@@ -2,37 +2,24 @@
 
 ## Abstract
 
-YouTube's success remains enigmatic: why do some videos go viral while others fail? This project investigates the forces driving YouTube success through two complementary lenses. First, we construct an implicit audience network from 8.6 billion comments, using shared commenter patterns as a proxy for content relationships and potential recommendation pathways. While we cannot access YouTube's actual recommendation algorithm, overlapping audience behavior reveals how videos connect through shared viewership. Second, we analyze how audience engagement quality—measured through comment depth, interaction patterns, and community formation—correlates with channel growth and content virality. We introduce a multi-scale community framework examining how user communities form around individual channels, groups of channels, and entire content categories, and how these communities interact, overlap, and evolve over time. By integrating inferred network positioning with engagement dynamics and content characteristics, we test whether success stems from strategic content choices that attract connected audiences, authentic community building, or their interaction. Our analysis of 72.9 million videos from 136k channels across 2016-2019 reveals patterns in YouTube's ecosystem dynamics.
+YouTube's success remains enigmatic: why do some videos go viral while others fail? This project investigates the forces driving YouTube success through two complementary lenses. First, we construct an implicit audience network from 8.6 billion comments, using shared commenter patterns as a proxy for content relationships and potential recommendation pathways. While we cannot access YouTube's actual recommendation algorithm, overlapping audience behavior reveals how videos connect through shared viewership. Second, we analyze how audience engagement quality, measured through comment depth, interaction patterns, and community formation, correlates with channel growth and content virality. We introduce a multi-scale community framework examining how user communities form around individual channels, groups of channels, and entire content categories, and how these communities interact, overlap, and evolve over time. By integrating inferred network positioning with engagement dynamics and content characteristics, we test whether success stems from strategic content choices that attract connected audiences, authentic community building, or their interaction. Our analysis of 72.9 million videos from 136k channels across 2016-2019 reveals patterns in YouTube's ecosystem dynamics.
 
 ## Research Questions
 
-**Audience Network Structure:**
-1. Can we construct a meaningful video network from comment behavior, and how does it compare to official category structures?
-2. Which videos serve as "bridges" connecting different audience communities, and which are isolated?
-3. How does position in this audience network predict video success and channel growth?
-4. Are certain content categories (Gaming, Education) more insular or open to cross-cluster audience overlap?
+How do we define and characterize communities at different levels?
 
-**Engagement Dynamics:**
-5. To what extent do comment volume and quality correlate with channel growth in subscribers and views?
-6. Do highly engaged comment sections (more replies, likes on comments) indicate stronger audience loyalty than channels with passive audiences?
-7. Does engagement quality (comment depth) predict sustained growth better than raw engagement quantity?
+**Community Structure and Dynamics (User level):**
+- What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity?
+- How do communities evolve over time (2016-2019): do they grow, fragment, merge, or maintain stable boundaries?
 
-**Community Structure and Dynamics:**
-8. How do we define and detect communities at multiple scales: individual channel communities, multi-channel communities, and category-level communities?
-9. How do these different community levels interact and overlap? Do channel communities nest within category communities, or do they cross boundaries?
-10. What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity?
-11. How do communities evolve over time (2016-2019): do they grow, fragment, merge, or maintain stable boundaries?
-12. Do successful channels build dedicated communities, or do they tap into existing cross-channel communities?
+**Content Network Structure (Video level):**
+- Can we construct a meaningful video network from comment behavior, and how does it compare to self-defined categories?
+- Which videos serve as "bridges" connecting different audience communities, and which are isolated?
+- Are certain content categories more insular or open to cross-cluster audience overlap?
 
-**Integration Questions:**
-13. Does audience network centrality amplify or substitute for engagement quality in predicting success?
-14. Do highly engaged communities drive content spread across network boundaries?
-15. Are "bridge videos" associated with users who belong to multiple communities?
-16. What content features predict both favorable network position AND high-quality community engagement?
-
-## Proposed Additional Datasets
-
-**No external datasets required.** All analyses use the YouNiverse dataset (72.9M videos, 136k channels, 8.6B comments, 449M users, weekly time-series 2016-2019).
+**Engagement Dynamics (Comments impact on channel):**
+- To what extent do comment volume and quality correlate with channel stats in subscribers and views?
+- Do highly engaged comment sections indicate stronger audience loyalty than channels with passive audiences?
 
 ## Methods
 
