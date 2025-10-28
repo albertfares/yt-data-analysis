@@ -32,3 +32,8 @@ radatouille on top
 
 - **Questions for TAs (optional):**  
   _[Add any questions or requests for feedback here]_
+
+
+### Contributors :bust_in_silhouette:
+[SltMatteo](https://github.com/SltMatteo), [Tkemper2](https://github.com/Tkemper2), [albertfares](https://github.com/albertfares), [jeanninhugo](https://github.com/jeanninhugo), [frossardr](https://github.com/frossardr)
+
