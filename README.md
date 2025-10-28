@@ -66,15 +66,15 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 *Level 1: Channel Communities*
 - For each channel, identify its "community" as users who commented on multiple videos from that channel
-- Metrics: community size, cohesion (what % of channel's commenters are repeat), exclusivity (what % only comment on this channel)
+- Metrics: community size, cohesion (% repeat commenters), exclusivity (% commenting only on this channel)
 
 *Level 2: Multi-Channel Communities*
 - Build user-user network (edges = shared videos commented on)
-- Apply Louvain clustering to identify user communities that span multiple channels
-- For each community: size, dominant channels/categories, internal cohesion
+- Apply Louvain clustering to identify user communities spanning multiple channels
+- Characterize: size, dominant channels/categories, internal cohesion
 
 *Level 3: Category Communities*
-- Aggregate users by their dominant category (majority of comments in Gaming, Education, etc.)
+- Aggregate users by dominant category (majority of comments)
 - Create category-user affinity matrix
 - Test whether category boundaries align with detected user communities
 
@@ -86,254 +86,141 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 ### Analytical Approaches
 
-**Phase 1: Network Reconstruction and Characterization**
-
-*Step 1:* Build video-video similarity network
-- Weight edges by shared commenter count
-- Test weighting schemes: raw count vs. normalized by video popularity
-- Validate assumption that shared commenters imply recommendation links by examining temporal patterns
-
-*Step 2:* Community detection and comparison
-- Apply Louvain algorithm to identify video neighborhoods
-- Compare detected clusters with official YouTube categories using adjusted mutual information
-- Quantify divergence: percentage of videos whose cluster differs from their official category
-
-*Step 3:* Identify structural roles
-- Calculate centrality metrics for all videos
-- Classify videos as bridges (high betweenness), hubs (high degree), or periphery (low connectivity)
+**Phase 1: Network Reconstruction**
+- Build video-video similarity network with shared commenter weighting
+- Apply Louvain community detection to identify video neighborhoods
+- Compare detected clusters with official YouTube categories (adjusted mutual information)
+- Calculate centrality metrics and identify bridge/dead-end videos
 
 **Phase 2: Multi-Scale Community Analysis**
-
-*Step 1: Channel-Level Communities*
-
-For each channel:
-```python
-channel_community = users who commented ≥2 times on this channel
-community_size = len(channel_community)
-community_cohesion = repeat_commenters / total_commenters
-community_exclusivity = users_only_here / channel_community
-```
-
-Regression: channel growth ~ community_size + cohesion + exclusivity + controls
-
-*Step 2: Cross-Channel User Communities*
-
-- Build user-user similarity matrix (Jaccard similarity of commented videos)
-- Apply Louvain clustering with multiple resolution parameters to detect communities at different scales
-- For each detected community, characterize:
-  - Size distribution
-  - Channel diversity (how many different channels do members engage with?)
-  - Category concentration (entropy across categories)
-  - Temporal stability (do same users remain in community over time?)
-
-*Step 3: Community Characterization*
-
-For members of each community, calculate:
-- **Activity intensity:** comments per user, time span of activity
-- **Content diversity:** number of unique channels/categories engaged with
-- **Loyalty patterns:** percentage of comments going to top 3 channels
-- **Engagement quality:** average replies given, average likes received
-- **Cross-community membership:** users belonging to multiple communities (detected via overlapping clustering)
-
-*Step 4: Community Interaction and Overlap*
-
-**Channel-Category Overlap:**
-- For each channel community, measure overlap with category-level communities
-- Jaccard similarity: `|channel_community ∩ category_community| / |channel_community ∪ category_community|`
-- Test: Do successful channels build exclusive communities, or tap into broader category communities?
-
-**Cross-Category Flow:**
-- Build bipartite graph: user communities ↔ video categories
-- Calculate flow matrix: which user communities engage with which categories
-- Identify "specialist" communities (high concentration in one category) vs. "generalist" communities (spread across categories)
-
-**Community Boundaries:**
-- Measure boundary permeability: what percentage of community members also engage outside the community?
-- Identify "ambassadors" (users active in multiple communities) vs. "core members" (exclusive to one community)
+- Extract channel-level communities (repeat commenters)
+- Detect cross-channel user communities via Louvain clustering
+- Characterize community members: activity, loyalty, diversity, engagement quality
+- Analyze community overlap (channel-category, cross-category flow)
 
 **Phase 3: Temporal Community Evolution**
+- Create yearly community snapshots (2016-2019)
+- Track community persistence, growth, fragmentation, mergers
+- Analyze member migration patterns
+- Test whether YouTube became more clustered over time
 
-*Step 1: Longitudinal Community Tracking*
+**Phase 4: Engagement Analysis**
+- Calculate engagement quality scores (PCA-weighted composite)
+- Regression: channel growth ~ engagement_quality + community_metrics + controls
+- Test whether engagement quality predicts sustained growth
 
-For yearly snapshots (2016, 2017, 2018, 2019):
-- Detect communities independently each year
-- Track community persistence using maximum overlap matching
-- Classify evolution patterns:
-  - **Stable:** Same core members, similar size
-  - **Growth:** Core maintained, significant new members
-  - **Fragmentation:** Community splits into multiple smaller communities
-  - **Merger:** Multiple communities combine
-  - **Dissolution:** Community disappears
-
-*Step 2: Member Trajectory Analysis*
-
-Track individual users across time:
-- Do users stay in same communities, or migrate?
-- Do users join additional communities (expansion) or switch (migration)?
-- Calculate community loyalty scores over time
-
-*Step 3: Category Evolution*
-
-- Test whether category boundaries became more rigid (increased clustering) or more fluid (decreased clustering) over 2016-2019
-- Hypothesis: YouTube became more echo-chamber-like over time
-
-**Phase 4: Engagement Quality and Community Structure**
-
-*Step 1:* Engagement quality scoring
-- For each video/channel, calculate composite engagement score:
-```
-  engagement_quality = (replies_per_comment × w1) + (likes_per_comment × w2) + (repeat_commenter_ratio × w3)
-```
-  Weights determined via PCA
-
-*Step 2:* Community-engagement relationship
-- Regression: engagement_quality ~ community_cohesion + community_size + community_diversity
-- Test: Do tighter communities have better engagement? Or does diversity drive quality?
-
-*Step 3:* Growth prediction
-- Channel growth (Δsubscribers, Δviews) ~ engagement_quality + community_metrics + network_position + controls
-- Test relative importance using SHAP values
-
-**Phase 5: Integration Analysis**
-
-*Step 1:* Network position × Community × Engagement
-
-Create multi-dimensional success framework:
-```
-Success factors:
-- Network centrality (high/low)
-- Community strength (strong/weak)  
-- Engagement quality (high/low)
-```
-
-Use decision tree to identify which combinations predict sustained growth
-
-*Step 2:* Bridge videos and multi-community users
-
-- Test: Are bridge videos (connecting network clusters) more likely to attract users from multiple communities?
-- Do multi-community users drive cross-cluster spread?
-
-*Step 3:* Content features predicting integrated success
-
-- Multi-target regression: predict network centrality + community strength + engagement quality from content features
-- Identify optimal content strategies for different goals
-
-*Step 4:* Viral pathways through communities
-
-- For videos that went viral, trace their spread:
-  - Did they stay within one community or jump communities?
-  - Did they leverage multi-community users as bridges?
-  - Temporal sequence: which communities adopted first, which followed?
+**Phase 5: Integration**
+- Multi-dimensional framework: network centrality × community strength × engagement quality
+- Test interaction effects on channel growth
+- Analyze bridge videos and multi-community users
+- Predict success from content features
 
 ### Statistical Methods
 
-- **Network validation:** Compare reconstructed network to random baseline, modularity score vs. null model
-- **Community detection validation:** Use multiple algorithms (Louvain, Label Propagation, Infomap) and compare results for robustness
-- **Regression models:** Fixed-effects controlling for channel identity, category, time period
-- **Temporal analysis:** Panel data models with channel fixed effects
-- **Robustness:** Bootstrap confidence intervals, sensitivity to parameter choices
-- **Multiple testing correction:** Bonferroni for multiple comparisons
-- **Causality:** Acknowledge observational limitations, use "associated with" not "causes"
+- Network validation: modularity scores vs. random baseline
+- Community detection: compare multiple algorithms (Louvain, Label Propagation)
+- Regression: fixed-effects controlling for channel, category, time
+- Robustness: bootstrap confidence intervals, sensitivity analysis
+- Multiple testing correction: Bonferroni
+- Causal language: "associated with" not "causes"
 
 ## Proposed Timeline
 
-**Week 1 (Nov 18-24): Data Infrastructure**
-- Download datasets, verify integrity
+**Week 1 (Nov 5-11): Data Infrastructure & P2 Preparation**
+- Download and verify datasets
 - Build preprocessing pipelines
-- Exploratory data analysis
-- **Deliverable:** Clean data, EDA notebook
+- Exploratory data analysis: distributions, missing values, correlations
+- Test network construction on sample data
+- **Deliverable (Nov 5):** README.md and initial analysis notebook for P2
 
-**Week 2 (Nov 25-Dec 1): Network Construction**
-- Build user-video bipartite graph
+**Week 2 (Nov 12-18): Network Construction**
+- Build full user-video bipartite graph
 - Project to video-video and user-user networks
-- Calculate basic centrality metrics
-- **Deliverable:** Network graphs constructed
+- Calculate centrality metrics
+- Initial community detection
+- **Deliverable:** Network graphs and basic statistics
 
-**Week 3 (Dec 2-8): Network & Community Detection**
-- Louvain community detection on videos and users
-- Identify bridges and dead-ends
-- Channel-level community extraction
-- **Deliverable:** Initial community structures
+**Week 3 (Nov 19-25): Community Detection & Analysis**
+- Multi-scale community detection (channel/multi-channel/category)
+- Community characterization and overlap analysis
+- Member profiling
+- **Deliverable:** Community structures and characterization
 
-**Week 4 (Dec 9-15): Multi-Scale Community Analysis**
-- Community characterization (size, cohesion, diversity)
-- Community overlap analysis (channel-category)
-- Cross-community membership patterns
-- **Deliverable:** Community analysis results
-
-**Week 5 (Dec 16-22): Temporal Evolution**
-- Yearly community snapshots (2016-2019)
-- Track community persistence and evolution
-- Member migration patterns
-- **Deliverable:** Temporal evolution results
-
-**Week 6 (Dec 23-29): Engagement & Integration**
+**Week 4 (Nov 26-Dec 2): Temporal & Engagement Analysis**
+- Yearly community snapshots and evolution tracking
 - Engagement quality metrics
+- Community-engagement relationships
+- **Deliverable:** Temporal and engagement results
+
+**Week 5 (Dec 3-9): Integration & Content Features**
 - Network × community × engagement models
+- Content feature extraction (NLP, tags)
 - Bridge videos and multi-community users
+- Viral pathway analysis
 - **Deliverable:** Integration analysis complete
 
-**Week 7 (Dec 30-Jan 5): Content Features & Prediction**
-- NLP on titles, tag analysis
-- Predict success from content + community + network
-- Viral pathway tracing
-- **Deliverable:** Predictive models complete
-
-**Week 8 (Jan 6-12): Finalization**
-- Interactive visualizations (network, communities, evolution)
+**Week 6 (Dec 10-17): Finalization for P3**
+- Statistical validation and robustness checks
+- Interactive visualizations
+- Final report and data story
 - Website development
-- Video production
-- **Deliverable:** Complete submission
+- Video presentation
+- **Deliverable (Dec 17):** Complete P3 submission
 
 ## Organization Within the Team
 
-**Member 1 (Network Lead):**
+**Member 1 (Network Construction Lead):**
 - User-video bipartite graph construction
 - Video-video similarity network projection
 - Centrality calculations
 - Bridge/dead-end identification
-- Network visualization
 
-**Member 2 (Community Lead):**
-- Multi-scale community detection (channel, multi-channel, category)
-- Community characterization and overlap analysis
-- Temporal community tracking
-- Community member profiling
+**Member 2 (Community Detection Lead):**
+- Multi-scale community detection (Louvain, Label Propagation)
+- Channel, multi-channel, and category community extraction
+- Community detection algorithm comparison
 
-**Member 3 (Engagement & Integration Lead):**
+**Member 3 (Community Characterization Lead):**
+- Member profiling (activity, loyalty, diversity)
+- Community overlap and interaction analysis
+- Cross-community membership patterns
+
+**Member 4 (Temporal & Engagement Lead):**
+- Temporal community tracking (2016-2019)
+- Community evolution analysis
 - Engagement quality metrics
 - Community-engagement relationships
-- Network × community × engagement integration
-- Statistical modeling and validation
 
-**Member 4 (Content & Visualization Lead):**
+**Member 5 (Integration & Visualization Lead):**
 - Content feature extraction (NLP, tags)
-- Predictive modeling
-- Interactive visualizations (communities, evolution, networks)
-- Website and video production
+- Integration models (network × community × engagement)
+- Statistical validation
+- Visualizations and final presentation
 
 **Shared Responsibilities:**
 - Weekly meetings (Mondays)
 - Code review and documentation
-- Final presentation preparation
+- Notebook maintenance
+- Final report writing
 
 **Internal Milestones:**
-- **Dec 1:** Networks and basic communities constructed
-- **Dec 15:** Multi-scale community analysis complete
-- **Dec 29:** Temporal evolution and integration complete
-- **Jan 10:** All visualizations and predictive models ready
-- **Jan 15:** Final submission
+- **Nov 5:** P2 submission (README + initial notebook)
+- **Nov 18:** Networks and basic communities constructed
+- **Nov 25:** Community analysis complete
+- **Dec 2:** Temporal and engagement analyses done
+- **Dec 9:** Integration and visualizations complete
+- **Dec 17:** P3 final submission
 
 ## Questions for TAs
 
-1. **Network computation feasibility:** With 449M users and 20.5M videos, should we sample (e.g., videos with ≥50 comments) to make computation tractable? What computational resources are available?
+1. **Computational feasibility:** With 449M users and 20.5M videos, should we sample (e.g., videos with ≥50 comments) for tractability? What computational resources are available?
 
-2. **Community detection validation:** How do we validate that detected communities are meaningful rather than artifacts? Should we compare multiple algorithms or use specific validation metrics?
+2. **Community detection validation:** How do we validate detected communities are meaningful? Should we compare multiple algorithms, use modularity scores, or other metrics?
 
-3. **Multi-scale community definition:** Is our three-level approach (channel/multi-channel/category) appropriate, or would you recommend a different granularity? Should we use hierarchical clustering instead?
+3. **Multi-scale community approach:** Is our three-level framework (channel/multi-channel/category) appropriate? Should we use hierarchical clustering instead?
 
-4. **Temporal community tracking:** What's the best method for matching communities across time periods—maximum overlap, or should we track individual user trajectories and reconstruct communities?
+4. **Temporal community tracking:** What method is best for matching communities across years—maximum overlap, user trajectory tracking, or another approach?
 
-5. **Engagement quality operationalization:** Beyond replies and likes per comment, what other signals would strengthen our engagement quality measure? Should we incorporate comment sentiment or toxicity?
+5. **Engagement quality measure:** For our composite engagement score, should we use PCA-derived weights, equal weights, or domain-based weights? How do we validate this measure?
 
-6. **Community overlap metrics:** For measuring channel-category community overlap, is Jaccard similarity sufficient, or should we use more sophisticated overlap measures?
+6. **Network assumption validation:** We assume shared commenters imply recommendation links. How can we empirically validate this assumption beyond temporal proximity analysis?
