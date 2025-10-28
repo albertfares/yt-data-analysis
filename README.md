@@ -2,22 +2,22 @@
 
 ## Abstract
 
-YouTube's success remains enigmatic: why do some videos go viral while others fail? This project investigates the forces driving YouTube success through two complementary lenses. First, we reconstruct YouTube's hidden recommendation network from 8.6 billion comments, mapping how videos cluster and connect through shared audiences. Second, we analyze how audience engagement quality—measured through comment depth, interaction patterns, and community formation—correlates with channel growth and content virality. We introduce a multi-scale community framework examining how user communities form around individual channels, groups of channels, and entire content categories, and how these communities interact, overlap, and evolve over time. By integrating network positioning with engagement dynamics and content characteristics, we test whether success stems from strategic positioning in the recommendation graph, authentic community building, content optimization, or their interaction. Our analysis of 72.9 million videos from 136k channels across 2016-2019 reveals the complete picture of YouTube's ecosystem.
+YouTube's success remains enigmatic: why do some videos go viral while others fail? This project investigates the forces driving YouTube success through two complementary lenses. First, we construct an implicit audience network from 8.6 billion comments, using shared commenter patterns as a proxy for content relationships and potential recommendation pathways. While we cannot access YouTube's actual recommendation algorithm, overlapping audience behavior reveals how videos connect through shared viewership. Second, we analyze how audience engagement quality—measured through comment depth, interaction patterns, and community formation—correlates with channel growth and content virality. We introduce a multi-scale community framework examining how user communities form around individual channels, groups of channels, and entire content categories, and how these communities interact, overlap, and evolve over time. By integrating inferred network positioning with engagement dynamics and content characteristics, we test whether success stems from strategic content choices that attract connected audiences, authentic community building, or their interaction. Our analysis of 72.9 million videos from 136k channels across 2016-2019 reveals patterns in YouTube's ecosystem dynamics.
 
 ## Research Questions
 
-**Network Structure (Recommendation Genome):**
-1. Can we reconstruct YouTube's recommendation network from comment behavior, and how does it compare to official category structures?
-2. Which videos serve as "bridges" connecting different content communities, and which are "dead ends"?
-3. How does network position (centrality, cluster membership) predict video success and channel growth?
-4. Are certain content categories (Gaming, Education) more insular or open to cross-cluster recommendations?
+**Audience Network Structure:**
+1. Can we construct a meaningful video network from comment behavior, and how does it compare to official category structures?
+2. Which videos serve as "bridges" connecting different audience communities, and which are isolated?
+3. How does position in this audience network predict video success and channel growth?
+4. Are certain content categories (Gaming, Education) more insular or open to cross-cluster audience overlap?
 
-**Engagement Dynamics (Power of Comments):**
+**Engagement Dynamics:**
 5. To what extent do comment volume and quality correlate with channel growth in subscribers and views?
 6. Do highly engaged comment sections (more replies, likes on comments) indicate stronger audience loyalty than channels with passive audiences?
 7. Does engagement quality (comment depth) predict sustained growth better than raw engagement quantity?
 
-**Community Structure and Dynamics (Multi-Scale Analysis):**
+**Community Structure and Dynamics:**
 8. How do we define and detect communities at multiple scales: individual channel communities, multi-channel communities, and category-level communities?
 9. How do these different community levels interact and overlap? Do channel communities nest within category communities, or do they cross boundaries?
 10. What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity?
@@ -25,8 +25,8 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 12. Do successful channels build dedicated communities, or do they tap into existing cross-channel communities?
 
 **Integration Questions:**
-13. Does network centrality amplify or substitute for engagement quality in predicting success?
-14. Do highly engaged communities drive viral spread across network boundaries?
+13. Does audience network centrality amplify or substitute for engagement quality in predicting success?
+14. Do highly engaged communities drive content spread across network boundaries?
 15. Are "bridge videos" associated with users who belong to multiple communities?
 16. What content features predict both favorable network position AND high-quality community engagement?
 
@@ -38,19 +38,20 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 ### Data Preprocessing and Feature Engineering
 
-**Network Construction (Recommendation Genome):**
+**Audience Network Construction:**
 - Build user-video bipartite graph (449M users × 20.5M videos) from comment table
 - Project to video-video similarity network: edge weight = number of shared commenters
+- **Rationale:** Videos with many shared commenters likely appeal to similar audiences, suggesting they may circulate in related recommendation spaces or serve similar content niches
 - Use sparse matrix operations (scipy.sparse) for computational efficiency
 - Calculate network metrics:
   - Degree centrality (number of connections)
   - Betweenness centrality (sampled for feasibility)
   - PageRank scores
   - Clustering coefficients
-- Apply Louvain community detection algorithm to identify video neighborhoods
-- Identify bridge videos (high betweenness, connecting disparate clusters) and dead-end videos (low degree, isolated)
+- Apply Louvain community detection algorithm to identify audience clusters
+- Identify bridge videos (high betweenness, connecting disparate clusters) and isolated videos (low degree)
 
-**Engagement Metrics (Power of Comments):**
+**Engagement Metrics:**
 - **Volume metrics:** Total comments per video/channel
 - **Quality metrics:**
   - Average replies per comment (comment depth)
@@ -86,11 +87,12 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 ### Analytical Approaches
 
-**Phase 1: Network Reconstruction**
+**Phase 1: Audience Network Construction**
 - Build video-video similarity network with shared commenter weighting
-- Apply Louvain community detection to identify video neighborhoods
+- Apply Louvain community detection to identify audience clusters
 - Compare detected clusters with official YouTube categories (adjusted mutual information)
-- Calculate centrality metrics and identify bridge/dead-end videos
+- Calculate centrality metrics and identify bridge/isolated videos
+- **Validation:** Test whether shared commenters correlate with content similarity (tags, titles, category)
 
 **Phase 2: Multi-Scale Community Analysis**
 - Extract channel-level communities (repeat commenters)
@@ -102,7 +104,7 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 - Create yearly community snapshots (2016-2019)
 - Track community persistence, growth, fragmentation, mergers
 - Analyze member migration patterns
-- Test whether YouTube became more clustered over time
+- Test whether audience clustering increased over time
 
 **Phase 4: Engagement Analysis**
 - Calculate engagement quality scores (PCA-weighted composite)
@@ -156,7 +158,7 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 - Network × community × engagement models
 - Content feature extraction (NLP, tags)
 - Bridge videos and multi-community users
-- Viral pathway analysis
+- Audience overlap analysis
 - **Deliverable:** Integration analysis complete
 
 **Week 6 (Dec 10-17): Finalization for P3**
@@ -173,7 +175,7 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 - User-video bipartite graph construction
 - Video-video similarity network projection
 - Centrality calculations
-- Bridge/dead-end identification
+- Bridge/isolated video identification
 
 **Member 2 (Community Detection Lead):**
 - Multi-scale community detection (Louvain, Label Propagation)
@@ -223,4 +225,4 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 5. **Engagement quality measure:** For our composite engagement score, should we use PCA-derived weights, equal weights, or domain-based weights? How do we validate this measure?
 
-6. **Network assumption validation:** We assume shared commenters imply recommendation links. How can we empirically validate this assumption beyond temporal proximity analysis?
+6. **Network interpretation:** We're using shared commenters as a proxy for audience overlap, but cannot claim this represents YouTube's actual recommendation algorithm. How should we frame our network findings to be clear about this limitation while still drawing meaningful insights?
