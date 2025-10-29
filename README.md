@@ -13,7 +13,7 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 **Content Network (Video level):**
 - Can we construct a meaningful video network from comment behavior and overlapping users, and how does it compare to self-defined categories?
-- Which videos serve as "bridges" connecting different audience communities, and which are isolated?
+- Which videos serve as "pathways" connecting different parts of the network?
 - How do user communities behave inside the video network?
 
 **Engagement Dynamics (Comments impact on channel) (OPTIONAL?):**
