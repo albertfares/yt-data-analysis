@@ -1,4 +1,4 @@
-# YouTube Success Decoded: The Interplay of Content Strategy, Network Position, and Community Engagement
+# The Hidden Web of YouTube: How Comments Connect Content and Communities
 
 ## Abstract
 
@@ -6,18 +6,17 @@ YouTube's success remains enigmatic: why do some videos go viral while others fa
 
 ## Research Questions
 
-How do we define and characterize communities at different levels?
+**User Communities (User level):**
+- How to define and create communities of users from comment behavior?
+- Which channels are popular within each community and are they shared between different communities?
+- What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity, new metrics?
 
-**Community Structure and Dynamics (User level):**
-- What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity?
-- How do communities evolve over time (2016-2019): do they grow, fragment, merge, or maintain stable boundaries?
-
-**Content Network Structure (Video level):**
-- Can we construct a meaningful video network from comment behavior, and how does it compare to self-defined categories?
+**Content Network (Video level):**
+- Can we construct a meaningful video network from comment behavior and overlapping users, and how does it compare to self-defined categories?
 - Which videos serve as "bridges" connecting different audience communities, and which are isolated?
-- Are certain content categories more insular or open to cross-cluster audience overlap?
+- How do user communities behave inside the video network?
 
-**Engagement Dynamics (Comments impact on channel):**
+**Engagement Dynamics (Comments impact on channel) (OPTIONAL?):**
 - To what extent do comment volume and quality correlate with channel stats in subscribers and views?
 - Do highly engaged comment sections indicate stronger audience loyalty than channels with passive audiences?
 
