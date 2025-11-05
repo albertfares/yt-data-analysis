@@ -36,6 +36,13 @@ The dataset is available on [Zenodo](https://zenodo.org/records/4650046).
 The provided dataset is already cleaned. However, to further reduce noise and improve computational efficiency while preserving meaningful structures (i.e. communities and network), we decided to apply additional filtering steps, as described below.
 
 ### User Communities (User level):
+For this part our aim is to explore community dynamics on a user level. Want we want to do in order to discuss our research question: 
+- Filter our user dataset to lower noise. Indeed, we want to spot patterns based on where, how and how much some users post comments. But we noticed that a lot of users comment very little. In order to achieve meaningful results, and because the dataset is huge, we keep only users that have commented more than a given threshold.
+- Build a modified table that maps comment authors to the channel they commented on and the number of comments they posted. This serves as the foundational dataset for all subsequent user-level analyses.
+- Choose and extract meaningful features that describe user commenting profiles. 
+- Apply similarity measure and clustering techniques (KNN with varying k, DBScan, HDBScan, Louvain) to see what type of communities of similar users emerge.
+- Characterize and visualize clusters; from the emerging communities from the earlier point, we analyze their behavior with feature analysis and visualize the results (PCA to grpah clusters, etc)
+- Apply all the aforementionned methods to subsets of the original dataset and progressively scale it in optimized pipelines.
 
 ### Content Network (Video level):
 Here are the different steps we are considering to explore the video level: 
@@ -66,16 +73,16 @@ We define loyalty metrics to distinguish active from passive audiences, then we 
 |-----------|-----------|-----------|-----------|
 |  0  |  05.11  | Define a Project proposal and run intial analysis   | Matteo, Thomas, Albert, Romain, Hugo  |
 |  1  |  12.11  |Prepare and build the network (video-level): Select the most relevant videos and users using filtering thresholds, then capture relationships between them based on shared commenters and compute Jaccard similarity to quantify audience overlap.   |  Albert, Romain, Hugo  |
-|     |         | Value A   | Value B   |
+|     |         | Continue to run experiments on small datasets to extract early results and think about important features for the next steps | Thomas, Matteo  |
 |  2  |  19.11  | Reveal natural content communities by detecting groups of related videos using Louvain or Leiden algorithms (video-level)  | Albert, Romain, Hugo   |
-|     |         | Value A   | Value B   |
+|     |         | Build a pipeline to make the early results scale on the full dataset and define the features and parameters useful for it | Thomas, Matteo   |
 |  3  |  26.11  | Understand audience structure by examining dominant channels, common content themes, and overlaps between communities (video-level)   | Albert, Romain, Hugo   |
-|     |         | Value A   | Value B   |
+|     |         | Run our analysis with the previously mentionned robust pipeline  | Thomas, Matteo  |
 |  4  |  03.12  | Highlight videos bridging different clusters using betweenness centrality; compare audience-driven clusters to official categories to evaluate alignment. (video-level)  | Albert, Romain, Hugo   |
-|     |         | Value A   | Value B   |
+|     |         | cont. objectives of earlier week   | Thomas, Matteo  |
 |  5  |  10.12  | Engagement Dynamics analysis: Examine how commenting activity relates to channel performance by analyzing correlations between engagement metrics (volume, diversity, loyalty) and audience size or growth.   | Albert, Romain, Hugo   |
 |     |         | Use an LLM to analyze titles/descriptions of central videos to identify language patterns that encourages commenting behavior.   | Albert, Romain, Hugo   |
-|     |         | Value A   | Value B   |
+|     |         | Compare results between user network and video network and interpret and explain our full results| Thomas, Matteo |
 |  6  |  17.12  | Complete project, document results, finalize report and clean up repository    | Matteo, Thomas, Albert, Romain, Hugo   |
 
 
@@ -85,7 +92,7 @@ We define loyalty metrics to distinguish active from passive audiences, then we 
   - Can we use external librairies/softwares to visualize the video network such as Gephi?
 
 ## Acknowledgments :ballot_box_with_check::
-AI coding assistants were used to assist with code implementation, debugging, data visualization, and technical documentation. All analytical decisions, research design, and interpretations were made by the team.
+AI coding assistants were used to assist with code implementation, debugging, data visualization, and technical documentation. All analytical decisions, research design, and interpretations were made by the team.
 
 In addition, the introductory image was created using ChatGPT.
 
