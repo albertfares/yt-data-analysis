@@ -73,7 +73,8 @@ We define loyalty metrics to distinguish active from passive audiences, then we 
 |     |         | Value A   | Value B   |
 |  4  |  03.12  | Highlight videos bridging different clusters using betweenness centrality; compare audience-driven clusters to official categories to evaluate alignment. (video-level)  | Albert, Romain, Hugo   |
 |     |         | Value A   | Value B   |
-|  5  |  10.12  | Engagement Dynamics: Correlate engagement metrics with channel performance and use an LLM to analyze titles/descriptions of central videos to identify language patterns that encourages commenting behavior.   | Albert, Romain, Hugo   |
+|  5  |  10.12  | Engagement Dynamics analysis: Examine how commenting activity relates to channel performance by analyzing correlations between engagement metrics (volume, diversity, loyalty) and audience size or growth.   | Albert, Romain, Hugo   |
+|     |         | Use an LLM to analyze titles/descriptions of central videos to identify language patterns that encourages commenting behavior.   | Albert, Romain, Hugo   |
 |     |         | Value A   | Value B   |
 |  6  |  17.12  | Complete project, document results, finalize report and clean up repository    | Matteo, Thomas, Albert, Romain, Hugo   |
 
