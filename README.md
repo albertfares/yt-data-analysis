@@ -36,7 +36,7 @@ The dataset is available on [Zenodo](https://zenodo.org/records/4650046).
 The provided dataset is already cleaned. However, to further reduce noise and improve computational efficiency while preserving meaningful structures (i.e. communities and network), we decided to apply additional filtering steps, as described below.
 
 ### User Communities (User level):
-For this part our aim is to explore community dynamics on a user level. We want to do in order to discuss our research question: 
+For this part our aim is to explore community dynamics on a user level. What we want to do in order to discuss our research question: 
 - Filter our user dataset to lower noise. Indeed, we want to spot patterns based on where, how and how much some users post comments. But we noticed that a lot of users comment very little. In order to achieve meaningful results, and because the dataset is huge, we keep only users that have commented more than a given threshold.
 - Build a modified table that maps comment authors to the channel they commented on and the number of comments they posted. This serves as the foundational dataset for all subsequent user-level analyses.
 - Choose and extract meaningful features that describe user commenting profiles. 
