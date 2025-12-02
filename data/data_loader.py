@@ -6,6 +6,7 @@ import json
 import pandas as pd
 from tqdm.auto import tqdm
 import os
+import gzip
 
 
 def format_number(num):
@@ -244,6 +245,9 @@ def load_metadata_for_videos(metadata_path, video_ids, channel_map=None, verbose
     
     return video_metadata
 
+# =========================================================================
+# ====================== .gz loaders for large files ======================
+# =========================================================================
 
 def load_comments_gz(
     data_path,
@@ -325,3 +329,100 @@ def load_videos_gz(
     df = pd.concat(chunks, ignore_index=True)
     print(f"✅ Videos DataFrame shape: {df.shape}")
     return df
+
+
+def load_channel_data_gz(filepath, verbose=True):
+    """
+    Load YouTube channel data from TSV(.gz) file.
+    """
+    if verbose:
+        print(f"Loading channel data from {filepath}...")
+
+    df = pd.read_csv(filepath, sep='\t', compression='gzip')  # ✅
+
+    channels = {}
+    for _, row in df.iterrows():
+        channel_id = row['channel']
+        channels[channel_id] = {
+            'name': row.get('name_cc', 'Unknown'),
+            'subscribers': row.get('subscribers_cc', 0),
+            'videos': row.get('videos_cc', 0),
+            'category': row.get('category_cc', 'Unknown'),
+            'join_date': row.get('join_date', 'Unknown')
+        }
+
+    if verbose:
+        print(f"✓ Loaded {len(channels):,} channels")
+
+    return channels
+
+
+def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verbose=True, max_lines=None):
+    """
+    Efficiently load metadata for specific video IDs from a large JSONL.GZ file.
+    Streams line by line, no full-file load.
+    """
+    video_ids = set(video_ids)
+    video_metadata = {}
+    found_count = 0
+    total_videos = len(video_ids)
+    
+    if verbose:
+        print(f"\nSearching for metadata for {total_videos} videos...")
+        print(f"Scanning: {metadata_path}")
+    
+    # ✅ use gzip.open to stream compressed file
+    with gzip.open(metadata_path, 'rt', encoding='utf-8') as f:
+        iterator = tqdm(f, desc="Scanning metadata", disable=not verbose, unit=" lines")
+        
+        for i, line in iterator:
+            if found_count >= total_videos:
+                if verbose:
+                    print(f"✓ All {total_videos} videos found! Stopping scan.")
+                break
+
+            if max_lines is not None and i >= max_lines:
+                if verbose:
+                    print(f"⏹️ Reached max_lines={max_lines}, stopping scan.")
+                break
+
+            try:
+                video = json.loads(line.strip())
+                video_id = video.get('display_id') or video.get('video_id') or video.get('id')
+                
+                if video_id and video_id in video_ids:
+                    channel_id = video.get('channel_id', 'Unknown')
+                    views = video.get('view_count', 0)
+                    
+                    if channel_map and channel_id in channel_map:
+                        channel_name = channel_map[channel_id]['name']
+                    else:
+                        channel_name = channel_id
+                    
+                    video_metadata[video_id] = {
+                        'title': video.get('title', 'No title'),
+                        'channel': channel_name,
+                        'channel_id': channel_id,
+                        'views': views,
+                        'views_formatted': format_number(views),
+                        'upload_date': video.get('upload_date', 'Unknown'),
+                        'categories': video.get('categories', []),
+                        'duration': video.get('duration', 0),
+                        'likes': video.get('like_count', 0),
+                        'dislikes': video.get('dislike_count', 0)
+                    }
+                    found_count += 1
+                    
+                    if verbose:
+                        iterator.set_postfix({'found': f"{found_count}/{total_videos}"})
+                        
+            except (json.JSONDecodeError, AttributeError):
+                continue
+    
+    if verbose:
+        print(f"\n✓ Found metadata for {found_count}/{total_videos} videos")
+        if found_count < total_videos:
+            missing = video_ids - set(video_metadata.keys())
+            print(f"  ⚠ Missing {len(missing)} videos: {list(missing)[:5]}...")
+    
+    return video_metadata
