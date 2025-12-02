@@ -1,1 +1,3 @@
 *.gexf
+__pycache__/
+*.pyc
