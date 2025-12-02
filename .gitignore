@@ -1,4 +1,5 @@
 *.gexf
 __pycache__/
 *.pyc
-data/**
+data/*
+!data/*.py
