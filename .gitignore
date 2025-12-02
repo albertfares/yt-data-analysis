@@ -1,5 +1,4 @@
 *.gexf
 __pycache__/
 *.pyc
-data/*
-!data/.gitkeep 
+data/**
