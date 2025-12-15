@@ -90,7 +90,7 @@ def load_comment_data(filepath, nrows=None, verbose=True):
     df['video_id'] = df['video_id'].astype('category')
     
     if verbose:
-        print(f"\n✓ Data loaded successfully!")
+        print(f"\n Data loaded successfully!")
         print(f"  Shape: {df.shape}")
         print(f"  Memory usage: {df.memory_usage(deep=True).sum() / 1024**3:.2f} GB")
         if nrows:
@@ -198,7 +198,7 @@ def load_metadata_for_videos(metadata_path, video_ids, channel_map=None, verbose
             # Early exit if all videos found
             if found_count >= total_videos:
                 if verbose:
-                    print(f"✓ All {total_videos} videos found! Stopping scan.")
+                    print(f" All {total_videos} videos found! Stopping scan.")
                 break
             
             try:
@@ -238,10 +238,10 @@ def load_metadata_for_videos(metadata_path, video_ids, channel_map=None, verbose
                 continue
     
     if verbose:
-        print(f"\n✓ Found metadata for {found_count}/{total_videos} videos")
+        print(f"\n Found metadata for {found_count}/{total_videos} videos")
         if found_count < total_videos:
             missing = video_ids - set(video_metadata.keys())
-            print(f"  ⚠ Missing {len(missing)} videos: {list(missing)[:5]}...")
+            print(f"  Missing {len(missing)} videos: {list(missing)[:5]}...")
     
     return video_metadata
 
@@ -281,7 +281,7 @@ def load_comments_gz(
             print("   Reached chunk limit.")
             break
 
-    print("📌 Concatenating chunks...")
+    print("Concatenating chunks...")
     df = pd.concat(chunks, ignore_index=True)
     print(f"Comments DataFrame shape: {df.shape}")
     return df
@@ -325,7 +325,7 @@ def load_videos_gz(
             print("   Reached chunk limit.")
             break
 
-    print("📌 Concatenating chunks...")
+    print("Concatenating chunks...")
     df = pd.concat(chunks, ignore_index=True)
     print(f"Videos DataFrame shape: {df.shape}")
     return df
@@ -352,7 +352,7 @@ def load_channel_data_gz(filepath, verbose=True):
         }
 
     if verbose:
-        print(f"✓ Loaded {len(channels):,} channels")
+        print(f"Loaded {len(channels):,} channels")
 
     return channels
 
@@ -383,7 +383,7 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
             
             if found_count >= total_videos:
                 if verbose:
-                    print(f"✓ All {total_videos} videos found! Stopping scan.")
+                    print(f"All {total_videos} videos found! Stopping scan.")
                 break
 
             if max_lines is not None and i >= max_lines:
@@ -426,6 +426,6 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
                 continue
     
     if verbose:
-        print(f"\n✓ Found metadata for {found_count}/{total_videos} videos")
+        print(f"\n Found metadata for {found_count}/{total_videos} videos")
     
     return video_metadata
