@@ -3,14 +3,10 @@ Utility functions for network analysis.
 """
 
 from .filtering import iterative_filter
-from .network_builder import (
-    prepare_network_data,
-    build_video_mappings,
-    compute_video_edges,
-    prune_edges,
-    build_networkx_graph,
-    build_audience_network
-)
+
+# UPDATED: Import only the new sparse builder function
+from .network_builder import build_video_projection_sparse
+
 from .network_analysis import (
     compute_betweenness_centrality,
     get_top_nodes,
@@ -33,13 +29,8 @@ __all__ = [
     # Filtering
     'iterative_filter',
     
-    # Network building
-    'prepare_network_data',
-    'build_video_mappings',
-    'compute_video_edges',
-    'prune_edges',
-    'build_networkx_graph',
-    'build_audience_network',
+    # Network building (Updated)
+    'build_video_projection_sparse',
     
     # Network analysis
     'compute_betweenness_centrality',
@@ -58,4 +49,3 @@ __all__ = [
     # Data exploration
     'explore_initial_data'
 ]
-
