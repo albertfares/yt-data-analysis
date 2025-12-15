@@ -142,7 +142,7 @@ def load_channel_data(filepath, verbose=True):
         }
     
     if verbose:
-        print(f"✓ Loaded {len(channels):,} channels")
+        print(f" Loaded {len(channels):,} channels")
     
     return channels
 
@@ -261,8 +261,8 @@ def load_comments_gz(
     Prints progress as chunks are loaded.
     """
     comments_path = os.path.join(data_path, comments_file)
-    print(f"📄 Loading comments from: {comments_path}")
-    print(f"➡️  Chunk size: {chunksize:,} rows | Max chunks: {n_chunks}")
+    print(f" Loading comments from: {comments_path}")
+    print(f"  Chunk size: {chunksize:,} rows | Max chunks: {n_chunks}")
 
     comments_iter = pd.read_csv(
         comments_path,
@@ -274,16 +274,16 @@ def load_comments_gz(
 
     chunks = []
     for i, chunk in enumerate(comments_iter, start=1):
-        print(f"   🔹 Loaded chunk {i}")
+        print(f"   Loaded chunk {i}")
         chunks.append(chunk)
 
         if (n_chunks is not None) and (i >= n_chunks):
-            print("   ⏹️  Reached chunk limit.")
+            print("   Reached chunk limit.")
             break
 
     print("📌 Concatenating chunks...")
     df = pd.concat(chunks, ignore_index=True)
-    print(f"✅ Comments DataFrame shape: {df.shape}")
+    print(f"Comments DataFrame shape: {df.shape}")
     return df
 
 
@@ -299,8 +299,8 @@ def load_videos_gz(
     Prints progress as chunks are loaded.
     """
     videos_path = os.path.join(data_path, videos_file)
-    print(f"📄 Loading videos from: {videos_path}")
-    print(f"➡️  Chunk size: {chunksize:,} rows | Max chunks: {n_chunks}")
+    print(f"Loading videos from: {videos_path}")
+    print(f"Chunk size: {chunksize:,} rows | Max chunks: {n_chunks}")
 
     videos_iter = pd.read_json(
         videos_path,
@@ -311,23 +311,23 @@ def load_videos_gz(
 
     chunks = []
     for i, chunk in enumerate(videos_iter, start=1):
-        print(f"   🔹 Loaded chunk {i}")
+        print(f"   Loaded chunk {i}")
 
         if usecols is not None:
             missing = [c for c in usecols if c not in chunk.columns]
             if missing:
-                print(f"     ⚠️ Missing columns in this chunk: {missing}")
+                print(f"     Missing columns in this chunk: {missing}")
             chunk = chunk[[c for c in usecols if c in chunk.columns]]
 
         chunks.append(chunk)
 
         if (n_chunks is not None) and (i >= n_chunks):
-            print("   ⏹️  Reached chunk limit.")
+            print("   Reached chunk limit.")
             break
 
     print("📌 Concatenating chunks...")
     df = pd.concat(chunks, ignore_index=True)
-    print(f"✅ Videos DataFrame shape: {df.shape}")
+    print(f"Videos DataFrame shape: {df.shape}")
     return df
 
 
@@ -338,7 +338,7 @@ def load_channel_data_gz(filepath, verbose=True):
     if verbose:
         print(f"Loading channel data from {filepath}...")
 
-    df = pd.read_csv(filepath, sep='\t', compression='gzip')  # ✅
+    df = pd.read_csv(filepath, sep='\t', compression='gzip')  
 
     channels = {}
     for _, row in df.iterrows():
@@ -362,6 +362,10 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
     Efficiently load metadata for specific video IDs from a large JSONL.GZ file.
     Streams line by line, no full-file load.
     """
+    import gzip
+    import json
+    from tqdm.auto import tqdm
+
     video_ids = set(video_ids)
     video_metadata = {}
     found_count = 0
@@ -371,11 +375,12 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
         print(f"\nSearching for metadata for {total_videos} videos...")
         print(f"Scanning: {metadata_path}")
     
-    # ✅ use gzip.open to stream compressed file
     with gzip.open(metadata_path, 'rt', encoding='utf-8') as f:
         iterator = tqdm(f, desc="Scanning metadata", disable=not verbose, unit=" lines")
         
-        for i, line in iterator:
+        # --- FIX IS HERE: Added enumerate() ---
+        for i, line in enumerate(iterator):
+            
             if found_count >= total_videos:
                 if verbose:
                     print(f"✓ All {total_videos} videos found! Stopping scan.")
@@ -383,11 +388,12 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
 
             if max_lines is not None and i >= max_lines:
                 if verbose:
-                    print(f"⏹️ Reached max_lines={max_lines}, stopping scan.")
+                    print(f"Reached max_lines={max_lines}, stopping scan.")
                 break
 
             try:
                 video = json.loads(line.strip())
+                # Handle different ID formats
                 video_id = video.get('display_id') or video.get('video_id') or video.get('id')
                 
                 if video_id and video_id in video_ids:
@@ -404,7 +410,7 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
                         'channel': channel_name,
                         'channel_id': channel_id,
                         'views': views,
-                        'views_formatted': format_number(views),
+                        # 'views_formatted': format_number(views), # Add helper if needed
                         'upload_date': video.get('upload_date', 'Unknown'),
                         'categories': video.get('categories', []),
                         'duration': video.get('duration', 0),
@@ -421,8 +427,5 @@ def load_metadata_for_videos_gz(metadata_path, video_ids, channel_map=None, verb
     
     if verbose:
         print(f"\n✓ Found metadata for {found_count}/{total_videos} videos")
-        if found_count < total_videos:
-            missing = video_ids - set(video_metadata.keys())
-            print(f"  ⚠ Missing {len(missing)} videos: {list(missing)[:5]}...")
     
     return video_metadata
