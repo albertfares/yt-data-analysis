@@ -6,7 +6,7 @@
 
 
 ## Abstract :page_facing_up::
-YouTube hosts billions of videos, but how do audiences navigate this vast landscape? This project maps the hidden social structures connecting content and communities by analyzing 8.6 billion comments from 449 million users across 72.9 million videos (2016-2019). We construct an audience network where videos connect through shared commenters, revealing how content clusters emerge from viewing behavior rather than official categories. By detecting communities at multiple scales, we examine how these groups interact, overlap, and evolve over time. We investigate what characterizes community members, which videos serve as bridges between different audience clusters, and how engagement quality relates to network position. Since we cannot access YouTube's recommendation algorithm, we infer content relationships directly from audience behavior, providing a bottom-up view of the platform's social structure. Our findings reveal the organic organization of YouTube's ecosystem and offer insights into how communities form and connect across this massive platform.
+YouTube recommendation algorithms typically rely on passive metrics like views and watch time. This project takes a different approach by mapping the active social structure of the platform. By analyzing millions of comments from the YouNiverse dataset, we focus on the "1% of users" who actively participate rather than just consume. We construct a Channel-Category Network, aggregating individual videos into stable communities of conversation. This macroscopic view reveals how different interest groups (e.g., "Gaming," "Politics") interact and identifies the specific "Diplomat Channels" that serve as bridges between them. Simultaneously, we cluster users into distinct "Tribes" based on their commenting behavior. By combining these two layers—the Channel Map and the User Tribes—we propose a novel, community-driven recommendation system designed to diversify user interests via trusted social pathways, rather than reinforcing echo chambers.
 
 ## Research Questions :thought_balloon:: 
 ### User Communities (User level):
@@ -16,8 +16,9 @@ YouTube hosts billions of videos, but how do audiences navigate this vast landsc
 
 ### Content Network (Video level):
 - Can we construct a meaningful video network from comment behavior and overlapping users, and how does it compare to self-defined categories?
-- Which videos serve as "pathways" connecting different parts of the network?
+- Which videos serve as "bridges" connecting different parts of the network?
 - How do user communities behave inside the video network?
+- Can we simulate a "User Journey" that leverages these bridges to recommend novel content that feels socially relevant rather than random?
 
 ### Engagement Dynamics (Comments impact on channel) (Additional):
 - To what extent do comment volume and quality correlate with channel stats in subscribers and views?
@@ -55,8 +56,16 @@ Here are the different steps we are considering to explore the video level:
 
 The example below illustrates the local ego-network of a video of interest (in red), which has the highest degree within the most connected component. It is connected to other videos (in blue) through overlapping commenting users.
  <p align="center">
-    <img width="545" height="393" alt="Capture d’écran 2025-11-05 à 11 29 54" src="https://github.com/user-attachments/assets/81b8a4a0-b1e4-4036-b04e-eb1b9fbb1250" />
+    <img width="545" height="393" alt="Capture d’écran 2025-11-05 à 11 29 54" src="https://github.com/user-attachments/assets/81b8a4a0-b1e4-4036-b04e-eb1b9fbb1250" />
 </p>
+
+### Integration: The Recommendation Engine
+We combine the two pipelines to simulate a recommendation:
+- Input: A user is identified as belonging to Tribe A.
+- Pathfinding: We locate Tribe A on the Channel Map.
+- Bridge: We identify the nearest "Diplomat" node connected to Tribe A.
+- Output: We recommend the content on the other side of the bridge, broadening the user's horizon through a trusted social path.
+
 
 Additional:
 Run an LLM analysis on video metadata (titles and descriptions) for high degree and betweenness-similarity videos to have an insight on he type of language that convince people to comment.  
