@@ -61,7 +61,7 @@ We aggregated billions of interactions into a graph where nodes $i$ and $j$ repr
 
 * **Topology Analysis:**
     * We applied the **Louvain Algorithm** to maximize the modularity $Q$, partitioning the network into communities $C_1, ..., C_k$ where internal density is maximized.
-    * We calculated **Degree** to identify Hubs (anchors) and **Betweenness Centrality** ($C_B$) to identify Bridges.
+    * We calculated **Degree** to identify Hubs and **Betweenness Centrality** ($C_B$) to identify Bridges.
 
 ### 3. The Recommendation Engine (The Tool)
 Finally, we operationalized the network structure.
@@ -125,10 +125,10 @@ ADA-2024-PROJECT-OOOHFADA/
 
 | Team Member | Contribution Focus |
 | :--- | :--- |
-| **[SltMatteo](https://github.com/SltMatteo)** | **Network Construction:** Handled the crawling of edge data, implementation of the PMI/Score metric, and efficient handling of large dataframes. |
-| **[Tkemper2](https://github.com/Tkemper2)** | **Visualization & Story:** Created the Chord diagrams, Gephi network exports, and led the design and implementation of the Data Story website. |
-| **[albertfares](https://github.com/albertfares)** | **Algorithm & Analysis:** Implemented community detection (Louvain), defined the specific metrics for "Hubs" and "Bridges," and managed the repository structure. |
-| **[jeanninhugo](https://github.com/jeanninhugo)** | **User Analysis & Report:** Working on the User-level metrics to position users within the network and synthesizing findings into the final textual report/README. |
+| **[Romain](https://github.com/frossardr)** | **Network Construction:** Handled the crawling of edge data, implementation of the PMI/Score metric, and efficient handling of large dataframes. |
+| **[Albert](https://github.com/albertfares)** | **Visualization & Story:** Created the Chord diagrams, Gephi network exports, and led the design and implementation of the Data Story website. |
+| **[Hugo](https://github.com/jeanninhugo)** | **Algorithm & Analysis:** Implemented community detection (Louvain), defined the specific metrics for "Hubs" and "Bridges," and managed the repository structure. |
+| **[Thomas](https://github.com/Tkemper2)** | **User Analysis & Report:** Working on the User-level metrics to position users within the network and synthesizing findings into the final textual report/README. |
 
 
 
