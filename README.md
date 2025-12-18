@@ -9,24 +9,12 @@ YouTube's recommendation algorithm is a closely guarded secret. We seek to circu
 
 This approach ignores standard metrics such as view counts in order to reveal organic communities formed by genuine human interactions. The result is a transparent recommendation engine that prioritizes users' active interests —what makes them react— rather than passive metadata that may result from a simple trend. By shifting the focus from static categories (simple views) to dynamic user behavior, we offer a new way to discover content based on where communities are actually active.
 
-## Research Questions :thought_balloon:: 
-### User Communities (User level):
-- How to define and create communities of users from comment behavior?
-- Which channels are popular within each community and are they shared between different communities?
-- What characterizes members of different communities: comment frequency, content diversity, channel loyalty, engagement intensity, new metrics?
+## Research Questions
 
-### Content Network (Video level):
-- Can we construct a meaningful video network from comment behavior and overlapping users, and how does it compare to self-defined categories?
-- Which videos serve as "bridges" connecting different parts of the network?
-- How do user communities behave inside the video network?
-- Can we simulate a "User Journey" that leverages these bridges to recommend novel content that feels socially relevant rather than random?
+- **User Level (Behavior):** Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?
+- **Channel Level (Structure):** What organic structures emerge when we connect channels based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?
+- **Application (Recommendation):** Can we build a transparent recommendation engine based on comments that bypasses the "Rich-Get-Richer" cycle? Can we predict a user's next favorite channel simply by knowing who their "digital neighbors" are?
 
-### Engagement Dynamics (Comments impact on channel) (Additional):
-- To what extent do comment volume and quality correlate with channel stats in subscribers and views?
-- Do highly engaged comment sections indicate stronger audience loyalty than channels with passive audiences?
-
-## Data Story
-Dive into the visual side of our analysis. This [Data Story](https://radatouille.netlify.app/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
 
 ## Dataset :books::
 Considering the size of YouNiverse, we chose not to explore another dataset.
@@ -36,77 +24,85 @@ For detailed documentation and methodology, see the original YouNiverse paper:
 
 The dataset is available on [Zenodo](https://zenodo.org/records/4650046).
 
-## Methods :hammer_and_wrench:: 
-The provided dataset is already cleaned. However, to further reduce noise and improve computational efficiency while preserving meaningful structures (i.e. communities and network), we decided to apply additional filtering steps, as described below.
 
-### User Communities (User level):
-For this part our aim is to explore community dynamics on a user level. What we want to do in order to discuss our research question: 
-- Filter our user dataset to lower noise. Indeed, we want to spot patterns based on where, how and how much some users post comments. But we noticed that a lot of users comment very little. In order to achieve meaningful results, and because the dataset is huge, we keep only users that have commented more than a given threshold.
-- Build a modified table that maps comment authors to the channel they commented on and the number of comments they posted. This serves as the foundational dataset for all subsequent user-level analyses.
-- Choose and extract meaningful features that describe user commenting profiles. 
-- Apply similarity measure and clustering techniques (KNN with varying k, DBScan, HDBScan, Louvain) to see what type of communities of similar users emerge.
-- Characterize and visualize clusters; from the emerging communities from the earlier point, we analyze their behavior with feature analysis and visualize the results (PCA to grpah clusters, etc)
-- Apply all the aforementionned methods to subsets of the original dataset and progressively scale it in optimized pipelines.
+## Methods
 
-### Content Network (Video level):
-Here are the different steps we are considering to explore the video level: 
-- Threshold users with a minimum number of videos commented and videos with a minimum number of users in its comment section.
-- Construct a network where nodes represent videos and edges indicate shared commenters. Keep only strong connections using Jaccard similarity.
-- Use NetworkX to output a graph, initially with ~72k videos and ~654k edges, where edge weight reflects audience overlap strength.
-- Detect communities (Louvain/Leiden) to find clusters of overlapping audiences.
-- Characterize clusters: dominant channels, common content themes (metadata keywords), and cluster overlaps (Jaccard similarity of shared commenters).
-- Identify "pathway" videos: nodes with high betweeness bridging clusters; compare audience-driven clusters with official categories using purity or normalized mutual information.
+We chose to focus on the large-scale structure of the provided YouNiverse dataset.
+We used the following methods:
+- **Louvain Community Detection** (for identifying organic clusters)
+- **Pointwise Mutual Information (PMI)** (for edge weighting)
+- **PageRank & Betweenness Centrality** (for identifying Hubs and Bridges)
+- **Interactive Visualization** (Chord Diagrams, Sankey Diagrams)
 
-The example below illustrates the local ego-network of a video of interest (in red), which has the highest degree within the most connected component. It is connected to other videos (in blue) through overlapping commenting users.
- <p align="center">
-    <img width="545" height="393" alt="Capture d’écran 2025-11-05 à 11 29 54" src="https://github.com/user-attachments/assets/81b8a4a0-b1e4-4036-b04e-eb1b9fbb1250" />
-</p>
+### Preprocessing & User Profiling (The Signal)
+To build a robust graph, we first had to define the "Signal" amidst the noise.
+- **High-Fidelity Filter:** We removed bots, spam, and "drive-by" commenters to isolate **"Super Users"**—authors who are consistently active and socially validated (receiving likes).
+- **Behavioral Analysis:** We analyzed commenting tendencies to distinguish between "Tourists" (one-off visitors) and "Residents" (loyal community members), ensuring our network edges reflect genuine engagement.
 
-### Integration: The Recommendation Engine
-We combine the two pipelines to simulate a recommendation:
-- Input: A user is identified as belonging to Tribe A.
-- Pathfinding: We locate Tribe A on the Channel Map.
-- Bridge: We identify the nearest "Diplomat" node connected to Tribe A.
-- Output: We recommend the content on the other side of the bridge, broadening the user's horizon through a trusted social path.
+### Network Construction (The Map)
+We aggregated billions of interactions to reconstruct the map of YouTube.
+- **The Interaction Score:** To design a meaningful network, we developed a custom edge weight: $Score = PMI \times \log(Shared Users)$. This balances **volume** (popularity) with **specificity** (PMI), identifying significant connections rather than just trending ones.
+- **Topology Analysis:** We applied the **Louvain Algorithm** to detect organic clusters ("Hidden Tribes") and calculated centrality metrics to identify **Hubs** (anchors) and **Bridges** (gateways), revealing how the ecosystem organizes itself beyond official categories.
+
+### The Recommendation Engine (The Tool)
+Finally, we operationalized the network structure.
+- **Proximity-Based Logic:** We built a tool that suggests channels based on **network proximity**. By locating a user within a specific behavioral cluster, the engine recommends the strongest neighboring nodes ("digital neighbors") that they haven't visited yet.
+- **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
+
+## Repository Structure
+
+├── data/                                   # Data folder (not tracked by git)
+│   ├── raw/                                # Original datasets
+│   └── processed/                          # Cleaned data and network edge lists
+├── src/                                    # Source code for analysis
+│   ├── network_construction.py             # Script to build edges and calculate PMI/Scores
+│   ├── community_detection.py              # Logic for clustering algorithms
+│   └── visualization.py                    # Scripts for Chord diagrams and interactive plots
+├── results.ipynb                           # Main Jupyter notebook presenting the findings
+├── pip_requirements.txt                    # Required Python packages
+└── README.md                               # Project documentation
+
+## How to Run the Code 💻
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/epfl-ada/ada-2024-project-ooohfada.git](https://github.com/epfl-ada/ada-2024-project-ooohfada.git)
+    cd ada-2024-project-ooohfada
+    ```
+
+2.  **Set up the environment:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r pip_requirements.txt
+    ```
+
+3.  **Data Acquisition:**
+    * Download the dataset from the [ADA 2024 YouNiverse Kaggle page](https://zenodo-org.translate.goog/records/4650046) and place it in `data/raw/`.
+
+4.  **Execution:**
+    * Run the notebook `results.ipynb` to view the analysis pipeline and visualizations.
+
+## Contributions 👥
+
+| Team Member | Contribution Focus |
+| :--- | :--- |
+| **[SltMatteo](https://github.com/SltMatteo)** | **Network Construction:** Handled the crawling of edge data, implementation of the PMI/Score metric, and efficient handling of large dataframes. |
+| **[Tkemper2](https://github.com/Tkemper2)** | **Visualization & Story:** Created the Chord diagrams, Gephi network exports, and led the design and implementation of the Data Story website. |
+| **[albertfares](https://github.com/albertfares)** | **Algorithm & Analysis:** Implemented community detection (Louvain), defined the specific metrics for "Hubs" and "Bridges," and managed the repository structure. |
+| **[jeanninhugo](https://github.com/jeanninhugo)** | **User Analysis & Report:** Working on the User-level metrics to position users within the network and synthesizing findings into the final textual report/README. |
 
 
-Additional:
-Run an LLM analysis on video metadata (titles and descriptions) for high degree and betweenness-similarity videos to have an insight on he type of language that convince people to comment.  
-
-### Engagement Dynamics (Comments impact on channel) (Additional):
-We define loyalty metrics to distinguish active from passive audiences, then we conduct Pearson and Spearman correlation analyses between comment metrics and channel performance indicators to assess:
-- The strength of association between comment volume and subscriber count.
-- The relationship between unique commenter counts and channel size.
-- The difference in loyalty metrics between high-engagement (top quartile by comment rate) and low-engagement channels (bottom quartile).
-
-## Proposed Timeline :calendar::
-
-   | Week | Deadline | Tasks | Responsible |
-|-----------|-----------|-----------|-----------|
-|  0  |  05.11  | Define a Project proposal and run intial analysis   | Matteo, Thomas, Albert, Romain, Hugo  |
-|  1  |  12.11  |Prepare and build the network (video-level): Select the most relevant videos and users using filtering thresholds, then capture relationships between them based on shared commenters and compute Jaccard similarity to quantify audience overlap.   |  Albert, Romain, Hugo  |
-|     |         | Continue to run experiments on small datasets to extract early results and think about important features for the next steps | Thomas, Matteo  |
-|  2  |  19.11  | Reveal natural content communities by detecting groups of related videos using Louvain or Leiden algorithms (video-level)  | Albert, Romain, Hugo   |
-|     |         | Build a pipeline to make the early results scale on the full dataset and define the features and parameters useful for it | Thomas, Matteo   |
-|  3  |  26.11  | Understand audience structure by examining dominant channels, common content themes, and overlaps between communities (video-level)   | Albert, Romain, Hugo   |
-|     |         | Run our analysis with the previously mentionned robust pipeline  | Thomas, Matteo  |
-|  4  |  03.12  | Highlight videos bridging different clusters using betweenness centrality; compare audience-driven clusters to official categories to evaluate alignment. (video-level)  | Albert, Romain, Hugo   |
-|     |         | cont. objectives of earlier week   | Thomas, Matteo  |
-|  5  |  10.12  | Engagement Dynamics analysis: Examine how commenting activity relates to channel performance by analyzing correlations between engagement metrics (volume, diversity, loyalty) and audience size or growth.   | Albert, Romain, Hugo   |
-|     |         | Use an LLM to analyze titles/descriptions of central videos to identify language patterns that encourages commenting behavior.   | Albert, Romain, Hugo   |
-|     |         | Compare results between user network and video network and interpret and explain our full results| Thomas, Matteo |
-|  6  |  17.12  | Complete project, document results, finalize report and clean up repository    | Matteo, Thomas, Albert, Romain, Hugo   |
 
 
+## Acknowledgments & AI Usage :ballot_box_with_check::
+**External Tools:**
+- **Gephi:** Used for large-scale network visualization to validate our community detection results visually.
 
-
-## Questions for TAs :question:: 
-  - Can we use external librairies/softwares to visualize the video network such as Gephi?
-
-## Acknowledgments :ballot_box_with_check::
-AI coding assistants were used to assist with code implementation, debugging, data visualization, and technical documentation. All analytical decisions, research design, and interpretations were made by the team.
-
-In addition, the introductory image was created using ChatGPT.
+**AI Assistants:**
+- AI coding assistants were used to assist with code implementation, debugging, data visualization, and technical documentation.
+- All analytical decisions, research design, and interpretations were made by the team.
+- The introductory image was created using ChatGPT.
 
 ### Contributors :busts_in_silhouette::
 [SltMatteo](https://github.com/SltMatteo), [Tkemper2](https://github.com/Tkemper2), [albertfares](https://github.com/albertfares), [jeanninhugo](https://github.com/jeanninhugo), [frossardr](https://github.com/frossardr)
