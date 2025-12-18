@@ -4,9 +4,10 @@
 </p>
 
 
-
 ## Abstract :page_facing_up::
-YouTube recommendation algorithms typically rely on passive metrics like views and watch time. This project takes a different approach by mapping the active social structure of the platform. By analyzing millions of comments from the YouNiverse dataset, we focus on the "1% of users" who actively participate rather than just consume. We construct a Channel-Category Network, aggregating individual videos into stable communities of conversation. This macroscopic view reveals how different interest groups (e.g., "Gaming," "Politics") interact and identifies the specific "Diplomat Channels" that serve as bridges between them. Simultaneously, we cluster users into distinct "Tribes" based on their commenting behavior. By combining these two layers—the Channel Map and the User Tribes—we propose a novel, community-driven recommendation system designed to diversify user interests via trusted social pathways, rather than reinforcing echo chambers.
+YouTube's recommendation algorithm is a closely guarded secret. We seek to circumvent this "black box" by mapping the social structure of the platform from the bottom up. Using a massive dataset including 8.6 billion comments, we construct a network where channels are connected solely by the users who comment on them.
+
+This approach ignores standard metrics such as view counts in order to reveal organic communities formed by genuine human interactions. The result is a transparent recommendation engine that prioritizes users' active interests —what makes them react— rather than passive metadata that may result from a simple trend. By shifting the focus from static categories (simple views) to dynamic user behavior, we offer a new way to discover content based on where communities are actually active.
 
 ## Research Questions :thought_balloon:: 
 ### User Communities (User level):
@@ -24,6 +25,8 @@ YouTube recommendation algorithms typically rely on passive metrics like views a
 - To what extent do comment volume and quality correlate with channel stats in subscribers and views?
 - Do highly engaged comment sections indicate stronger audience loyalty than channels with passive audiences?
 
+## Data Story
+Dive into the visual side of our analysis. This [Data Story](https://radatouille.netlify.app/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
 
 ## Dataset :books::
 Considering the size of YouNiverse, we chose not to explore another dataset.
