@@ -27,41 +27,79 @@ The dataset is available on [Zenodo](https://zenodo.org/records/4650046).
 
 ## Methods
 
-We chose to focus on the large-scale structure of the provided YouNiverse dataset.
-We used the following methods:
+We focused on the large-scale structure of the YouNiverse dataset, employing the following methods:
 - **Louvain Community Detection** (for identifying organic clusters)
 - **Pointwise Mutual Information (PMI)** (for edge weighting)
 - **PageRank & Betweenness Centrality** (for identifying Hubs and Bridges)
 - **Interactive Visualization** (Chord Diagrams, Sankey Diagrams)
 
-### Preprocessing & User Profiling (The Signal)
-To build a robust graph, we first had to define the "Signal" amidst the noise.
-- **High-Fidelity Filter:** We removed bots, spam, and "drive-by" commenters to isolate **"Super Users"**—authors who are consistently active and socially validated (receiving likes).
-- **Behavioral Analysis:** We analyzed commenting tendencies to distinguish between "Tourists" (one-off visitors) and "Residents" (loyal community members), ensuring our network edges reflect genuine engagement.
+### 1. Preprocessing & User Profiling (The Signal)
+To build a robust graph, we defined the "Signal" by filtering for **"Super Users"** ($U_{super}$). A user $u$ is retained only if they satisfy the following engagement thresholds:
 
-### Network Construction (The Map)
-We aggregated billions of interactions to reconstruct the map of YouTube.
-- **The Interaction Score:** To design a meaningful network, we developed a custom edge weight: $Score = PMI \times \log(Shared Users)$. This balances **volume** (popularity) with **specificity** (PMI), identifying significant connections rather than just trending ones.
-- **Topology Analysis:** We applied the **Louvain Algorithm** to detect organic clusters ("Hidden Tribes") and calculated centrality metrics to identify **Hubs** (anchors) and **Bridges** (gateways), revealing how the ecosystem organizes itself beyond official categories.
+$$u \in U_{super} \iff (N_{videos}(u) \ge 24) \land (N_{likes}(u) \ge 5)$$
 
-### The Recommendation Engine (The Tool)
+Where:
+* $N_{videos}(u)$: The number of unique videos user $u$ commented on (ensuring consistency).
+* $N_{likes}(u)$: The total likes received on their comments (ensuring social validation).
+* **Bot Removal:** We strictly removed the top $1\%$ of most active accounts to eliminate non-human behavior.
+
+### 2. Network Construction (The Map)
+We aggregated billions of interactions into a graph where nodes $i$ and $j$ represent Channels (aggregated by category).
+
+* **The Interaction Score ($W_{ij}$):**
+    We developed a custom edge weight that balances **specificity** (PMI) with **volume** (raw shared count). The weight $W_{ij}$ between two channels is defined as:
+
+    $$W_{ij} = \text{PMI}(i, j) \times \log(|U_i \cap U_j|)$$
+
+    Where the **Pointwise Mutual Information (PMI)** is calculated as:
+
+    $$\text{PMI}(i, j) = \log\left(\frac{P(i, j)}{P(i)P(j)}\right) = \log\left(\frac{N \cdot |U_i \cap U_j|}{|U_i| \cdot |U_j|}\right)$$
+
+    * $|U_i \cap U_j|$: Number of shared commentators between channel $i$ and $j$.
+    * $N$: Total number of users in the network.
+    * **Logic:** PMI penalizes generic links between massive channels, while the $\log$ term prevents statistically high PMI values from insignificant niche channels (e.g., 2 users sharing 2 channels) from dominating the graph.
+
+* **Topology Analysis:**
+    * We applied the **Louvain Algorithm** to maximize the modularity $Q$, partitioning the network into communities $C_1, ..., C_k$ where internal density is maximized.
+    * We calculated **Degree** to identify Hubs (anchors) and **Betweenness Centrality** ($C_B$) to identify Bridges.
+
+### 3. The Recommendation Engine (The Tool)
 Finally, we operationalized the network structure.
 - **Proximity-Based Logic:** We built a tool that suggests channels based on **network proximity**. By locating a user within a specific behavioral cluster, the engine recommends the strongest neighboring nodes ("digital neighbors") that they haven't visited yet.
-- **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
-
+- **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links $W_{ij}$) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
 ## Repository Structure
-
-├── data/                                   # Data folder (not tracked by git)
-│   ├── raw/                                # Original datasets
-│   └── processed/                          # Cleaned data and network edge lists
-├── src/                                    # Source code for analysis
-│   ├── network_construction.py             # Script to build edges and calculate PMI/Scores
-│   ├── community_detection.py              # Logic for clustering algorithms
-│   └── visualization.py                    # Scripts for Chord diagrams and interactive plots
-├── results.ipynb                           # Main Jupyter notebook presenting the findings
-├── pip_requirements.txt                    # Required Python packages
-└── README.md                               # Project documentation
-
+```
+ADA-2024-PROJECT-OOOHFADA/
+├── data/                                           # Data folder (will contain all the data used and created in the project)
+├── extras/                                         # Extra files
+│   ├── dataset_description.md                      # Description of the dataset
+│   └── dataset_presenation.pdf                     # Presentation of the dataset            
+├── plot_data/                                      # Folder for plots (will contain the plots generated by the scripts 
+│                                                   # and used in the data story when generated by the results notebook)
+├── src/                            
+│   ├── data/                                       # Data processing scripts
+│   │   ├── bbdataset_preprocessing.py              # Preprocessing of the bad buzz dataset
+│   │   ├── dataloader_functions.py                 # Dataloader for the dataset
+│   │   ├── final_dataset_creation.py               # Creation of the final dataset
+│   │   ├── preprocessing.py                        # Preprocessing of the dataset
+│   │   ├── reduce_metadata.py                      # Reduction of the metadata dataset
+│   │   └── video_extraction.py                     # Extraction of the videos
+│   ├── models/                                     # LLM related scripts
+│   │   └── llm_call_helpers.py                     # LLM call helpers
+│   ├── scripts/                                    # Utility scripts
+│   │   └──  preprocessing_pipeline.sh              # Preprocessing pipeline script
+│   ├── utils/                                      # Helper functions
+│   │   ├── 1M_plus_utils.py                        # Helper functions for the 1M+ analysis
+│   │   ├── find_video_categories.py                # Helper functions for the video categories analysis
+│   │   ├── plots.py                                # Helper functions for the plots
+│   │   ├── recovery_analysis_utils.py              # Helper functions for the recovery analysis
+│   │   └── results_utils.py                        # Helper functions for the results
+├── venv/                                           # Virtual environment
+├── .gitignore
+├── pip_requirements.txt                            # Required packages
+├── README.md                                       # Project description and instructions
+└── results.ipynb                                   # Jupyter notebook with the results
+```
 ## How to Run the Code 💻
 
 1.  **Clone the repository:**
@@ -83,7 +121,7 @@ Finally, we operationalized the network structure.
 4.  **Execution:**
     * Run the notebook `results.ipynb` to view the analysis pipeline and visualizations.
 
-## Contributions 👥
+## Contributions
 
 | Team Member | Contribution Focus |
 | :--- | :--- |
