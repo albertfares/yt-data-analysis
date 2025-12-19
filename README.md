@@ -68,6 +68,9 @@ Finally, we operationalized the network structure.
 - **Proximity-Based Logic:** We built a tool that suggests channels based on **network proximity**. By locating a user within a specific behavioral cluster, the engine recommends the strongest neighboring nodes ("digital neighbors") that they haven't visited yet.
 - **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links $W_{ij}$) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
 
+## Data Story
+Dive into the visual side of our analysis. This [data story](https://radatouille.netlify.app/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
+
 ## Repository Structure :file_folder:
 ```
 ada-2025-project-radatouille/
@@ -82,7 +85,9 @@ ada-2025-project-radatouille/
 │   └── community_helper.py     #utils methods file for USER-level part
 │
 ├── plot_results/
-│                                                
+│
+├── website/
+│                                           
 ├── .gitignore
 ├── requirements.txt                            
 ├── README.md                                       # Project description and instructions
