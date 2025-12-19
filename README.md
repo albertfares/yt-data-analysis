@@ -4,19 +4,19 @@
 </p>
 
 
-## Abstract :page_facing_up::
+## Abstract :page_facing_up:
 YouTube's recommendation algorithm is a closely guarded secret. We seek to circumvent this "black box" by mapping the social structure of the platform from the bottom up. Using a massive dataset including 8.6 billion comments, we construct a network where channels are connected solely by the users who comment on them.
 
 This approach ignores standard metrics such as view counts in order to reveal organic communities formed by genuine human interactions. The result is a transparent recommendation engine that prioritizes users' active interests —what makes them react— rather than passive metadata that may result from a simple trend. By shifting the focus from static categories (simple views) to dynamic user behavior, we offer a new way to discover content based on where communities are actually active.
 
-## Research Questions :thought_balloon: :
+## Research Questions :thought_balloon: 
 
 - **User Level (Behavior):** Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?
 - **Channel Level (Structure):** What organic structures emerge when we connect channels based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?
 - **Application (Recommendation):** Can we build a transparent recommendation engine based on comments that bypasses the "Rich-Get-Richer" cycle? Can we predict a user's next favorite channel simply by knowing who their "digital neighbors" are?
 
 
-## Dataset :books::
+## Dataset :books:
 Considering the size of YouNiverse, we chose not to explore another dataset.
 
 For detailed documentation and methodology, see the original YouNiverse paper: 
@@ -63,11 +63,12 @@ We aggregated billions of interactions into a graph where nodes $i$ and $j$ repr
     * We applied the **Louvain Algorithm** to maximize the modularity $Q$, partitioning the network into communities $C_1, ..., C_k$ where internal density is maximized.
     * We calculated **Degree** to identify Hubs and **Betweenness Centrality** ($C_B$) to identify Bridges.
 
-### 3. The Recommendation Engine (The Tool) :file_folder:
+### 3. The Recommendation Engine (The Tool) 
 Finally, we operationalized the network structure.
 - **Proximity-Based Logic:** We built a tool that suggests channels based on **network proximity**. By locating a user within a specific behavioral cluster, the engine recommends the strongest neighboring nodes ("digital neighbors") that they haven't visited yet.
 - **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links $W_{ij}$) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
-## Repository Structure
+
+## Repository Structure :file_folder:
 ```
 ada-2025-project-radatouille/
 ├── data/
@@ -130,7 +131,7 @@ ada-2025-project-radatouille/
     * Run the notebook `results.ipynb` to view the analysis pipeline and visualizations.
     * :warning:The notebook is long, and some cells may take a long time and be memory-intensive to run.
 
-## Contributions
+## Contributions :memo:
 
 | Team Member | Contribution Focus |
 | :--- | :--- |
@@ -143,7 +144,7 @@ ada-2025-project-radatouille/
 
 
 
-## Acknowledgments & AI Usage :ballot_box_with_check::
+## Acknowledgments & AI Usage :ballot_box_with_check:
 **External Tools:**
 - **Gephi:** Used for large-scale network visualization to validate our community detection results visually.
 
@@ -152,6 +153,6 @@ ada-2025-project-radatouille/
 - All analytical decisions, research design, and interpretations were made by the team.
 - The introductory image was created using ChatGPT.
 
-### Contributors :busts_in_silhouette::
+### Contributors :busts_in_silhouette:
 [SltMatteo](https://github.com/SltMatteo), [Tkemper2](https://github.com/Tkemper2), [albertfares](https://github.com/albertfares), [jeanninhugo](https://github.com/jeanninhugo), [frossardr](https://github.com/frossardr)
 
