@@ -1,6 +1,8 @@
 import duckdb
 import time
 from pathlib import Path
+import pandas as pd
+import plotly.graph_objects as go
 
 
 
@@ -673,3 +675,300 @@ def analyze_pmi_network(input_csv, output_txt):
     print_both("\n" + "=" * 80)
     print_both(f"Analysis completed in {elapsed:.2f} seconds")
     print_both("=" * 80)
+
+
+
+def generate_violin_json(file_path, output_path):
+    print("Generating Violin Chart Data...")
+
+    # --- 2. LOAD DATA ---
+    if not os.path.exists(file_path):
+        print(f"Error: File '{file_path}' not found.")
+        return
+
+    df = pd.read_csv(file_path)
+    if df.empty:
+        print("Warning: Input dataframe is empty.")
+        return
+
+    # --- 3. PREPROCESS DATA ---
+    # Prepare two sides of edges to get full node stats
+    df_1 = df[['group1', 'group1_size', 'score']].rename(columns={'group1': 'Node', 'group1_size': 'Size', 'score': 'Edge_Score'})
+    df_2 = df[['group2', 'group2_size', 'score']].rename(columns={'group2': 'Node', 'group2_size': 'Size', 'score': 'Edge_Score'})
+    all_nodes = pd.concat([df_1, df_2])
+
+    # Aggregate stats per node
+    node_stats = all_nodes.groupby('Node').agg(
+        Size=('Size', 'mean'), 
+        Degree=('Edge_Score', 'count'), 
+        Avg_Score=('Edge_Score', 'mean')
+    ).reset_index()
+
+    # Create Categories & Log metrics
+    def get_category(s):
+        return s.split('|')[0] if pd.notna(s) else "Unknown"
+
+    node_stats['Category'] = node_stats['Node'].apply(get_category)
+    node_stats['Log_Size'] = np.log10(node_stats['Size'] + 1)
+    node_stats['Log_Degree'] = np.log10(node_stats['Degree'] + 1)
+    node_stats['Log_Score'] = np.log10(node_stats['Avg_Score'] + 1)
+
+    # Filter: Keep only top 15 categories
+    top_cats = node_stats['Category'].value_counts().nlargest(15).index
+    data = node_stats[node_stats['Category'].isin(top_cats)].copy()
+    data.sort_values('Category', inplace=True)
+    categories = data['Category'].unique()
+
+    # --- 4. HTML TOOLTIP GENERATOR ---
+    def generate_table_html(cat_name, series_data):
+        stats = series_data.describe()
+        html = f"""
+        <span style='font-size:14px; font-weight:bold;'>{cat_name}</span><br>
+        <table style="border: 1px solid black; border-collapse: collapse; background-color: white; font-family: Arial; font-size: 12px; color: black;">
+            <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
+                <th style="padding: 4px; text-align: left;">Statistique</th>
+                <th style="padding: 4px; text-align: right;">Valeur</th>
+            </tr>
+            <tr><td style="padding: 4px;">Moyenne</td><td style="padding: 4px; text-align: right;">{stats['mean']:.2f}</td></tr>
+            <tr><td style="padding: 4px;">Médiane</td><td style="padding: 4px; text-align: right;">{stats['50%']:.2f}</td></tr>
+            <tr><td style="padding: 4px;">Min</td><td style="padding: 4px; text-align: right;">{stats['min']:.2f}</td></tr>
+            <tr><td style="padding: 4px;">Max</td><td style="padding: 4px; text-align: right;">{stats['max']:.2f}</td></tr>
+            <tr style="border-top: 1px solid #ddd;"><td style="padding: 4px;"><i>Nbr Noeuds</i></td><td style="padding: 4px; text-align: right;"><i>{int(stats['count'])}</i></td></tr>
+        </table>
+        <extra></extra>
+        """
+        return html
+
+    # --- 5. BUILD BASE FIGURE ---
+    fig = px.violin(
+        data, 
+        y="Log_Score", 
+        color="Category", 
+        facet_col="Category", 
+        facet_col_wrap=5, 
+        facet_row_spacing=0.1,
+        box=True, points=False,
+        color_discrete_sequence=px.colors.qualitative.Bold
+    )
+
+    # Apply custom HTML tooltips to initial traces
+    for trace in fig.data:
+        cat = trace.name
+        if cat in categories:
+            subset = data[data['Category'] == cat]['Log_Score']
+            trace.hovertemplate = generate_table_html(cat, subset)
+
+    # Clean up annotations (Remove "Category=")
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("Category=", "")))
+    
+    # Style the traces
+    fig.update_traces(
+        name="",  
+        meanline_visible=True,
+        jitter=0.05,
+        width=0.8,
+        hoveron="violins"
+    )
+
+    # Clean Axes
+    fig.update_xaxes(title=None, showticklabels=False, showgrid=False, zeroline=False)
+    fig.update_yaxes(
+        matches='y', showticklabels=True, showgrid=True, title=None, 
+        showspikes=False
+    )    metrics = ['Log_Score', 'Log_Degree', 'Log_Size']
+    labels = ['Score (Log10)', 'Degree (Log10)', 'Size (Log10)']
+    
+    buttons = []
+    for m, label in zip(metrics, labels):
+        y_updates = []
+        html_updates = []
+        
+        
+        for cat in categories: 
+            cat_data = data[data['Category'] == cat]
+            y_vals = cat_data[m]
+            y_updates.append(y_vals)
+            html_updates.append(generate_table_html(cat, y_vals))
+            
+        buttons.append(dict(
+            label=label,
+            method="update",
+            args=[
+                {"y": y_updates, "hovertemplate": html_updates}, 
+                {"title": f"Distribution: {label}"}
+            ]
+        ))
+# --- 6.5 FIX: MANUALLY FORCE ALL AXES TO MATCH ---
+    # This loop iterates through 'xaxis', 'xaxis2', 'yaxis', 'yaxis2', etc.
+    # and forces the style explicitly, preventing the "Master Axis" glitch.
+    
+    for axis_name in fig.layout:
+        if axis_name.startswith('xaxis'):
+            # Force X-Axis Clean (No labels, no grid)
+            fig.layout[axis_name].showticklabels = False
+            fig.layout[axis_name].showgrid = False
+            fig.layout[axis_name].zeroline = False
+            fig.layout[axis_name].title = None
+            
+        elif axis_name.startswith('yaxis'):
+            # Force Y-Axis Visible (Labels yes, Grid yes)
+            fig.layout[axis_name].showticklabels = True
+            fig.layout[axis_name].showgrid = True
+            fig.layout[axis_name].title = None
+            # Ensure the "Master" axis doesn't look different
+            fig.layout[axis_name].zeroline = False
+            fig.layout[axis_name].showspikes = False
+
+    # Force the background color explicitly so the website CSS doesn't override it
+    fig.update_layout(
+        plot_bgcolor='white',
+        paper_bgcolor='white'
+    )
+
+    
+    # --- 7. FINAL LAYOUT & EXPORT ---
+    fig.update_layout(
+        updatemenus=[dict(active=0, buttons=buttons, x=0, y=1.12, xanchor="left", yanchor="top", bgcolor="white")],
+        showlegend=False,
+        margin=dict(t=100),
+        height=900,
+        width=1200,
+        hovermode='closest',
+        hoverlabel=dict(
+            bgcolor="white",
+            font_size=12,
+            font_family="Arial",
+            namelength=-1 
+        )
+    )
+
+    # Ensure output directory exists
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
+
+    fig.write_json(output_path)
+    print(f"Saved JSON data! Open '{output_path}' to use it.")
+
+
+def generate_sunburst_json(file_path, output_path, CATEGORY_PALETTE, DEFAULT_COLOR="#CCCCCC", COLOR_INTERNAL="#B0BEC5", COLOR_EXTERNAL="#FFCCBC"):
+    print("Generating Sunburst Data...")
+
+    # --- 2. LOAD & PREPARE DATA ---
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return
+
+    # Helper: Extract category name
+    def get_cat(s):
+        return s.split('|')[0] if pd.notna(s) else "Unknown"
+
+    df['Cat1'] = df['group1'].apply(get_cat)
+    df['Cat2'] = df['group2'].apply(get_cat)
+
+    # Aggregate Volume (Shared Users)
+    agg_df = df.groupby(['Cat1', 'Cat2'])['shared_commentators'].sum().reset_index()
+
+    # Filter: Remove noise (Bottom 20%) to keep chart clean
+    threshold = agg_df['shared_commentators'].quantile(0.20)
+    agg_filtered = agg_df[agg_df['shared_commentators'] > threshold].copy()
+
+    # --- 3. BUILD HIERARCHY (Tree Structure) ---
+    tree = {}
+
+    def insert_data(center, neighbor, vol):
+        if center not in tree: tree[center] = {'Internal': {}, 'External': {}}
+        
+        type_label = 'Internal' if center == neighbor else 'External'
+        
+        # Add to the specific branch
+        if neighbor in tree[center][type_label]:
+            tree[center][type_label][neighbor] += vol
+        else:
+            tree[center][type_label][neighbor] = vol
+
+    # Populate Tree (Symmetric)
+    for _, row in agg_filtered.iterrows():
+        c1, c2, vol = row['Cat1'], row['Cat2'], row['shared_commentators']
+        insert_data(c1, c2, vol)
+        if c1 != c2: insert_data(c2, c1, vol)
+
+    # --- 4. FLATTEN TO PLOTLY LISTS ---
+    ids = []
+    labels = []
+    parents = []
+    values = []
+    node_colors = []
+
+    for center, branches in tree.items():
+        # Calculate Branch Totals
+        internal_sum = sum(branches['Internal'].values())
+        external_sum = sum(branches['External'].values())
+        center_total = internal_sum + external_sum
+        
+        if center_total == 0: continue
+
+        # LEVEL 0: CENTER (The Category)
+        ids.append(center)
+        labels.append(center)
+        parents.append("")
+        values.append(center_total)
+        node_colors.append(CATEGORY_PALETTE.get(center, DEFAULT_COLOR))
+
+        # LEVEL 1: TYPE (Internal vs External)
+        for type_label, neighbors in branches.items():
+            branch_sum = sum(neighbors.values())
+            
+            if branch_sum > 0:
+                branch_id = f"{center} - {type_label}"
+                
+                ids.append(branch_id)
+                labels.append(type_label)
+                parents.append(center)
+                values.append(branch_sum)
+                
+                if type_label == 'Internal':
+                    node_colors.append(COLOR_INTERNAL)
+                else:
+                    node_colors.append(COLOR_EXTERNAL)
+
+                # LEVEL 2: LEAVES (Connected Categories)
+                for neighbor, vol in neighbors.items():
+                    leaf_id = f"{branch_id} - {neighbor}"
+                    
+                    ids.append(leaf_id)
+                    labels.append(neighbor)
+                    parents.append(branch_id)
+                    values.append(vol)
+                    
+                    node_colors.append(CATEGORY_PALETTE.get(neighbor, DEFAULT_COLOR))
+
+    # --- 5. GENERATE FIGURE OBJECT ---
+    fig = go.Figure(go.Sunburst(
+        ids=ids,
+        labels=labels,
+        parents=parents,
+        values=values,
+        marker=dict(colors=node_colors),
+        branchvalues="total",
+        
+        # DISPLAY: Label + Percentage of Parent Ring
+        textinfo="label+percent parent",
+        
+        # HOVER INFO
+        hovertemplate='<b>%{label}</b><br>Volume: %{value:,.0f}<br>Share: %{percentParent:.1%}<extra></extra>'
+    ))
+
+    fig.update_layout(
+        margin=dict(t=40, l=0, r=0, b=0),
+        width=1000,
+        height=1000,
+        font=dict(family="Arial", size=14)
+    )
+
+    
+    fig.write_json(output_path)
+    
+    print(f"Saved JSON data! Open '{output_path}' to use it.")
