@@ -3,6 +3,7 @@ import time
 from pathlib import Path
 import pandas as pd
 import plotly.graph_objects as go
+import os
 
 
 
@@ -13,7 +14,21 @@ def format_number(n):
 
 
 def analyze_author_group_comments(input_csv, output_txt):
+    """
+    Analyzes the relationship between authors and groups using DuckDB.
 
+    This function calculates basic file statistics, counts unique authors and groups,
+    and performs a category analysis to identify top categories by pair count
+    and top groups by author participation.
+
+    Args:
+        input_csv (str): Path to the input CSV file containing author-group pairs.
+        output_txt (file object): An open file object (writable) to log the analysis results. 
+                                  Results are printed to stdout and written to this file.
+
+    Returns:
+        None
+    """
     def print_both(text, output_file=output_txt):
         """Print to both console and file"""
         print(text)
@@ -140,6 +155,20 @@ def analyze_author_group_comments(input_csv, output_txt):
     print_both("=" * 80)
 
 def analyze_filtered_streaming(input_csv, output_txt):
+    """
+    Performs statistical analysis on filtered streaming comment data.
+
+    This function connects to DuckDB to analyze comment distributions. It calculates
+    unique counts for videos, authors, and groups, and generates percentile statistics 
+    (min, median, 99th%, max) for comment volume per group and per author.
+
+    Args:
+        input_csv (str): Path to the input CSV file containing streaming comment data.
+        output_txt (file object): An open file object (writable) to log the analysis results.
+
+    Returns:
+        None
+    """
     def print_both(text, output_file=output_txt):
         """Print to both console and file"""
         print(text)
@@ -334,7 +363,23 @@ def analyze_filtered_streaming(input_csv, output_txt):
 
 
 def analyze_pmi_network(input_csv, output_txt):
+    """
+    Analyzes the structure and strength of the PMI (Pointwise Mutual Information) network.
 
+    This function evaluates the network graph where nodes are groups/channels. 
+    It calculates:
+    - Network density and total edges.
+    - Node degree distribution (percentiles).
+    - Distribution of PMI scores and 'Score' (PMI * log(shared_commentators)).
+    - Connectivity between categories (Inter-category vs Intra-category edges).
+
+    Args:
+        input_csv (str): Path to the CSV file containing network edges (group1, group2, scores).
+        output_txt (file object): An open file object (writable) to log the analysis results.
+
+    Returns:
+        None
+    """
     def print_both(text, output_file=output_txt):
         """Print to both console and file"""
         print(text)
@@ -679,6 +724,21 @@ def analyze_pmi_network(input_csv, output_txt):
 
 
 def generate_violin_json(file_path, output_path):
+    """
+    Generates a Plotly JSON artifact for a facetted violin chart representing node distributions.
+
+    This function processes network edge data to aggregate node statistics (Size, Degree, Avg_Score).
+    It applies Log10 transformations to these metrics and creates an interactive violin plot
+    facetted by category. The output includes dropdown buttons to switch between metrics
+    and custom HTML tooltips.
+
+    Args:
+        file_path (str): Path to the input CSV file containing network edge data.
+        output_path (str): Path where the resulting Plotly JSON file will be saved.
+
+    Returns:
+        None: The function saves a JSON file to disk.
+    """
     print("Generating Violin Chart Data...")
 
     # --- 2. LOAD DATA ---
@@ -775,7 +835,8 @@ def generate_violin_json(file_path, output_path):
     fig.update_yaxes(
         matches='y', showticklabels=True, showgrid=True, title=None, 
         showspikes=False
-    )    metrics = ['Log_Score', 'Log_Degree', 'Log_Size']
+    )   
+    metrics = ['Log_Score', 'Log_Degree', 'Log_Size']
     labels = ['Score (Log10)', 'Degree (Log10)', 'Size (Log10)']
     
     buttons = []
@@ -852,6 +913,25 @@ def generate_violin_json(file_path, output_path):
 
 
 def generate_sunburst_json(file_path, output_path, CATEGORY_PALETTE, DEFAULT_COLOR="#CCCCCC", COLOR_INTERNAL="#B0BEC5", COLOR_EXTERNAL="#FFCCBC"):
+    """
+    Generates a Plotly Sunburst chart JSON representing shared readership flow between categories.
+
+    This function builds a hierarchical tree structure from the flat CSV data. The hierarchy is:
+    [Category -> Internal/External Flow -> Connected Category]. 
+    It aggregates 'shared_commentators' volume to size the slices and applies a color scheme 
+    based on the category palette.
+
+    Args:
+        file_path (str): Path to the input CSV file containing group-to-group shared commentator data.
+        output_path (str): Path where the resulting Plotly JSON file will be saved.
+        CATEGORY_PALETTE (dict): A dictionary mapping category names (strings) to hex color codes.
+        DEFAULT_COLOR (str, optional): Fallback color for unmatched categories. Defaults to "#CCCCCC".
+        COLOR_INTERNAL (str, optional): Color for the 'Internal' branch ring. Defaults to "#B0BEC5".
+        COLOR_EXTERNAL (str, optional): Color for the 'External' branch ring. Defaults to "#FFCCBC".
+
+    Returns:
+        None: The function saves a JSON file to disk.
+    """
     print("Generating Sunburst Data...")
 
     # --- 2. LOAD & PREPARE DATA ---
