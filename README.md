@@ -73,37 +73,16 @@ Finally, we operationalized the network structure.
 ada-2025-project-radatouille/
 ├── data/
 │   ├── raw/
-│   ├── processed/
-│   └── filtered/
+│   ├── models/                           # network modeling dataset, with additional values than juste filtered files
+│   └── filtered/                             # first filtering files
 │
 ├── utils/                                         
 │   ├── __init__.py                      
-│   ├── data_exploration.py
-│   ├── filtering.py
-│   ├── network_analysis.py              
-│   ├── network_builder.py
-│   ├── visualization.py
-│   └── user_level/
-│       ├── cluster_users.py   
-│       ├── count_comment_treshold.py
-│       ├── count_users_comments.py
-│       └── user_communities.py
+│   ├── network_helper.py       #utils methods file for VIDEO-level part
+│   └── community_helper.py     #utils methods file for USER-level part
 │
-├── models/                                     
-│   ├── user_level/
-│   │   ├── cluster_users.txt
-│   │   └──user_total_comments_small.csv
-│   │ 
-│   ├── filtering.py
-│   ├── network_analysis.py 
-│   ├── network_builder.py
-│   ├── visualization.py
-│   └── user_level/
-│       ├── cluster_users.py   
-│       ├── count_comment_treshold.py
-│       ├── count_users_comments.py
-│       └── user_communities.py  
-│                                                   
+├── plot_results/
+│                                                
 ├── .gitignore
 ├── requirements.txt                            
 ├── README.md                                       # Project description and instructions
