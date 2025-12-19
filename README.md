@@ -124,10 +124,6 @@ ada-2025-project-radatouille/
 
 
 ## Acknowledgments & AI Usage :ballot_box_with_check:
-**External Tools:**
-- **Gephi:** Used for large-scale network visualization to validate our community detection results visually.
-
-**AI Assistants:**
 - AI coding assistants were used to assist with code implementation, debugging, data visualization, and technical documentation.
 - All analytical decisions, research design, and interpretations were made by the team.
 - The introductory image was created using ChatGPT.
