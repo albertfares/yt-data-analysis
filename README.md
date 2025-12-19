@@ -12,7 +12,7 @@ This approach ignores standard metrics such as view counts in order to reveal or
 ## Research Questions :thought_balloon: 
 
 - **User Level (Behavior):** Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?
-- **Channel Level (Structure):** What organic structures emerge when we connect channels based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?
+- **Content Level (Structure):** What organic structures emerge when we connect channels/videos/categories based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?
 - **Application (Recommendation):** Can we build a transparent recommendation engine based on comments that bypasses the "Rich-Get-Richer" cycle? Can we predict a user's next favorite channel simply by knowing who their "digital neighbors" are?
 
 
