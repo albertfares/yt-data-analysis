@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:gh": "vite build --base=/ada-2025-project-radatouille/"
   },
   "dependencies": {
     "echarts": "^6.0.0",
@@ -28,3 +28,4 @@
     "vite": "^7.2.4"
   }
 }
+
