@@ -1,0 +1,741 @@
+{
+  "nodes": [
+    {
+      "id": "Entertainment",
+      "label": "Entertainment",
+      "value": 36580563,
+      "title": "<b>Entertainment</b><br>Commentators: 36,580,563",
+      "group": "Entertainment"
+    },
+    {
+      "id": "People & Blogs",
+      "label": "People & Blogs",
+      "value": 29868965,
+      "title": "<b>People & Blogs</b><br>Commentators: 29,868,965",
+      "group": "People & Blogs"
+    },
+    {
+      "id": "Music",
+      "label": "Music",
+      "value": 28414209,
+      "title": "<b>Music</b><br>Commentators: 28,414,209",
+      "group": "Music"
+    },
+    {
+      "id": "Comedy",
+      "label": "Comedy",
+      "value": 27038950,
+      "title": "<b>Comedy</b><br>Commentators: 27,038,950",
+      "group": "Comedy"
+    },
+    {
+      "id": "Gaming",
+      "label": "Gaming",
+      "value": 26850990,
+      "title": "<b>Gaming</b><br>Commentators: 26,850,990",
+      "group": "Gaming"
+    },
+    {
+      "id": "Film & Animation",
+      "label": "Film & Animation",
+      "value": 19381027,
+      "title": "<b>Film & Animation</b><br>Commentators: 19,381,027",
+      "group": "Film & Animation"
+    },
+    {
+      "id": "Howto & Style",
+      "label": "Howto & Style",
+      "value": 19343363,
+      "title": "<b>Howto & Style</b><br>Commentators: 19,343,363",
+      "group": "Howto & Style"
+    },
+    {
+      "id": "Education",
+      "label": "Education",
+      "value": 14529971,
+      "title": "<b>Education</b><br>Commentators: 14,529,971",
+      "group": "Education"
+    },
+    {
+      "id": "Science & Technology",
+      "label": "Science & Technology",
+      "value": 13347331,
+      "title": "<b>Science & Technology</b><br>Commentators: 13,347,331",
+      "group": "Science & Technology"
+    },
+    {
+      "id": "News & Politics",
+      "label": "News & Politics",
+      "value": 12063081,
+      "title": "<b>News & Politics</b><br>Commentators: 12,063,081",
+      "group": "News & Politics"
+    },
+    {
+      "id": "Sports",
+      "label": "Sports",
+      "value": 10001257,
+      "title": "<b>Sports</b><br>Commentators: 10,001,257",
+      "group": "Sports"
+    },
+    {
+      "id": "Pets & Animals",
+      "label": "Pets & Animals",
+      "value": 6988493,
+      "title": "<b>Pets & Animals</b><br>Commentators: 6,988,493",
+      "group": "Pets & Animals"
+    },
+    {
+      "id": "Travel & Events",
+      "label": "Travel & Events",
+      "value": 3887612,
+      "title": "<b>Travel & Events</b><br>Commentators: 3,887,612",
+      "group": "Travel & Events"
+    },
+    {
+      "id": "Autos & Vehicles",
+      "label": "Autos & Vehicles",
+      "value": 3851693,
+      "title": "<b>Autos & Vehicles</b><br>Commentators: 3,851,693",
+      "group": "Autos & Vehicles"
+    },
+    {
+      "id": "Nonprofits & Activism",
+      "label": "Nonprofits & Activism",
+      "value": 2292489,
+      "title": "<b>Nonprofits & Activism</b><br>Commentators: 2,292,489",
+      "group": "Nonprofits & Activism"
+    }
+  ],
+  "edges": [
+    {
+      "from": "Entertainment",
+      "to": "People & Blogs",
+      "value": 27954011,
+      "title": "Shared Commentators: 27,954,011"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Music",
+      "value": 26410762,
+      "title": "Shared Commentators: 26,410,762"
+    },
+    {
+      "from": "Comedy",
+      "to": "Entertainment",
+      "value": 25762501,
+      "title": "Shared Commentators: 25,762,501"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Gaming",
+      "value": 25010526,
+      "title": "Shared Commentators: 25,010,526"
+    },
+    {
+      "from": "Comedy",
+      "to": "People & Blogs",
+      "value": 22157643,
+      "title": "Shared Commentators: 22,157,643"
+    },
+    {
+      "from": "Music",
+      "to": "People & Blogs",
+      "value": 21846724,
+      "title": "Shared Commentators: 21,846,724"
+    },
+    {
+      "from": "Gaming",
+      "to": "People & Blogs",
+      "value": 20719112,
+      "title": "Shared Commentators: 20,719,112"
+    },
+    {
+      "from": "Comedy",
+      "to": "Music",
+      "value": 20522376,
+      "title": "Shared Commentators: 20,522,376"
+    },
+    {
+      "from": "Comedy",
+      "to": "Gaming",
+      "value": 20021811,
+      "title": "Shared Commentators: 20,021,811"
+    },
+    {
+      "from": "Gaming",
+      "to": "Music",
+      "value": 19141161,
+      "title": "Shared Commentators: 19,141,161"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Film & Animation",
+      "value": 18492795,
+      "title": "Shared Commentators: 18,492,795"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Howto & Style",
+      "value": 18159613,
+      "title": "Shared Commentators: 18,159,613"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "People & Blogs",
+      "value": 16486737,
+      "title": "Shared Commentators: 16,486,737"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "People & Blogs",
+      "value": 15853127,
+      "title": "Shared Commentators: 15,853,127"
+    },
+    {
+      "from": "Comedy",
+      "to": "Film & Animation",
+      "value": 15391390,
+      "title": "Shared Commentators: 15,391,390"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Music",
+      "value": 15185549,
+      "title": "Shared Commentators: 15,185,549"
+    },
+    {
+      "from": "Comedy",
+      "to": "Howto & Style",
+      "value": 14963587,
+      "title": "Shared Commentators: 14,963,587"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Gaming",
+      "value": 14892951,
+      "title": "Shared Commentators: 14,892,951"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Music",
+      "value": 14518360,
+      "title": "Shared Commentators: 14,518,360"
+    },
+    {
+      "from": "Education",
+      "to": "Entertainment",
+      "value": 13696906,
+      "title": "Shared Commentators: 13,696,906"
+    },
+    {
+      "from": "Gaming",
+      "to": "Howto & Style",
+      "value": 12947361,
+      "title": "Shared Commentators: 12,947,361"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Science & Technology",
+      "value": 12476287,
+      "title": "Shared Commentators: 12,476,287"
+    },
+    {
+      "from": "Education",
+      "to": "People & Blogs",
+      "value": 11915663,
+      "title": "Shared Commentators: 11,915,663"
+    },
+    {
+      "from": "Entertainment",
+      "to": "News & Politics",
+      "value": 11372608,
+      "title": "Shared Commentators: 11,372,608"
+    },
+    {
+      "from": "Comedy",
+      "to": "Education",
+      "value": 11244724,
+      "title": "Shared Commentators: 11,244,724"
+    },
+    {
+      "from": "Education",
+      "to": "Music",
+      "value": 11170152,
+      "title": "Shared Commentators: 11,170,152"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Howto & Style",
+      "value": 10846662,
+      "title": "Shared Commentators: 10,846,662"
+    },
+    {
+      "from": "People & Blogs",
+      "to": "Science & Technology",
+      "value": 10741629,
+      "title": "Shared Commentators: 10,741,629"
+    },
+    {
+      "from": "Comedy",
+      "to": "Science & Technology",
+      "value": 10308549,
+      "title": "Shared Commentators: 10,308,549"
+    },
+    {
+      "from": "Education",
+      "to": "Gaming",
+      "value": 10281642,
+      "title": "Shared Commentators: 10,281,642"
+    },
+    {
+      "from": "Music",
+      "to": "Science & Technology",
+      "value": 10196258,
+      "title": "Shared Commentators: 10,196,258"
+    },
+    {
+      "from": "Gaming",
+      "to": "Science & Technology",
+      "value": 10055960,
+      "title": "Shared Commentators: 10,055,960"
+    },
+    {
+      "from": "News & Politics",
+      "to": "People & Blogs",
+      "value": 9954285,
+      "title": "Shared Commentators: 9,954,285"
+    },
+    {
+      "from": "Music",
+      "to": "News & Politics",
+      "value": 9470791,
+      "title": "Shared Commentators: 9,470,791"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Sports",
+      "value": 9443982,
+      "title": "Shared Commentators: 9,443,982"
+    },
+    {
+      "from": "Comedy",
+      "to": "News & Politics",
+      "value": 9257344,
+      "title": "Shared Commentators: 9,257,344"
+    },
+    {
+      "from": "Education",
+      "to": "Film & Animation",
+      "value": 8930905,
+      "title": "Shared Commentators: 8,930,905"
+    },
+    {
+      "from": "Education",
+      "to": "Howto & Style",
+      "value": 8418031,
+      "title": "Shared Commentators: 8,418,031"
+    },
+    {
+      "from": "People & Blogs",
+      "to": "Sports",
+      "value": 8038865,
+      "title": "Shared Commentators: 8,038,865"
+    },
+    {
+      "from": "Gaming",
+      "to": "News & Politics",
+      "value": 7829069,
+      "title": "Shared Commentators: 7,829,069"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Science & Technology",
+      "value": 7776753,
+      "title": "Shared Commentators: 7,776,753"
+    },
+    {
+      "from": "Music",
+      "to": "Sports",
+      "value": 7641923,
+      "title": "Shared Commentators: 7,641,923"
+    },
+    {
+      "from": "Gaming",
+      "to": "Sports",
+      "value": 7538394,
+      "title": "Shared Commentators: 7,538,394"
+    },
+    {
+      "from": "Comedy",
+      "to": "Sports",
+      "value": 7468283,
+      "title": "Shared Commentators: 7,468,283"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Science & Technology",
+      "value": 7422371,
+      "title": "Shared Commentators: 7,422,371"
+    },
+    {
+      "from": "Education",
+      "to": "Science & Technology",
+      "value": 7280077,
+      "title": "Shared Commentators: 7,280,077"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "News & Politics",
+      "value": 7094777,
+      "title": "Shared Commentators: 7,094,777"
+    },
+    {
+      "from": "Education",
+      "to": "News & Politics",
+      "value": 6896505,
+      "title": "Shared Commentators: 6,896,505"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Pets & Animals",
+      "value": 6724462,
+      "title": "Shared Commentators: 6,724,462"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "News & Politics",
+      "value": 6507088,
+      "title": "Shared Commentators: 6,507,088"
+    },
+    {
+      "from": "People & Blogs",
+      "to": "Pets & Animals",
+      "value": 6139575,
+      "title": "Shared Commentators: 6,139,575"
+    },
+    {
+      "from": "News & Politics",
+      "to": "Science & Technology",
+      "value": 5896729,
+      "title": "Shared Commentators: 5,896,729"
+    },
+    {
+      "from": "Comedy",
+      "to": "Pets & Animals",
+      "value": 5842240,
+      "title": "Shared Commentators: 5,842,240"
+    },
+    {
+      "from": "Music",
+      "to": "Pets & Animals",
+      "value": 5646402,
+      "title": "Shared Commentators: 5,646,402"
+    },
+    {
+      "from": "Gaming",
+      "to": "Pets & Animals",
+      "value": 5614131,
+      "title": "Shared Commentators: 5,614,131"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Sports",
+      "value": 5378248,
+      "title": "Shared Commentators: 5,378,248"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Sports",
+      "value": 4985935,
+      "title": "Shared Commentators: 4,985,935"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Pets & Animals",
+      "value": 4821041,
+      "title": "Shared Commentators: 4,821,041"
+    },
+    {
+      "from": "Education",
+      "to": "Sports",
+      "value": 4722222,
+      "title": "Shared Commentators: 4,722,222"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Pets & Animals",
+      "value": 4683045,
+      "title": "Shared Commentators: 4,683,045"
+    },
+    {
+      "from": "Science & Technology",
+      "to": "Sports",
+      "value": 4603271,
+      "title": "Shared Commentators: 4,603,271"
+    },
+    {
+      "from": "News & Politics",
+      "to": "Sports",
+      "value": 4350973,
+      "title": "Shared Commentators: 4,350,973"
+    },
+    {
+      "from": "Education",
+      "to": "Pets & Animals",
+      "value": 3986311,
+      "title": "Shared Commentators: 3,986,311"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Travel & Events",
+      "value": 3689300,
+      "title": "Shared Commentators: 3,689,300"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Entertainment",
+      "value": 3546495,
+      "title": "Shared Commentators: 3,546,495"
+    },
+    {
+      "from": "Pets & Animals",
+      "to": "Science & Technology",
+      "value": 3478453,
+      "title": "Shared Commentators: 3,478,453"
+    },
+    {
+      "from": "People & Blogs",
+      "to": "Travel & Events",
+      "value": 3375524,
+      "title": "Shared Commentators: 3,375,524"
+    },
+    {
+      "from": "News & Politics",
+      "to": "Pets & Animals",
+      "value": 3256525,
+      "title": "Shared Commentators: 3,256,525"
+    },
+    {
+      "from": "Music",
+      "to": "Travel & Events",
+      "value": 3192979,
+      "title": "Shared Commentators: 3,192,979"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "People & Blogs",
+      "value": 3115877,
+      "title": "Shared Commentators: 3,115,877"
+    },
+    {
+      "from": "Comedy",
+      "to": "Travel & Events",
+      "value": 3042755,
+      "title": "Shared Commentators: 3,042,755"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Music",
+      "value": 2897265,
+      "title": "Shared Commentators: 2,897,265"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Comedy",
+      "value": 2809182,
+      "title": "Shared Commentators: 2,809,182"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Gaming",
+      "value": 2705271,
+      "title": "Shared Commentators: 2,705,271"
+    },
+    {
+      "from": "Gaming",
+      "to": "Travel & Events",
+      "value": 2606097,
+      "title": "Shared Commentators: 2,606,097"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Travel & Events",
+      "value": 2531147,
+      "title": "Shared Commentators: 2,531,147"
+    },
+    {
+      "from": "Pets & Animals",
+      "to": "Sports",
+      "value": 2525279,
+      "title": "Shared Commentators: 2,525,279"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Travel & Events",
+      "value": 2439554,
+      "title": "Shared Commentators: 2,439,554"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Science & Technology",
+      "value": 2366797,
+      "title": "Shared Commentators: 2,366,797"
+    },
+    {
+      "from": "Education",
+      "to": "Travel & Events",
+      "value": 2334369,
+      "title": "Shared Commentators: 2,334,369"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Education",
+      "value": 2194608,
+      "title": "Shared Commentators: 2,194,608"
+    },
+    {
+      "from": "Entertainment",
+      "to": "Nonprofits & Activism",
+      "value": 2189920,
+      "title": "Shared Commentators: 2,189,920"
+    },
+    {
+      "from": "News & Politics",
+      "to": "Travel & Events",
+      "value": 2179502,
+      "title": "Shared Commentators: 2,179,502"
+    },
+    {
+      "from": "Science & Technology",
+      "to": "Travel & Events",
+      "value": 2130048,
+      "title": "Shared Commentators: 2,130,048"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Film & Animation",
+      "value": 2121480,
+      "title": "Shared Commentators: 2,121,480"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Howto & Style",
+      "value": 2103058,
+      "title": "Shared Commentators: 2,103,058"
+    },
+    {
+      "from": "Nonprofits & Activism",
+      "to": "People & Blogs",
+      "value": 2032589,
+      "title": "Shared Commentators: 2,032,589"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "News & Politics",
+      "value": 2008347,
+      "title": "Shared Commentators: 2,008,347"
+    },
+    {
+      "from": "Music",
+      "to": "Nonprofits & Activism",
+      "value": 1902050,
+      "title": "Shared Commentators: 1,902,050"
+    },
+    {
+      "from": "Comedy",
+      "to": "Nonprofits & Activism",
+      "value": 1889481,
+      "title": "Shared Commentators: 1,889,481"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Sports",
+      "value": 1776958,
+      "title": "Shared Commentators: 1,776,958"
+    },
+    {
+      "from": "News & Politics",
+      "to": "Nonprofits & Activism",
+      "value": 1594790,
+      "title": "Shared Commentators: 1,594,790"
+    },
+    {
+      "from": "Education",
+      "to": "Nonprofits & Activism",
+      "value": 1592252,
+      "title": "Shared Commentators: 1,592,252"
+    },
+    {
+      "from": "Sports",
+      "to": "Travel & Events",
+      "value": 1576316,
+      "title": "Shared Commentators: 1,576,316"
+    },
+    {
+      "from": "Film & Animation",
+      "to": "Nonprofits & Activism",
+      "value": 1543413,
+      "title": "Shared Commentators: 1,543,413"
+    },
+    {
+      "from": "Gaming",
+      "to": "Nonprofits & Activism",
+      "value": 1498847,
+      "title": "Shared Commentators: 1,498,847"
+    },
+    {
+      "from": "Howto & Style",
+      "to": "Nonprofits & Activism",
+      "value": 1487602,
+      "title": "Shared Commentators: 1,487,602"
+    },
+    {
+      "from": "Pets & Animals",
+      "to": "Travel & Events",
+      "value": 1331175,
+      "title": "Shared Commentators: 1,331,175"
+    },
+    {
+      "from": "Nonprofits & Activism",
+      "to": "Science & Technology",
+      "value": 1288837,
+      "title": "Shared Commentators: 1,288,837"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Pets & Animals",
+      "value": 1126552,
+      "title": "Shared Commentators: 1,126,552"
+    },
+    {
+      "from": "Nonprofits & Activism",
+      "to": "Sports",
+      "value": 882464,
+      "title": "Shared Commentators: 882,464"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Travel & Events",
+      "value": 830254,
+      "title": "Shared Commentators: 830,254"
+    },
+    {
+      "from": "Nonprofits & Activism",
+      "to": "Pets & Animals",
+      "value": 830192,
+      "title": "Shared Commentators: 830,192"
+    },
+    {
+      "from": "Nonprofits & Activism",
+      "to": "Travel & Events",
+      "value": 577970,
+      "title": "Shared Commentators: 577,970"
+    },
+    {
+      "from": "Autos & Vehicles",
+      "to": "Nonprofits & Activism",
+      "value": 494035,
+      "title": "Shared Commentators: 494,035"
+    }
+  ]
+}
