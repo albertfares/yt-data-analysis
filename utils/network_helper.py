@@ -77,7 +77,7 @@ def stream_filter_large_dataset(
     counts_file = cache_dir / '.counts_cache_duckdb.json'
     
     print("="*80)
-    print("⚡ STREAMING TWO-PASS FILTER (FAST VERSION WITH DUCKDB)")
+    print("STREAMING TWO-PASS FILTER (FAST VERSION WITH DUCKDB)")
     print("="*80)
     print(f"Input:        {data_path}")
     print(f"Output:       {output_path}")
@@ -88,14 +88,14 @@ def stream_filter_large_dataset(
     # --- State Management ---
     if reset_state and state_file.exists():
         os.remove(state_file)
-        print("🔄 Reset state - starting from beginning")
+        print("Reset state - starting from beginning")
 
     state = {'pass1_complete': False, 'pass2_chunks_processed': 0}
     if state_file.exists():
         with open(state_file, 'r') as f:
             state = json.load(f)
-            print(f"📍 Resuming previous session:")
-            print(f"   Pass 2 processed: {state['pass2_chunks_processed']} chunks")
+            print(f"Resuming previous session:")
+            print(f" Pass 2 processed: {state['pass2_chunks_processed']} chunks")
 
     # ============================================================================
     # PASS 1: FAST COUNTING WITH DUCKDB
@@ -106,7 +106,7 @@ def stream_filter_large_dataset(
     skip_chunks = state.get('pass2_chunks_processed', 0)
     
     if skip_chunks > 0:
-        print(f"\n📍 Previous session processed {skip_chunks} chunks")
+        print(f"\n Previous session processed {skip_chunks} chunks")
         
     # Try to load counts cache
     user_video_counts = {}
@@ -119,12 +119,12 @@ def stream_filter_large_dataset(
         
         # Validate cache matches current run parameters
         if cache.get('skip_chunks') == skip_chunks and cache.get('max_chunks') == max_chunks:
-            print(f"\n📂 Found valid cached counts.")
+            print(f"\n Found valid cached counts.")
             user_video_counts = cache['user_video_counts']
             user_total_likes = cache['user_total_likes']
             video_user_counts = cache['video_user_counts']
             cache_valid = True
-            print(f"   ✓ Loaded {len(user_video_counts):,} users and {len(video_user_counts):,} videos")
+            print(f"   Loaded {len(user_video_counts):,} users and {len(video_user_counts):,} videos")
     
     pass1_time = 0
     if not cache_valid:
@@ -179,7 +179,7 @@ def stream_filter_large_dataset(
         video_user_counts = dict(zip(video_counts_df['video_id'], video_counts_df['user_count']))
         
         pass1_time = time.time() - pass1_start
-        print(f"   ✓ Pass 1 finished in {pass1_time:.1f}s")
+        print(f"   Pass 1 finished in {pass1_time:.1f}s")
         
         # Save cache
         with open(counts_file, 'w') as f:
@@ -199,13 +199,13 @@ def stream_filter_large_dataset(
         valid_counts = [c for c in user_video_counts.values() if c >= min_videos_per_user]
         if valid_counts:
             max_videos_per_user = np.percentile(valid_counts, outlier_percentile)
-            print(f"   🎯 User Outlier Cutoff (> {outlier_percentile}%): {max_videos_per_user:.0f} videos")
+            print(f"   User Outlier Cutoff (> {outlier_percentile}%): {max_videos_per_user:.0f} videos")
 
     if remove_video_outliers:
         valid_counts = [c for c in video_user_counts.values() if c >= min_users_per_video]
         if valid_counts:
             max_users_per_video = np.percentile(valid_counts, outlier_percentile)
-            print(f"   🎯 Video Outlier Cutoff (> {outlier_percentile}%): {max_users_per_video:.0f} users")
+            print(f"   Video Outlier Cutoff (> {outlier_percentile}%): {max_users_per_video:.0f} users")
 
     # ============================================================================
     # PASS 2: FILTERING
@@ -241,7 +241,7 @@ def stream_filter_large_dataset(
     total_loaded = con2.execute("SELECT COUNT(*) FROM pass2_data").fetchone()[0]
     
     if total_loaded == 0:
-        print("⚠️ No data found to process.")
+        print(" No data found to process.")
         con2.close()
         return
 
@@ -352,7 +352,7 @@ def build_video_group_mapping(
     os.makedirs(out_dir, exist_ok=True)
     
     print("="*80)
-    print("🚀 BUILDING VIDEO_ID → GROUP_KEY MAPPING")
+    print("BUILDING VIDEO_ID → GROUP_KEY MAPPING")
     print("="*80)
     print(f"Source:     {input_path}")
     print(f"Output Dir: {out_dir}")
@@ -381,7 +381,7 @@ def build_video_group_mapping(
             chunk = chunk[available_cols].copy()
             
             if 'categories' not in chunk.columns or 'channel_id' not in chunk.columns:
-                print(f"⚠️ Warning: Missing required columns in chunk {i}. Skipping.")
+                print(f"Warning: Missing required columns in chunk {i}. Skipping.")
                 continue
 
             # Create Group Key: Category | ChannelID
@@ -408,14 +408,14 @@ def build_video_group_mapping(
             )
 
     except Exception as e:
-        print(f"\n❌ Error processing file: {e}")
+        print(f"\n Error processing file: {e}")
         raise
 
     total_time = (time.time() - start_time) / 60
     print("\n" + "="*80)
-    print(f"✅ DONE!")
-    print(f"📊 Total videos processed: {total_rows:,}")
-    print(f"⏱️  Total runtime: {total_time:.1f} minutes")
+    print(f"DONE!")
+    print(f"Total videos processed: {total_rows:,}")
+    print(f"Total runtime: {total_time:.1f} minutes")
     print("="*80)
 
 def replace_channel_ids_with_names(
@@ -441,7 +441,7 @@ def replace_channel_ids_with_names(
     os.makedirs(out_dir, exist_ok=True)
     
     print("="*80)
-    print("🔄 REPLACING CHANNEL IDs WITH CHANNEL NAMES IN PARQUET FILES")
+    print("REPLACING CHANNEL IDs WITH CHANNEL NAMES IN PARQUET FILES")
     print("="*80)
     print(f"Input Directory:  {input_dir}")
     print(f"Mapping File:     {mapping_file}")
@@ -456,7 +456,7 @@ def replace_channel_ids_with_names(
         channel_map = dict(zip(channels_df['channel'], channels_df['name_cc']))
         print(f"   ✓ Loaded {len(channel_map):,} channel mappings")
     except Exception as e:
-        print(f"❌ Error loading mapping file: {e}")
+        print(f"Error loading mapping file: {e}")
         return
 
     # --- Step 2: Get File List ---
@@ -464,7 +464,7 @@ def replace_channel_ids_with_names(
     print(f"\n[2/3] Found {len(parquet_files)} parquet files to process")
     
     if not parquet_files:
-        print("⚠️ No parquet files found. Aborting.")
+        print("No parquet files found. Aborting.")
         return
 
     # --- Step 3: Process Files ---
@@ -506,7 +506,7 @@ def replace_channel_ids_with_names(
             df.to_parquet(output_path, index=False)
             
         except Exception as e:
-            print(f"⚠️ Error processing file {p_file}: {e}")
+            print(f"Error processing file {p_file}: {e}")
 
     # --- Summary ---
     print("\n" + "="*80)
@@ -517,15 +517,15 @@ def replace_channel_ids_with_names(
     print(f"Output directory:      {out_dir}")
 
     if unmapped_channels:
-        print(f"\n⚠️  Warning: {len(unmapped_channels):,} channel IDs were not found in the mapping.")
+        print(f"\n  Warning: {len(unmapped_channels):,} channel IDs were not found in the mapping.")
         print("    (Kept original IDs for these entries)")
         # Show a few examples
         print(f"    Examples: {list(unmapped_channels)[:5]}")
     else:
-        print("\n✅ All channel IDs successfully mapped!")
+        print("\n All channel IDs successfully mapped!")
 
     print("="*80)
-    print(f"\n✅ Complete! Results saved to: {out_dir}")
+    print(f"\n Complete! Results saved to: {out_dir}")
 
 def aggregate_comments_by_author_and_group(
     filtered_comments_csv,
@@ -561,7 +561,7 @@ def aggregate_comments_by_author_and_group(
         temp_db_path = Path(temp_db_path)
         
     print("="*80)
-    print("📊 AGGREGATING COMMENTS BY AUTHOR AND GROUP (DuckDB Chunked)")
+    print("AGGREGATING COMMENTS BY AUTHOR AND GROUP (DuckDB Chunked)")
     print("="*80)
     print(f"Comments:   {comments_path}")
     print(f"Mapping:    {mapping_dir}")
@@ -589,7 +589,7 @@ def aggregate_comments_by_author_and_group(
         total_rows = con.execute(f"""
             SELECT COUNT(*) FROM read_csv_auto('{comments_path}', sample_size=100000)
         """).fetchone()[0]
-        print(f"   ✓ Total rows to process: {total_rows:,}")
+        print(f"   Total rows to process: {total_rows:,}")
         
         num_chunks = (total_rows + chunk_size - 1) // chunk_size
 
@@ -654,7 +654,7 @@ def aggregate_comments_by_author_and_group(
             LIMIT 5
         """).fetchall()
         
-        print(f"\n   📈 Top 5 pairs:")
+        print(f"\n   Top 5 pairs:")
         for row in sample:
             print(f"   - {row[0][:15]}... in {row[1][:30]}... ({row[2]:,} comments)")
 
@@ -703,7 +703,7 @@ def count_unique_commentators(
         temp_db_path = Path(temp_db_path)
 
     print("="*80)
-    print("📊 COUNTING UNIQUE COMMENTATORS PER GROUP (Chunked DuckDB)")
+    print("COUNTING UNIQUE COMMENTATORS PER GROUP (Chunked DuckDB)")
     print("="*80)
     print(f"Input:      {input_path}")
     print(f"Output:     {output_path}")
@@ -765,7 +765,7 @@ def count_unique_commentators(
                 ORDER BY unique_commentators DESC
             ) TO '{output_path}' (HEADER, DELIMITER ',')
         """)
-        print(f"   ✓ Saved to {output_path}")
+        print(f"   Saved to {output_path}")
 
         # --- Stats ---
         print("\n[4/4] Generating stats...")
@@ -782,10 +782,10 @@ def count_unique_commentators(
         con.close()
         if temp_db_path.exists():
             os.remove(temp_db_path)
-            print("   ✓ Cleaned up temporary database")
+            print("   Cleaned up temporary database")
 
     total_time = (time.time() - start_time) / 60
-    print(f"\n✅ DONE in {total_time:.1f} min")
+    print(f"\n DONE in {total_time:.1f} min")
 
 def create_group_network_from_overlaps(
     input_csv,
@@ -820,7 +820,7 @@ def create_group_network_from_overlaps(
         temp_db_path = Path(temp_db_path)
         
     print("="*80)
-    print("🕸️  CREATING GROUP NETWORK FROM AUTHOR OVERLAPS")
+    print("CREATING GROUP NETWORK FROM AUTHOR OVERLAPS")
     print("="*80)
     print(f"Input:       {input_path}")
     print(f"Output:      {output_path}")
@@ -843,10 +843,10 @@ def create_group_network_from_overlaps(
         # --- Step 2: Count Rows ---
         print("\n[2/5] Counting rows...")
         total_rows = con.execute(f"SELECT COUNT(*) FROM read_csv_auto('{input_path}')").fetchone()[0]
-        print(f"   ✓ Total author-group pairs: {total_rows:,}")
+        print(f"   Total author-group pairs: {total_rows:,}")
         
         num_chunks = (total_rows + chunk_size - 1) // chunk_size
-        print(f"   ✓ Will process in {num_chunks} chunks")
+        print(f"   Will process in {num_chunks} chunks")
 
         # --- Step 3: Create Edge Table ---
         print("\n[3/5] Creating temporary edge pairs table...")
@@ -924,7 +924,7 @@ def create_group_network_from_overlaps(
         print(f"   Avg Shared:  {stats[0]:.2f}")
 
         # Show Top 5
-        print("\n📊 Top 5 Edges by Shared Authors:")
+        print("\n Top 5 Edges by Shared Authors:")
         top = con.execute(f"SELECT * FROM read_csv_auto('{output_path}') LIMIT 5").fetchall()
         for row in top:
             g1 = row[0][:30] + "..." if len(row[0]) > 30 else row[0]
@@ -959,7 +959,7 @@ def filter_inter_channel_edges(input_csv, output_csv=None):
         output_csv = input_path.with_name(f"{input_path.stem}_inter_channel{input_path.suffix}")
     
     print("="*80)
-    print("🔗 FILTERING TO INTER-CHANNEL EDGES ONLY")
+    print("FILTERING TO INTER-CHANNEL EDGES ONLY")
     print("="*80)
     print(f"Input:  {input_path.name}")
     print(f"Output: {Path(output_csv).name}")
@@ -969,7 +969,7 @@ def filter_inter_channel_edges(input_csv, output_csv=None):
     print("   Loading network...")
     df = pd.read_csv(input_path)
     initial_count = len(df)
-    print(f"   ✓ Loaded {initial_count:,} edges")
+    print(f"   Loaded {initial_count:,} edges")
 
     # Extract Channel IDs (Assumes format "Category|ChannelID")
     # We split by '|' and take the second part (index 1)
@@ -992,13 +992,13 @@ def filter_inter_channel_edges(input_csv, output_csv=None):
     # Save
     if len(df_filtered) > 0:
         df_filtered.to_csv(output_csv, index=False)
-        print(f"\n✅ SAVED: {output_csv}")
+        print(f"\n SAVED: {output_csv}")
         
         # Show top example
         top = df_filtered.iloc[0]
         print(f"   Top Edge: {top['group1']} <--> {top['group2']}")
     else:
-        print("\n⚠️ No inter-channel edges found.")
+        print("\n No inter-channel edges found.")
 
 def create_pmi_network(
     edges_csv,
@@ -1035,7 +1035,7 @@ def create_pmi_network(
     output_path = Path(output_csv)
     
     print("="*80)
-    print("🚀 CREATING GROUP NETWORK WITH PMI (INSTANT VERSION)")
+    print("CREATING GROUP NETWORK WITH PMI (INSTANT VERSION)")
     print("="*80)
     print(f"Edges:       {edges_path.name}")
     print(f"Group Sizes: {sizes_path.name}")
@@ -1049,12 +1049,12 @@ def create_pmi_network(
     print(f"[1/4] Loading group sizes...")
     group_sizes_df = pd.read_csv(sizes_path)
     group_size_map = dict(zip(group_sizes_df['group_key'], group_sizes_df['unique_commentators']))
-    print(f"   ✓ Loaded {len(group_sizes_df):,} groups")
+    print(f"   Loaded {len(group_sizes_df):,} groups")
 
     # --- Step 2: Load Edges ---
     print(f"[2/4] Loading edges...")
     edges_df = pd.read_csv(edges_path)
-    print(f"   ✓ Loaded {len(edges_df):,} edges")
+    print(f"   Loaded {len(edges_df):,} edges")
     
     # Column Detection (Robustness)
     if 'group1' in edges_df.columns:
@@ -1079,7 +1079,7 @@ def create_pmi_network(
     initial_len = len(edges_df)
     edges_df = edges_df.dropna(subset=['group1_size', 'group2_size'])
     if len(edges_df) < initial_len:
-        print(f"   ⚠️ Dropped {initial_len - len(edges_df)} edges due to missing group sizes.")
+        print(f"   Dropped {initial_len - len(edges_df)} edges due to missing group sizes.")
 
     # PMI Calculation: log( (Shared * N) / (SizeA * SizeB) )
     # 
@@ -1093,7 +1093,7 @@ def create_pmi_network(
     # Hybrid Score: PMI * log(Shared)
     edges_df['score'] = edges_df['pmi'] * np.log(edges_df[shared_col])
     
-    print(f"   ✓ PMI computed (Median: {edges_df['pmi'].median():.2f})")
+    print(f"   PMI computed (Median: {edges_df['pmi'].median():.2f})")
 
     # --- Step 4: Filter & Save ---
     print(f"[4/4] Filtering...")
@@ -1115,11 +1115,11 @@ def create_pmi_network(
     
     if len(output_df) > 0:
         output_df.to_csv(output_path, index=False)
-        print(f"\n✅ SAVED: {output_path}")
+        print(f"\n SAVED: {output_path}")
         print(f"   Nodes: {len(set(output_df['group1']) | set(output_df['group2'])):,}")
         print(f"   Top edge: {output_df.iloc[0]['group1']} <-> {output_df.iloc[0]['group2']} (Score: {output_df.iloc[0]['score']:.2f})")
     else:
-        print("\n⚠️ No edges met the criteria. Try lowering thresholds.")
+        print("\n No edges met the criteria. Try lowering thresholds.")
 
     return output_df
 
@@ -1823,7 +1823,7 @@ def analyze_pmi_network(input_csv, output_txt):
             has_nulls = True
     
     if not has_nulls:
-        print_both("  ✓ No NULL values found in any column")
+        print_both("  No NULL values found in any column")
     
     con.close()
     
@@ -2085,7 +2085,7 @@ def create_category_network_from_overlaps(
         # --- Step 2: Count Rows ---
         print("\n[2/6] Counting rows...")
         total_rows = con.execute(f"SELECT COUNT(*) FROM read_csv_auto('{input_path}', sample_size=100000)").fetchone()[0]
-        print(f"   ✓ Total rows: {total_rows:,}")
+        print(f"   Total rows: {total_rows:,}")
         
         num_chunks = (total_rows + chunk_size - 1) // chunk_size
 
@@ -2130,7 +2130,7 @@ def create_category_network_from_overlaps(
         
         # Display top categories
         stats = con.execute(f"SELECT * FROM read_csv_auto('{out_stats_path}') LIMIT 10").fetchall()
-        print(f"\n   📊 Top Categories by Unique Commentators:")
+        print(f"\n   Top Categories by Unique Commentators:")
         for cat, count in stats:
             print(f"   - {cat:<30} {count:>10,}")
 
@@ -2172,11 +2172,11 @@ def create_category_network_from_overlaps(
         
         if edge_count > 0:
             top_edges = con.execute(f"SELECT * FROM read_csv_auto('{out_edges_path}') LIMIT 5").fetchall()
-            print("\n   📊 Top Category Connections:")
+            print("\n   Top Category Connections:")
             for row in top_edges:
                 print(f"   {row[0]:<25} <--> {row[1]:<25} ({row[2]:,} shared)")
         else:
-            print("   ⚠️ No edges created.")
+            print("   No edges created.")
 
     finally:
         con.close()
@@ -2366,7 +2366,7 @@ def generate_network_community_json(
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     print("="*80)
-    print("📊 GENERATING NETWORK COMMUNITY DATA (JSON)")
+    print("GENERATING NETWORK COMMUNITY DATA (JSON)")
     print("="*80)
     print(f"Graph Input:  {graph_path}")
     print(f"JSON Output:  {output_path}")
@@ -2380,7 +2380,7 @@ def generate_network_community_json(
             G = pickle.load(f)
         print(f"   ✓ Loaded: {G.number_of_nodes():,} nodes, {G.number_of_edges():,} edges")
     except Exception as e:
-        print(f"❌ Error loading graph: {e}")
+        print(f"Error loading graph: {e}")
         return
 
     # --- Step 2: Extract Largest Component ---
@@ -2393,7 +2393,7 @@ def generate_network_community_json(
     print("\n[3/4] Loading communities...")
     
     if cache_path.exists():
-        print(f"   📦 Loading from cache...")
+        print(f"   Loading from cache...")
         with open(cache_path, 'rb') as f:
             communities = pickle.load(f)
         print(f"   ✓ Loaded {len(communities)} communities")
@@ -2416,7 +2416,7 @@ def generate_network_community_json(
         # Save cache
         with open(cache_path, 'wb') as f:
             pickle.dump(communities, f)
-        print(f"   ✓ Computed and cached {len(communities)} communities")
+        print(f"   Computed and cached {len(communities)} communities")
 
     # --- Step 4: Process & Export ---
     print(f"\n[4/4] Processing top {num_communities} communities...")
@@ -2507,7 +2507,7 @@ def generate_network_community_json(
         json.dump(community_data, f)
 
     print("\n" + "="*80)
-    print("✅ JSON GENERATION COMPLETE!")
+    print("JSON GENERATION COMPLETE!")
     print(f"📂 File: {output_path}")
     print("="*80)
 
@@ -2536,7 +2536,7 @@ def generate_recommender_json(
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     print("="*80)
-    print("🚀 GENERATING RECOMMENDER JSON DATA")
+    print("GENERATING RECOMMENDER JSON DATA")
     print("="*80)
     print(f"Input Edges:   {input_path}")
     print(f"Output JSON:   {output_path}")
@@ -2549,13 +2549,13 @@ def generate_recommender_json(
         # Fallback check for inter-channel specific file
         fallback = input_path.parent / f"{input_path.stem}_inter_channel{input_path.suffix}"
         if fallback.exists():
-            print(f"   ⚠️ Input not found, trying fallback: {fallback.name}")
+            print(f"   Input not found, trying fallback: {fallback.name}")
             input_path = fallback
         else:
             raise FileNotFoundError(f"Could not find {input_path}")
 
     edges_df = pd.read_csv(input_path)
-    print(f"   ✓ Loaded {len(edges_df):,} edges")
+    print(f"   Loaded {len(edges_df):,} edges")
 
     # --- Step 2: Find Top Channels ---
     print(f"\n[2/4] Finding top {top_n_channels} channels by degree...")
@@ -2574,8 +2574,8 @@ def generate_recommender_json(
     top_channels = sorted(channel_degree.items(), key=lambda x: x[1], reverse=True)[:top_n_channels]
     top_channel_names = set([ch for ch, _ in top_channels])
     
-    print(f"   ✓ Selected {len(top_channel_names)} channels")
-    print(f"   ✓ Top channel: {top_channels[0][0]} (Degree: {top_channels[0][1]})")
+    print(f"   Selected {len(top_channel_names)} channels")
+    print(f"   Top channel: {top_channels[0][0]} (Degree: {top_channels[0][1]})")
 
     # --- Step 3: Filter Graph ---
     print("\n[3/4] Filtering graph & building network...")
@@ -2587,7 +2587,7 @@ def generate_recommender_json(
                           str(x['group2']).split('|')[1] in top_channel_names, axis=1)
     
     filtered_df = edges_df[mask].copy()
-    print(f"   ✓ Filtered to {len(filtered_df):,} edges")
+    print(f"   Filtered to {len(filtered_df):,} edges")
 
     # Build Graph
     G = nx.Graph()
@@ -2616,11 +2616,11 @@ def generate_recommender_json(
             
     groups_df = pd.DataFrame(groups_info)
     if groups_df.empty:
-        print("   ❌ Error: No valid groups found to parse.")
+        print("   Error: No valid groups found to parse.")
         return
 
     categories = sorted(groups_df['category'].unique().tolist())
-    print(f"   ✓ Found {len(categories)} categories")
+    print(f"   Found {len(categories)} categories")
 
     # 4b. Path Calculation
     # Logic: For every group in the graph, find the shortest path to ANY group in every other Category
@@ -2681,7 +2681,7 @@ def generate_recommender_json(
                 }
                 count += 1
 
-    print(f"   ✓ Computed {count:,} optimal paths")
+    print(f"   Computed {count:,} optimal paths")
 
     # --- Step 5: Save Output ---
     # Build a dictionary of channels -> categories they belong to
@@ -2703,7 +2703,7 @@ def generate_recommender_json(
         json.dump(output_data, f, indent=2)
 
     print("\n" + "="*80)
-    print("✅ JSON GENERATED SUCCESSFULLY")
+    print("JSON GENERATED SUCCESSFULLY")
     print(f"📂 File: {output_path}")
     print("="*80)
 
@@ -2732,7 +2732,7 @@ def generate_sankey_json(
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     print("="*80)
-    print("📊 GENERATING SANKEY DIAGRAM DATA (JSON)")
+    print("GENERATING SANKEY DIAGRAM DATA (JSON)")
     print("="*80)
     print(f"Input:        {input_path}")
     print(f"Output:       {output_path}")
@@ -2745,13 +2745,13 @@ def generate_sankey_json(
          # Fallback check
         fallback = input_path.parent / f"{input_path.stem}_inter_channel{input_path.suffix}"
         if fallback.exists():
-            print(f"   ⚠️ Input not found, trying fallback: {fallback.name}")
+            print(f"   Input not found, trying fallback: {fallback.name}")
             input_path = fallback
         else:
             raise FileNotFoundError(f"Could not find {input_path}")
             
     edges_df = pd.read_csv(input_path)
-    print(f"   ✓ Loaded {len(edges_df):,} edges")
+    print(f"   Loaded {len(edges_df):,} edges")
 
     # --- Step 2: Filter Top Channels ---
     # Find top channels by degree
@@ -2768,7 +2768,7 @@ def generate_sankey_json(
     top_channels = sorted(channel_degree.items(), key=lambda x: x[1], reverse=True)[:top_n_channels]
     top_channel_names = set([ch for ch, _ in top_channels])
     
-    print(f"   ✓ Selected top {len(top_channel_names)} channels")
+    print(f"   Selected top {len(top_channel_names)} channels")
 
     # Filter edges to only those between top channels
     mask = edges_df.apply(lambda x: 
@@ -2776,7 +2776,7 @@ def generate_sankey_json(
                           str(x['group2']).split('|')[1] in top_channel_names, axis=1)
     
     filtered_df = edges_df[mask].copy()
-    print(f"   ✓ Filtered to {len(filtered_df):,} edges")
+    print(f"   Filtered to {len(filtered_df):,} edges")
 
     # --- Step 3: Build Graph ---
     print("\n[2/3] Building graph and computing reachability...")
@@ -2785,7 +2785,7 @@ def generate_sankey_json(
         # Use simple unweighted edges for BFS shortest path finding
         G.add_edge(row['group1'], row['group2'])
     
-    print(f"   ✓ Graph: {G.number_of_nodes():,} nodes")
+    print(f"   Graph: {G.number_of_nodes():,} nodes")
 
     # Get all categories
     all_categories = set()
@@ -2801,7 +2801,7 @@ def generate_sankey_json(
     
     groups_df = pd.DataFrame(groups_info)
     all_categories_list = sorted(list(all_categories))
-    print(f"   ✓ {len(all_categories_list)} categories found")
+    print(f"   {len(all_categories_list)} categories found")
 
     # --- Step 4: Compute Reachability Paths ---
     # Structure: channel_data[channel] = {'categories': [], 'paths': {source_cat: {target_cat: path}}}
@@ -2899,6 +2899,6 @@ def generate_sankey_json(
         json.dump(output_data, f, indent=4) # Indent for readability, remove if file is too large
 
     print("\n" + "="*80)
-    print("✅ SANKEY DATA GENERATED!")
+    print("SANKEY DATA GENERATED!")
     print(f"📂 Saved to: {output_path}")
     print("="*80)
