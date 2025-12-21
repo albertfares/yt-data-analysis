@@ -382,10 +382,7 @@ export default function User_community() {
               <strong>How much:</strong> <strong>131,167</strong> groups are ghost groups.
             </li>
             <li>
-              <strong>Authors:</strong> <strong>TODO</strong>
-            </li>
-            <li>
-              <strong>Share of all groups:</strong> <strong>TODO%</strong>
+              <strong>Share of all groups:</strong> <strong>0,00006%</strong>
             </li>
           </ul>
 
@@ -400,13 +397,10 @@ export default function User_community() {
               <strong>Definition:</strong> 2 ≤ total_comments &lt; 10
             </li>
             <li>
-              <strong>How much:</strong> <strong>TODO</strong>
+              <strong>How much:</strong> <strong>116632298</strong>
             </li>
             <li>
-              <strong>Authors:</strong> <strong>TODO</strong>
-            </li>
-            <li>
-              <strong>Share of all groups:</strong> <strong>TODO%</strong>
+              <strong>Share of all groups:</strong> <strong>53.7%</strong>
             </li>
           </ul>
 
