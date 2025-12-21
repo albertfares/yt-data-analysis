@@ -58,15 +58,15 @@ function taglineFrom(a) {
 
 const CUSTOM_DESCRIPTIONS_10 = {
   0: "Biggest group, focus on a small set of channel with low activity.",
-  1: "Moderate",
-  2: "Balanced users with stable habits who occasionally branch out to discover new creators.",
-  3: "Topic specialists who comment deeply within a narrow set of themes across a few channels.",
-  4: "Wide-ranging generalists who participate broadly but without strong attachment to any channel.",
-  5: "Low-activity but consistent commenters who return to familiar channels over long periods.",
-  6: "Highly active explorers commenting across many channels with strong topical diversity.",
-  7: "Focused power users who comment frequently within a tightly defined interest space.",
-  8: "Casual participants engaging sporadically across different topics and creators.",
-  9: "Hybrid profiles mixing loyalty and exploration depending on content type."
+  1: "Has a stable routine but still likes variety in topics and channels.",
+  2: "Second largest groups, interested in many topics and many channels.",
+  3: "Watch a lot of different channel but with very restricted categorial interests.",
+  4: "Moderate commenter, travel across lots of channels with restricted categorical interests.",
+  5: "Comments a lot on a huge amount of channels.",
+  6: "Profile that comments the most, categorically focused according to the huge number of comments.",
+  7: "Is quite active and comment on a high number of channels.",
+  8: "Casual profile, don't like to stay on a single channel for too long.",
+  9: "Low activity profile, interested in many topics across a many channels.",
 };
 
 export default function ProfileCards({
@@ -150,7 +150,9 @@ export default function ProfileCards({
         {cards.map((p) => {
           const a = archetypeFrom(p);
           const title = `${a.focus} · ${a.topic}`;
-          const tagline = taglineFrom(a);
+          const tagline =
+            CUSTOM_DESCRIPTIONS_10[p.id] ??
+            "A distinct commenter profile with recognizable behavioral patterns.";
 
           const tcN = normLog(p.tc_median ?? 0, minTc, maxTc);
           const nchN = normLog(p.nch_median ?? 0, minNch, maxNch);
