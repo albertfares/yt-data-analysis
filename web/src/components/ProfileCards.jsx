@@ -58,7 +58,7 @@ function taglineFrom(a) {
 
 const CUSTOM_DESCRIPTIONS_10 = {
   0: "Biggest group, focus on a small set of channel with low activity.",
-  1: "Has a stable routine but still likes variety in topics and channels.",
+  1: "Has a stable routine, focus on a moderate set of categories and channels.",
   2: "Second largest groups, interested in many topics and many channels.",
   3: "Watch a lot of different channel but with very restricted categorial interests.",
   4: "Moderate commenter, travel across lots of channels with restricted categorical interests.",
