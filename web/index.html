@@ -1,146 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Hidden Web of YouTube</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #e74c3c; /* YouTube Red-ish accent */
-            margin-top: 40px;
-        }
-        h3 {
-            color: #2c3e50;
-            margin-top: 30px;
-        }
-        p {
-            margin-bottom: 15px;
-        }
-        ul {
-            background-color: #f9f9f9;
-            padding: 20px 40px;
-            border-radius: 8px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        blockquote {
-            border-left: 5px solid #e74c3c;
-            background-color: #fff8f8;
-            margin: 20px 0;
-            padding: 15px 20px;
-            font-style: italic;
-        }
-        .formula-box {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hidden Web of YouTube</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-        /* Custom Style for Research Questions Block */
-        .research-box {
-            background-color: #fff6f6;
-            border-left: 5px solid #e74c3c;
-            padding: 20px 40px;
-            margin: 30px 0;
-            border-radius: 8px;
-        }
-
-        .research-box h2 {
-            margin-top: 0;
-            text-align: left;
-            color: #e74c3c;
-        }
-
-        .research-box ul {
-            background-color: transparent;
-            /* Force left alignment */
-            text-align: left;
-            /* Push bullets inside the visual area */
-            padding-left: 20px;
-            list-style-position: outside;
-        }
-
-        .user-guide {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-radius: 6px;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-        }
-
-        .chart-placeholder {
-            background-color: #eee;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #ccc;
-            margin-bottom: 40px;
-            color: #777;
-            font-weight: bold;
-        }
-    </style>
+  <!-- keep your existing styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <h1>The Algorithm Knows You... Or Does It?</h1>
 
-    <h1>The Algorithm Knows You... Or Does It?</h1>
+  <p>
+    Does it feel like you are always watching the same five channels?
+    Do you feel trapped in a feedback loop where the "Rich-Get-Richer"
+    and the famous just get more famous?
+  </p>
 
-    <p>Does it feel like you are always watching the same five channels? Do you feel trapped in a feedback loop where the "Rich-Get-Richer" and the famous just get more famous? You are not alone. YouTube's recommendation algorithm is a "black box" that prioritizes clicks over connection, often hiding the most vibrant communities from view.</p>
+  <p>
+    YouTube's recommendation algorithm is a "black box" that prioritizes
+    clicks over connection, often hiding the most vibrant communities from view.
+  </p>
 
-    <p><strong>But what if we could redraw the map?</strong></p>
+  <p><strong>But what if we could redraw the map?</strong></p>
 
-    <p>We believe that the true geography of YouTube isn't defined by metadata or view counts, but by <strong>you</strong>—the users. Our goal was to circumvent the traditional algorithm by mapping the platform from the bottom up. To do this, we first profiled the behavior of individual "Super Users"—filtering for consistent, socially validated humans to isolate the signal from the noise. By tracing the digital footprints of these specific individuals as they migrated between channels, we transformed their collective movements into the structural map of the ecosystem.</p>
+  <p>
+    We believe that the true geography of YouTube isn't defined by metadata
+    or view counts, but by <strong>you</strong> — the users.
+  </p>
 
-    <p>By analyzing a massive dataset of <strong>8.6 billion comments</strong>, we constructed a "Community Network" where channels are connected solely by the real people who talk about them.</p>
+  <h2>Rebuilding YouTube from the Bottom Up</h2>
 
-    <div class="research-box">
-        <h2>Our Research Questions</h2>
-        <p>To build this transparent engine, we focused on three key questions:</p>
-        <ul>
-            <li><strong>User Behavior:</strong> Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?</li>
-            <li><strong>Organic Structure:</strong> What organic structures emerge when we connect channels/videos/categories based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?</li>
-            <li><strong>Recommendation:</strong> Can we build a transparent recommendation engine based on comments that bypasses the "Rich-Get-Richer" cycle? Can we predict a user's next favorite channel simply by knowing who their "digital neighbors" are?</li>
-        </ul>
-    </div>
+  <p>
+    To bypass the traditional recommendation system, we mapped YouTube
+    from the bottom up by focusing on real human behavior.
+    We profiled consistent, socially validated users and tracked how
+    they migrate between channels.
+  </p>
 
-    <hr>
+  <p>
+    By analyzing <strong>8.6 billion comments</strong>,
+    we built a community network where channels are connected
+    solely by shared commenters.
+  </p>
 
-    <h2>Conclusion: The Architects of the Network</h2>
-    <p>We started this journey to see if we could look past the view counts and find the "real" YouTube. Our analysis of 40.6 million unique authors has provided a definitive answer to our research questions.</p>
-
-    <h3>Content Level: Quality over Quantity</h3>
-    <p>We discovered that organic structure does not mirror fame. Our analysis revealed "Cult Classics"—channels that, despite smaller subscriber counts, generate massive, tight-knit community interactions. Conversely, we found "Sleeping Giants" with millions of passive viewers but weak social ties. In fact, doubling a channel's subscribers only yields a ~12.5% increase in community connectivity, proving that the algorithm's favorite metric (views) is a poor proxy for genuine engagement.</p>
-
-    <h3>User Level: You Are the Bridge</h3>
-    <p>Most importantly, we found that users are not passive consumers; they are the active architects of the network.</p>
+  <div class="research-box">
+    <h2>Our Research Questions</h2>
     <ul>
-        <li><strong>Behavior:</strong> By filtering for "Super Users," we proved that commenting is a structured signal, not random noise.</li>
-        <li><strong>Connectivity:</strong> Users naturally migrate between topics—from Gaming to Science to Politics—creating "bridges" that connect seemingly unrelated worlds.</li>
+      <li>
+        <strong>User Behavior:</strong>
+        Is commenting structured enough to build a meaningful network?
+      </li>
+      <li>
+        <strong>Organic Structure:</strong>
+        What structures emerge when we connect channels through people,
+        not algorithms?
+      </li>
+      <li>
+        <strong>Recommendation:</strong>
+        Can we build a transparent recommendation engine
+        based on human interaction?
+      </li>
     </ul>
+  </div>
 
-    <h3>Final Verdict</h3>
-    <p>Can we build a transparent recommendation engine? <strong>Yes.</strong> By prioritizing "digital neighbors" (who you hang out with) over "digital trends" (what is popular), we have built a proof-of-concept that returns the power of discovery to the user. The most valuable signal on YouTube isn't the video itself; it's the conversation around it.</p>
-    <a href="./viz/">Go to viz page</a>
-    <a href="./community/#/User_community">Go to User community</a>
+  <hr />
+
+  <p>
+    👉 <a href="results.html">Continue to results and conclusions →</a>
+  </p>
+
+  <p>
+    👉 <a href="./viz/">Go to visualization</a><br />
+    👉 <a href="./community/#/User_community">Explore user communities</a>
+  </p>
 </body>
 </html>
