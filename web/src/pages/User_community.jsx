@@ -465,7 +465,7 @@ export default function User_community() {
           <HistFromJson
             jsonPath="data/fidelity_hist.json"
             title="Distribution of Channel diversity (10–1000 comments)"
-            xTitle="Channel diversity)"
+            xTitle="Channel diversity"
             logX={false}
             logY={true}
           />
@@ -489,8 +489,8 @@ export default function User_community() {
 
           <HistFromJson
             jsonPath="data/category_entropy_hist.json"
-            title="Distribution of Category Entropy (10–1000 comments)"
-            xTitle="Category entropy"
+            title="Distribution of Category Diversity (10–1000 comments)"
+            xTitle="Category diversity"
             logX={false}
             logY={false}
           />

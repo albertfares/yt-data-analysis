@@ -128,6 +128,7 @@ export default function ProfileCards({
       <div
         style={{
           marginTop: 14,
+          marginBottom: 48,
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
