@@ -1,0 +1,180 @@
+================================================================================
+PMI NETWORK EDGES ANALYSIS
+================================================================================
+
+1. BASIC FILE INFO
+--------------------------------------------------------------------------------
+File size: 0.07 GB (74.59 MB)
+
+Counting total edges...
+Total edges: 770,796
+
+2. COLUMN INFORMATION
+--------------------------------------------------------------------------------
+  - group1: VARCHAR
+  - group2: VARCHAR
+  - shared_commentators: BIGINT
+  - group1_size: BIGINT
+  - group2_size: BIGINT
+  - pmi: DOUBLE
+  - score: DOUBLE
+
+3. NETWORK STRUCTURE
+--------------------------------------------------------------------------------
+
+Counting unique nodes...
+Unique nodes (groups): 58,047
+
+Network density: 0.0458%
+  (Actual edges: 770,796 / Possible edges: 1,684,698,081)
+
+4. DEGREE DISTRIBUTION
+--------------------------------------------------------------------------------
+
+Calculating node degrees...
+  Min:     1
+  10th %:  4
+  25th %:  10
+  Median:  21
+  75th %:  37
+  90th %:  56
+  99th %:  99
+  Max:     185
+  Average: 26.56
+
+
+Top 15 nodes by degree:
+Rank   Category             Channel                                           Degree
+-------------------------------------------------------------------------------------
+1      People & Blogs       Cat :3 Gacha stuff                                   185
+2      People & Blogs       Johnathan Cheshire                                   185
+3      People & Blogs       astrovistics                                         182
+4      Entertainment        Rosi Chan                                            172
+5      Gaming               GamingWith Ally                                      171
+6      Entertainment        CocoDragon                                           170
+7      People & Blogs       Luna Playz                                           170
+8      Film & Animation     Sady Shadow                                          170
+9      People & Blogs       Tale Xawaii                                          169
+10     Film & Animation     ArcticCat                                            167
+11     People & Blogs       MyntEe可愛い                                            167
+12     Film & Animation     Murfie                                               166
+13     Entertainment        Senpai Wolfie                                        166
+14     Film & Animation     ThisIsFrog                                           165
+15     People & Blogs       Unicorn GirlYT                                       162
+
+5. SHARED COMMENTATORS DISTRIBUTION
+--------------------------------------------------------------------------------
+  Min:     3
+  10th %:  3
+  25th %:  4
+  Median:  6
+  75th %:  14
+  90th %:  41
+  99th %:  322
+  Max:     44,489
+  Average: 25.70
+  Total:   19,810,130
+
+6. PMI (POINTWISE MUTUAL INFORMATION) DISTRIBUTION
+--------------------------------------------------------------------------------
+  Min:     1.0000 (2x stronger than random)
+  10th %:  1.1038 (3x)
+  25th %:  1.2779 (3x)
+  Median:  1.6380 (5x)
+  75th %:  2.1868 (8x)
+  90th %:  2.8210 (16x)
+  99th %:  4.2142 (67x)
+  Max:     9.4123 (12,226x)
+  Average: 1.8304
+
+
+Top 15 edges by PMI:
+Rank   Group 1                             Group 2                                  PMI   Shared
+-----------------------------------------------------------------------------------------------
+1      Education|Monster Truck             Music|Puzzles TV                      9.4123        6
+2      Music|Baky Popile Official...       Music|Franco Love Federo              8.9087       59
+3      Entertainment|Bounce Patrol Kids    Film & Animation|VBGAMING11           8.6853        3
+4      Comedy|Fantastic Kids               Education|Rainbow TV                  8.4474        3
+5      Education|Kids ABC TV - Kinder...   Entertainment|Toys to Learn Colors...   8.3018        3
+6      Entertainment|Seven Stone Entertai... Howto & Style|Dulux India             8.1982       15
+7      Gaming|ZloyXP                       Gaming|impulseSV                      7.8892      549
+8      Education|TheAwesomeMario           People & Blogs|TheAwesomeMario        7.6639      210
+9      Education|스위트티비 Swee...             Howto & Style|World Train Toys        7.6298        4
+10     Film & Animation|Garam Garam Movies People & Blogs|Indian Crime Show      7.5646        3
+11     Entertainment|Kanwar Grewal Musica... Music|Sukh Sandhu                     7.5252       10
+12     Entertainment|Kishan Mahipal        Music|Aryan Films Entertai...         7.4459       38
+13     Music|Bilal Akkad VLogs             People & Blogs|Bohemian Kitchen       7.4420       16
+14     Entertainment|ELLA RECORDS          Entertainment|Neshnesh Tv             7.4384      122
+15     Education|infobells - Telugu        Film & Animation|FUNNY TOONS          7.3995        3
+
+7. SCORE (PMI × log(shared_commentators)) DISTRIBUTION
+--------------------------------------------------------------------------------
+  Min:     1.0986
+  10th %:  1.5466
+  25th %:  2.1002
+  Median:  3.1406
+  75th %:  4.8631
+  90th %:  7.2121
+  99th %:  13.8811
+  Max:     49.7658
+  Average: 3.9150
+
+
+Top 15 edges by Score:
+Rank   Group 1                        Group 2                           Score      PMI   Shared
+-----------------------------------------------------------------------------------------------
+1      Gaming|ZloyXP                  Gaming|impulseSV                49.7658   7.8892      549
+2      Education|TheAwesomeMario      People & Blogs|TheAwesomeMario  40.9796   7.6639      210
+3      Comedy|MxR Plays               People & Blogs|MxR Plays        38.6144   4.6424    4,096
+4      Science & Technology|PraveenMohan Travel & Events|PraveenMohan    38.4260   5.5758      984
+5      Comedy|TimothyDeLaGhetto Vl... Travel & Events|TimothyDeLaGhetto Vl...  37.9432   6.7002      288
+6      Howto & Style|JerushaCouture   Howto & Style|Mel in Melbourne  37.4711   6.0161      507
+7      People & Blogs|SciShow         Science & Technology|SciShow    37.1395   4.5026    3,822
+8      Entertainment|literal trash    People & Blogs|unicorn edits    36.9108   4.8441    2,038
+9      Nonprofits & Activism|News Now Dallas People & Blogs|News Now Houston  36.6452   5.3924      894
+10     Entertainment|Media Hub Official C... Entertainment|TANKA BUDATHOKI   36.4562   4.9978    1,472
+11     Music|Baky Popile Official...  Music|Franco Love Federo        36.3255   8.9087       59
+12     Music|Nyashinski               Music|VERA SIDIKA               36.1050   6.4116      279
+13     Comedy|KSI                     People & Blogs|KSI              35.8803   4.7958    1,775
+14     People & Blogs|Gisselle Rodriguez People & Blogs|annemariechase   35.7684   6.7445      201
+15     Entertainment|ELLA RECORDS     Entertainment|Neshnesh Tv       35.7342   7.4384      122
+
+8. CATEGORY-LEVEL ANALYSIS
+--------------------------------------------------------------------------------
+
+Edges between categories:
+Rank   Category 1           Category 2              Edges   Avg PMI   Avg Shared  Total Shared
+-----------------------------------------------------------------------------------------------
+1      Entertainment        People & Blogs         49,685    1.8633        23.54     1,169,689
+2      Entertainment        Music                  38,889    1.8135        25.76     1,001,819
+3      Entertainment        Entertainment          34,887    1.8161        32.47     1,132,616
+4      Music                Music                  33,075    1.9292        33.76     1,116,632
+5      Entertainment        Gaming                 33,054    1.7351        30.74     1,016,095
+6      Gaming               Gaming                 30,205    1.8337        41.80     1,262,595
+7      Entertainment        Film & Animation       27,832    1.8494        24.69       687,240
+8      Music                People & Blogs         26,039    1.8556        18.64       485,237
+9      People & Blogs       People & Blogs         24,180    1.9808        16.46       398,080
+10     Film & Animation     People & Blogs         21,754    1.9301        16.73       364,014
+11     Gaming               People & Blogs         20,983    1.8158        21.44       449,791
+12     Comedy               Entertainment          20,733    1.7677        39.46       818,036
+13     Film & Animation     Gaming                 19,090    1.8230        24.66       470,733
+14     Gaming               Music                  16,335    1.7010        22.16       362,019
+15     Entertainment        Howto & Style          14,037    1.7914        31.49       442,042
+16     Comedy               People & Blogs         13,846    1.7937        27.44       379,869
+17     Film & Animation     Music                  13,601    1.8151        21.38       290,768
+18     Education            Entertainment          13,125    1.8135        25.11       329,620
+19     Howto & Style        People & Blogs         12,821    1.8981        22.97       294,503
+20     Comedy               Gaming                 12,677    1.7270        33.19       420,750
+
+
+Inter-category vs Intra-category edges:
+  Same Category       :    162,115 (21.03%) | Avg PMI: 1.8964 | Avg Shared:    32.46
+  Different Category  :    608,681 (78.97%) | Avg PMI: 1.8128 | Avg Shared:    23.90
+
+9. DATA QUALITY (NULL VALUES)
+--------------------------------------------------------------------------------
+  ✓ No NULL values found in any column
+
+================================================================================
+Analysis completed in 6.69 seconds
+================================================================================
