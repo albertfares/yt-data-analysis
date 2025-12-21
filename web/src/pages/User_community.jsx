@@ -8,6 +8,8 @@ import KMeansExplorer from "../components/KMeansExplorer";
 import KMeansMedianExplorer from "../components/KMeansMedianExplorer";
 import ProfileCards from "../components/ProfileCards";
 import BackgroundNodes from "../components/BackgroundNodes";
+import BackgroundGhostNetwork from "../components/BackgroundGhostNetwork";
+import BackgroundCommentFlow from "../components/BackgroundCommentFlow";
 
 function openRandomVideo(e) {
   e.preventDefault();
@@ -445,6 +447,8 @@ export default function User_community() {
             </em>
           </p>
 
+         <section className="subsection">
+
           <h3>Channel Concentration (Fidelity)</h3>
           <p>
             The first question you ask is: <em>How concentrated is this group's attention across channels?</em>
@@ -466,6 +470,10 @@ export default function User_community() {
             logY={true}
           />
 
+          </section>
+
+          <section className="subsection">
+
           <h3>Category Diversity</h3>
           <p>
             So you ask a second question: <em>How diverse are the topics this group engages with ?</em>
@@ -486,6 +494,9 @@ export default function User_community() {
             logX={false}
             logY={false}
           />
+          </section>
+
+          <section className="subsection">
 
           <h3>A Behavior Map of YouTube</h3>
           <p>
@@ -509,6 +520,7 @@ export default function User_community() {
             And that sparks an exciting idea: Instead of describing millions of groups individually,
             why not identify a small number of representative commenter profiles ?
           </p>
+          </section>
         </Section>
 
         {/* CLUSTERING */}

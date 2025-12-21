@@ -139,7 +139,6 @@ body {
   color: var(--text);
 }
 
-/* canvas behind everything */
 #background-canvas {
   position: fixed;
   inset: 0;
@@ -149,13 +148,9 @@ body {
   pointer-events: none;
 }
 
-/* content above canvas */
 .page {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 14px;
 }
 
 .section {
@@ -173,4 +168,23 @@ body {
 
 .section + .section {
   margin-top: 44px;                /* extra separation between consecutive parts */
+}
+
+/* Subsection wrapper (h3-level) */
+.subsection {
+  margin: 36px 0;
+  padding: 22px 28px;
+  background: rgba(254, 249, 249, 0.9);
+  border-left: 4px solid rgba(231, 76, 60, 0.5);
+  border-radius: 10px;
+}
+
+/* Subsection titles */
+.subsection h3 {
+  margin-top: 0;
+}
+
+/* Tighter spacing inside */
+.subsection p:last-child {
+  margin-bottom: 0;
 }
