@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ReactECharts from "echarts-for-react";
 
-function clamp(v, a, b) {
-  return Math.max(a, Math.min(b, v));
+function clamp01(x) {
+  if (x == null || Number.isNaN(x)) return 0;
+  return Math.max(0, Math.min(1, x));
 }
 
 export default function KMeansMedianExplorer({
@@ -10,23 +11,15 @@ export default function KMeansMedianExplorer({
   height = 520,
   Kmin = 1,
   Kmax = 15,
-  useAllKFile = false, // if true: load profiles_allK.json once
 }) {
   const [K, setK] = useState(12);
+  const [allK, setAllK] = useState(null);
 
-  const [allK, setAllK] = useState(null);               // { profiles: { "12": [...] } }
-  const [profilesCache, setProfilesCache] = useState({}); // { "12": {K, profiles:[...]} }
-
-  // Used to ignore stale fetch responses when user drags slider quickly
-  const latestReqId = useRef(0);
-
-  // ---------- Load all-K file (optional) ----------
   useEffect(() => {
-    if (!useAllKFile) return;
-
     const controller = new AbortController();
     fetch(import.meta.env.BASE_URL + `${basePath}/profiles_allK.json`, {
       signal: controller.signal,
+      cache: "force-cache",
     })
       .then((r) => r.json())
       .then(setAllK)
@@ -35,71 +28,28 @@ export default function KMeansMedianExplorer({
       });
 
     return () => controller.abort();
-  }, [basePath, useAllKFile]);
+  }, [basePath]);
 
-  // ---------- Load per-K file (default) with cancellation + stale-response guard ----------
-  useEffect(() => {
-    if (useAllKFile) return;
-
+  const profiles = useMemo(() => {
     const key = String(K);
-    if (profilesCache[key]) return;
+    return allK?.profiles?.[key] ?? [];
+  }, [allK, K]);
 
-    const controller = new AbortController();
-    const reqId = ++latestReqId.current;
-
-    fetch(import.meta.env.BASE_URL + `${basePath}/profiles_K${K}.json`, {
-      signal: controller.signal,
-    })
-      .then((r) => r.json())
-      .then((payload) => {
-        // Ignore stale response (arrived after K changed again)
-        if (reqId !== latestReqId.current) return;
-
-        setProfilesCache((prev) => {
-          if (prev[key]) return prev;
-          return { ...prev, [key]: payload };
-        });
-      })
-      .catch((e) => {
-        if (e.name !== "AbortError") console.error(e);
-      });
-
-    return () => controller.abort();
-    // IMPORTANT: do NOT depend on profilesCache to avoid extra reruns
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [K, basePath, useAllKFile]);
-
-  // ---------- Select payload ----------
-  const payload = useMemo(() => {
-    if (useAllKFile) {
-      if (!allK) return null;
-      return { K, profiles: allK.profiles?.[String(K)] ?? [] };
-    }
-    return profilesCache[String(K)] ?? null;
-  }, [K, useAllKFile, allK, profilesCache]);
-
-  // ---------- Build ECharts option ----------
   const option = useMemo(() => {
-    if (!payload) return null;
+    if (!profiles.length) return null;
 
-    const prof = payload.profiles || [];
-    if (!prof.length) return null;
-
-    // Each profile becomes one polyline across parallel axes
-    const values = prof.map((p) => {
+    const values = profiles.map((p) => {
       const tc = p.tc_median ?? 0;
       const nch = p.nch_median ?? 0;
-      const fid = p.fidelity_median ?? 0;
-      const cat = p.catent_median ?? 0;
 
       return [
-        Math.log10(tc + 1),        // dim 0: log10(tc+1)
-        Math.log10(nch + 1),       // dim 1: log10(nch+1)
-        clamp(fid, 0, 1),          // dim 2
-        clamp(cat, 0, 1),          // dim 3
-        p.id ?? null,              // dim 4: id (tooltip)
-        p.share ?? null,           // dim 5 optional
-        p.n_points ?? null,        // dim 6 optional
+        Math.log10(tc + 1),              // dim 0
+        Math.log10(nch + 1),             // dim 1
+        clamp01(p.fidelity_median),      // dim 2
+        clamp01(p.catent_median),        // dim 3
+        p.id ?? null,                    // dim 4 tooltip
+        p.share ?? null,                 // dim 5 tooltip
+        p.n_points ?? null,              // dim 6 tooltip
       ];
     });
 
@@ -114,11 +64,8 @@ export default function KMeansMedianExplorer({
     return {
       title: { text: `Median profile explorer (K=${K})` },
 
-      // ✅ subtle, smooth transitions
       animation: true,
-      animationDuration: 220,
       animationDurationUpdate: 320,
-      animationEasing: "cubicOut",
       animationEasingUpdate: "cubicOut",
 
       tooltip: {
@@ -139,10 +86,10 @@ export default function KMeansMedianExplorer({
             `<b>Profile C${id}</b>`,
             `tc_median: ${tc.toLocaleString()}`,
             `nch_median: ${nch.toLocaleString()}`,
-            `fidelity_median: ${Number(fid).toFixed(3)}`,
-            `catent_median: ${Number(cat).toFixed(3)}`,
+            `channel diversity (median): ${Number(fid).toFixed(3)}`,
+            `category diversity (median): ${Number(cat).toFixed(3)}`,
           ];
-          if (share != null) lines.push(`share: ${(share * 100).toFixed(2)}%`);
+          if (share != null) lines.push(`share (sample): ${(share * 100).toFixed(2)}%`);
           if (nPoints != null) lines.push(`points: ${Number(nPoints).toLocaleString()}`);
           return lines.join("<br/>");
         },
@@ -151,13 +98,13 @@ export default function KMeansMedianExplorer({
       parallelAxis: [
         { dim: 0, name: "log10(tc_median+1)", min: tcMin, max: tcMax, realtime: false },
         { dim: 1, name: "log10(nch_median+1)", min: nchMin, max: nchMax, realtime: false },
-        { dim: 2, name: "fidelity_median", min: 0, max: 1, realtime: false },
-        { dim: 3, name: "catent_median", min: 0, max: 1, realtime: false },
+        { dim: 2, name: "channel diversity", min: 0, max: 1, realtime: false },
+        { dim: 3, name: "category diversity", min: 0, max: 1, realtime: false },
       ],
 
       parallel: {
-        left: 60,
-        right: 60,
+        left: 70,
+        right: 70,
         top: 90,
         bottom: 30,
         parallelAxisDefault: {
@@ -169,45 +116,30 @@ export default function KMeansMedianExplorer({
 
       series: [
         {
-          id: "profiles", // ✅ stable id helps update transitions
+          name: "profiles",
           type: "parallel",
           data: values,
-
-          // ✅ helps ECharts animate dataset changes
-          universalTransition: true,
-
-          lineStyle: { width: 2, opacity: 0.5 },
+          lineStyle: { width: 2, opacity: 0.55 },
           emphasis: { lineStyle: { opacity: 0.95, width: 3 } },
         },
       ],
     };
-  }, [payload, K]);
+  }, [profiles, K]);
 
-  // ---------- UI ----------
   return (
     <div style={{ marginTop: 16 }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          marginBottom: 10,
-          flexWrap: "wrap",
-        }}
-      >
-        <label>
-          <strong>K</strong> = {K}
-        </label>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, flexWrap: "wrap" }}>
+        <label><strong>K</strong> = {K}</label>
         <input
           type="range"
           min={Kmin}
           max={Kmax}
           value={K}
-          onChange={(e) => setK(Number(e.target.value))} // ✅ live updates while dragging
+          onChange={(e) => setK(Number(e.target.value))}
           style={{ width: 260 }}
         />
         <span style={{ opacity: 0.85 }}>
-          Each line is one profile (median behavior). Drag K to see profiles split/merge.
+          Each line is one profile (medians). Drag K to see profiles split/merge.
         </span>
       </div>
 
@@ -215,23 +147,18 @@ export default function KMeansMedianExplorer({
         <ReactECharts
           option={option || {}}
           style={{ height, width: "100%" }}
+          opts={{ renderer: "canvas" }}
+          notMerge={true}
+          replaceMerge={["series"]}
           lazyUpdate={true}
-          notMerge={false}                // ✅ allow smooth transitions
-          replaceMerge={["series"]}       // ✅ but replace the series cleanly
-          opts={{ renderer: "canvas" }}   // ✅ consistent renderer
         />
 
         {!option && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "rgba(0,0,0,0.04)",
-            }}
-          >
+          <div style={{
+            position: "absolute", inset: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(0,0,0,0.04)"
+          }}>
             Loading profiles…
           </div>
         )}

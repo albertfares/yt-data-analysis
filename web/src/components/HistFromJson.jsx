@@ -20,21 +20,29 @@ export default function HistFromJson({
   const option = useMemo(() => {
     if (!h) return null;
 
-    // Build [x_center, count, left, right]
+    const n = h.counts?.length ?? 0;
+    if (!n) return null;
+
+    // Clamp x-range to histogram edges (prevents last bar spilling out)
+    const xMin = h.bin_left[0];
+    const xMax = h.bin_right[n - 1];
+
+    // Build raw rows: [x_center, count, left, right]
     const raw = h.bin_left.map((l, i) => {
       const r = h.bin_right[i];
       const x = (l + r) / 2;
       return [x, h.counts[i], l, r];
     });
 
-    // log10(count+1) so 0 is representable
+    // ---- logY trick: plot log10(count+1) on a linear axis ----
     const log10p1 = (c) => Math.log10(c + 1);
 
     const maxCnt = Math.max(0, ...h.counts);
-    const yMax = Math.max(1, Math.ceil(Math.log10(maxCnt + 1))); // at least 1 decade
+    const yMax = Math.max(1, Math.ceil(Math.log10(maxCnt + 1))); // decades
 
+    // If logY: data becomes [x, yLog, left, right, originalCount]
     const data = logY
-      ? raw.map(([x, cnt, l, r]) => [x, log10p1(cnt), l, r, cnt]) // keep cnt for tooltip
+      ? raw.map(([x, cnt, l, r]) => [x, log10p1(cnt), l, r, cnt])
       : raw;
 
     return {
@@ -45,7 +53,7 @@ export default function HistFromJson({
         trigger: "axis",
         axisPointer: { type: "line", snap: true },
         formatter: (params) => {
-          const p = params[0];
+          const p = params?.[0];
           if (!p?.data) return "";
           if (logY) {
             const [, , l, r, cnt] = p.data;
@@ -66,7 +74,9 @@ export default function HistFromJson({
       xAxis: {
         type: logX ? "log" : "value",
         name: xTitle,
-        min: logX ? 1 : null,
+        min: logX ? Math.max(1, xMin) : xMin,
+        max: xMax,
+        boundaryGap: [0, 0],
         axisLabel: { formatter: (v) => Number(v).toLocaleString() },
       },
 
@@ -76,10 +86,10 @@ export default function HistFromJson({
             name: "Number of groups",
             min: 0,
             max: yMax,
-            interval: 1, // decades
+            interval: 1, // ticks at 0,1,2,3... (decades)
             axisLabel: {
               formatter: (v) => {
-                if (v === 0) return "0";
+                if (v <= 0) return "0";
                 return Number(Math.pow(10, v)).toLocaleString(); // 10, 100, 1 000...
               },
             },
@@ -95,8 +105,10 @@ export default function HistFromJson({
         {
           type: "bar",
           data,
-          barWidth: "99%",
           large: true,
+          clip: true,
+          barWidth: "95%",
+          barMinWidth: 1,
           encode: { x: 0, y: 1 },
         },
       ],
