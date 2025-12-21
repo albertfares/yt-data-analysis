@@ -24,6 +24,10 @@
             color: #e74c3c; /* YouTube Red-ish accent */
             margin-top: 40px;
         }
+        h3 {
+            color: #2c3e50;
+            margin-top: 30px;
+        }
         p {
             margin-bottom: 15px;
         }
@@ -50,78 +54,93 @@
             margin: 20px 0;
             overflow-x: auto;
         }
+
+        /* Custom Style for Research Questions Block */
+        .research-box {
+            background-color: #fff6f6;
+            border-left: 5px solid #e74c3c;
+            padding: 20px 40px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .research-box h2 {
+            margin-top: 0;
+            text-align: left;
+            color: #e74c3c;
+        }
+
+        .research-box ul {
+            background-color: transparent;
+            /* Force left alignment */
+            text-align: left;
+            /* Push bullets inside the visual area */
+            padding-left: 20px;
+            list-style-position: outside;
+        }
+
+        .user-guide {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        .chart-placeholder {
+            background-color: #eee;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+            margin-bottom: 40px;
+            color: #777;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Unveiling the Hidden Web of YouTube</h1>
+    <h1>The Algorithm Knows You... Or Does It?</h1>
 
-    <p>YouTube is often viewed as a library of isolated videos or a leaderboard of popular channels. But the real story isn't about the content creators, it's about the <strong>audience</strong>.</p>
+    <p>Does it feel like you are always watching the same five channels? Do you feel trapped in a feedback loop where the "Rich-Get-Richer" and the famous just get more famous? You are not alone. YouTube's recommendation algorithm is a "black box" that prioritizes clicks over connection, often hiding the most vibrant communities from view.</p>
 
-    <p>What if we could map the "footprints" users leave behind? By analyzing the commenting behavior of millions of users, we reconstructed the hidden social structures that connect different corners of YouTube. We moved beyond simple view counts to answer a deeper question: <strong>Who hangs out with whom?</strong></p>
+    <p><strong>But what if we could redraw the map?</strong></p>
 
-    <p>We built a <strong>Community Network</strong>, where connections are defined not by algorithms or official categories, but by the shared presence of active, human commenters.</p>
+    <p>We believe that the true geography of YouTube isn't defined by metadata or view counts, but by <strong>you</strong>—the users. Our goal was to circumvent the traditional algorithm by mapping the platform from the bottom up. To do this, we first profiled the behavior of individual "Super Users"—filtering for consistent, socially validated humans to isolate the signal from the noise. By tracing the digital footprints of these specific individuals as they migrated between channels, we transformed their collective movements into the structural map of the ecosystem.</p>
+
+    <p>By analyzing a massive dataset of <strong>8.6 billion comments</strong>, we constructed a "Community Network" where channels are connected solely by the real people who talk about them.</p>
+
+    <div class="research-box">
+        <h2>Our Research Questions</h2>
+        <p>To build this transparent engine, we focused on three key questions:</p>
+        <ul>
+            <li><strong>User Behavior:</strong> Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?</li>
+            <li><strong>Organic Structure:</strong> What organic structures emerge when we connect channels/videos/categories based on human behavior (comments) rather than algorithms? Which metric could be used to design a meaningful network based on comments?</li>
+            <li><strong>Recommendation:</strong> Can we build a transparent recommendation engine based on comments that bypasses the "Rich-Get-Richer" cycle? Can we predict a user's next favorite channel simply by knowing who their "digital neighbors" are?</li>
+        </ul>
+    </div>
 
     <hr>
 
-    <h2>Finding the "Real" Voices (Data Filtering)</h2>
-    <p>Before mapping the network, we had to separate the signal from the noise. YouTube comments are notoriously filled with spam, bots, and "drive-by" remarks. To ensure our network represented genuine human interest, we applied a rigorous "High-Fidelity" filter:</p>
+    <h2>Conclusion: The Architects of the Network</h2>
+    <p>We started this journey to see if we could look past the view counts and find the "real" YouTube. Our analysis of 40.6 million unique authors has provided a definitive answer to our research questions.</p>
 
+    <h3>Content Level: Quality over Quantity</h3>
+    <p>We discovered that organic structure does not mirror fame. Our analysis revealed "Cult Classics"—channels that, despite smaller subscriber counts, generate massive, tight-knit community interactions. Conversely, we found "Sleeping Giants" with millions of passive viewers but weak social ties. In fact, doubling a channel's subscribers only yields a ~12.5% increase in community connectivity, proving that the algorithm's favorite metric (views) is a poor proxy for genuine engagement.</p>
+
+    <h3>User Level: You Are the Bridge</h3>
+    <p>Most importantly, we found that users are not passive consumers; they are the active architects of the network.</p>
     <ul>
-        <li><strong>Video Quality:</strong> We only considered "high interaction" videos with at least <strong>200 unique authors</strong>, ensuring the video sparked a real community discussion.</li>
-        <li><strong>Author Consistency:</strong> We filtered for users who commented on at least <strong>24 different videos</strong> (averaging one per month over two years).</li>
-        <li><strong>Social Validation:</strong> To filter out trolls or irrelevant noise, we required authors to have received at least <strong>5 likes</strong> on their comments, ensuring their contributions were acknowledged by others.</li>
-        <li><strong>Bot Removal:</strong> We explicitly removed the top <strong>1% of most active accounts</strong> to strip out automated bots and spam scripts.</li>
+        <li><strong>Behavior:</strong> By filtering for "Super Users," we proved that commenting is a structured signal, not random noise.</li>
+        <li><strong>Connectivity:</strong> Users naturally migrate between topics—from Gaming to Science to Politics—creating "bridges" that connect seemingly unrelated worlds.</li>
     </ul>
 
-    <blockquote>
-        <strong>The Result:</strong> A dataset of "Super Users": comments by people who are consistently active, socially validated, and genuinely engaged. 
-    </blockquote>
-    <strong>!!! ADD STATS ABOUT 2.5B COMMENTS !!!</strong>
-
-    <h2>Defining the Network (Aggregation)</h2>
-    <p>Analyzing individual videos is too granular: a single channel might upload thousands of videos, making the dataset too huge to process effectively. To understand broader trends, we zoomed out.</p>
-
-    <p>We aggregated videos into <strong>Groups</strong> defined by the intersection of their <strong>Category</strong> and <strong>Channel Name</strong>.</p>
-    <ul>
-        <li><em>Instead of the Video ID:</em> "TfUHhwHJg60"</li>
-        <li><em>We see:</em> "<code>Politics | NBC News</code>" or "<code>Entertainment | PewDiePie</code>"".</li>
-    </ul>
-    <p>These Groups became the <strong>Nodes</strong> of our network.</p>
-<strong>!!! ADD STATS ABOUT GROUPS !!!</strong>
-
-<h2>The Mathematics of Connection</h2>
-    <p>How do we know if two groups are actually connected? It isn't enough for them to just share a few users by random chance. We needed a metric that rewards <strong>strong, statistically significant overlap</strong>.</p>
-
-    <p>We constructed the edges of our network based on the overlap of unique authors. The strength of the connection (the <strong>Edge Weight</strong>) was calculated using a custom scoring formula combining <strong>Pointwise Mutual Information (PMI)</strong> and logarithmic scaling:</p>
-
-    <div class="formula-box">
-        $$ \text{Score}(i, j) = \text{PMI}(i, j) \times \log_{10}(|i \cap j|) $$
-    </div>
-
-    <p>Where:</p>
-    <ul>
-        <li>
-            \(\text{PMI}(i, j) = \log \left( \frac{N \cdot |i \cap j|}{|i| \cdot |j|} \right)\) measures how much the groups overlap compared to random chance.
-            <br>
-            <em>(Here, \(|i|\) is the size of group \(i\), \(|i \cap j|\) is the number of shared authors, and \(N\) is the total universe of authors).</em>
-        </li>
-        <li>
-            \(\log_{10}(|i \cap j|)\) boosts the score based on the raw volume of shared authors, ensuring that tiny but "tight" communities don't overpower massive ones.
-        </li>
-    </ul>
-
-    <p>To ensure quality, we pruned the network to keep only the strongest connections, requiring a PMI \(\ge 1\) (above the median) and at least 3 shared authors (top 75%).</p>
-    <h2>What's Next?</h2>
-    <p>With this network constructed, we can now explore the shape of the YouTube universe. In the following sections, we will explore:</p>
-    <ol>
-        <li><strong>Network Visualizations:</strong> A deep dive into general group distributions and connectivity degrees.</li>
-        <li><strong>The Recommender:</strong> A tool that suggests new content categories based on your viewing habits.</li>
-        <li><strong>Popularity vs. Connectivity:</strong> An analysis comparing the most "connected" nodes to traditional metrics like views and subscribers.</li>
-    </ol>
-
+    <h3>Final Verdict</h3>
+    <p>Can we build a transparent recommendation engine? <strong>Yes.</strong> By prioritizing "digital neighbors" (who you hang out with) over "digital trends" (what is popular), we have built a proof-of-concept that returns the power of discovery to the user. The most valuable signal on YouTube isn't the video itself; it's the conversation around it.</p>
     <a href="./viz/">Go to viz page</a>
     <a href="./community/#/User_community">Go to User community</a>
-
 </body>
 </html>
