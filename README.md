@@ -34,7 +34,7 @@ The dataset is available on [Zenodo](https://zenodo.org/records/4650046).
 We focused on the large-scale structure of the YouNiverse dataset, employing the following methods:
 - **Louvain Community Detection** (for identifying organic clusters)
 - **Pointwise Mutual Information (PMI)** (for edge weighting)
-- **PageRank & Betweenness Centrality** (for identifying Hubs and Bridges)
+- **OLS Regression** (for analyzing the link between subscribers and connectivity score)
 - **Interactive Visualization** (Chord Diagrams, Sankey Diagrams)
 
 ### 1. Preprocessing & User Profiling (The Signal)
@@ -65,7 +65,7 @@ We aggregated billions of interactions into a graph where nodes $i$ and $j$ repr
 
 * **Topology Analysis:**
     * We applied the **Louvain Algorithm** to maximize the modularity $Q$, partitioning the network into communities $C_1, ..., C_k$ where internal density is maximized.
-    * We calculated **Degree** to identify Hubs and **Betweenness Centrality** ($C_B$) to identify Bridges.
+    * We calculated **Degree** to identify Hubs.
 
 ### 3. The Recommendation Engine (The Tool) 
 Finally, we operationalized the network structure.
