@@ -1,36 +1,22 @@
 /* =========================
-   Youniverse — Light Futuristic Minimal
+   Editorial / YouTube-red (match conclusion.html vibe)
    ========================= */
 
 :root {
-  /* Layout */
-  --page-max: 980px;
-  --radius-lg: 18px;
-  --radius-md: 14px;
+  --page-max: 1100px;
 
-  /* Colors (light + futuristic) */
-  --bg: #f6f8ff;
-  --bg2: #eef2ff;
-  --panel: rgba(255, 255, 255, 0.72);
-  --panel-strong: rgba(255, 255, 255, 0.92);
-  --border: rgba(20, 25, 45, 0.10);
+  --bg: #ffffff;
+  --text: #333;
+  --heading: #2c3e50;
+  --accent: #e74c3c;       /* YouTube red-ish */
+  --muted: #666;
 
-  --text: #0e1330;
-  --muted: rgba(14, 19, 48, 0.70);
+  --panel: #f9f9f9;
+  --panel2: #fff6f6;
+  --border: #eee;
 
-  /* Accent “cluster” palette */
-  --accent: #5b7cfa;     /* electric indigo */
-  --accent2: #22d3ee;    /* cyan */
-  --accent3: #a78bfa;    /* violet */
-
-  /* Shadows */
-  --shadow: 0 10px 30px rgba(16, 24, 48, 0.10);
-  --shadow2: 0 18px 50px rgba(16, 24, 48, 0.12);
-
-  /* Typography */
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
-    "Segoe UI Emoji";
-  line-height: 1.55;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
   color: var(--text);
   background: var(--bg);
   text-rendering: optimizeLegibility;
@@ -38,96 +24,153 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* IMPORTANT: remove the default Vite centering */
 body {
   margin: 0;
   min-height: 100vh;
-  display: block;
-  background:
-    radial-gradient(900px 600px at 20% -10%, rgba(34, 211, 238, 0.22), transparent 55%),
-    radial-gradient(800px 600px at 80% 0%, rgba(91, 124, 250, 0.22), transparent 50%),
-    radial-gradient(700px 600px at 50% 110%, rgba(167, 139, 250, 0.18), transparent 55%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
+  background: var(--bg);
   color: var(--text);
 }
 
-/* Subtle futuristic grid texture */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(14, 19, 48, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 19, 48, 0.04) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 70%);
-  opacity: 0.55;
-}
-
-/* Center the app content with a proper page container */
+/* Main centered page container */
 .page {
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 32px 18px 80px;
+  padding: 20px;
 }
 
-/* Headings */
-h1, h2, h3 {
-  letter-spacing: -0.02em;
-  margin: 22px 0 10px;
+/* Titles like your HTML page */
+h1 {
+  color: var(--heading);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 10px;
+  margin: 0 0 18px;
+  font-size: 2.2rem;
 }
-h1 { font-size: 40px; line-height: 1.1; }
-h2 { font-size: 26px; line-height: 1.2; }
-h3 { font-size: 18px; line-height: 1.25; color: var(--text); }
 
-p, li { color: var(--muted); }
-strong { color: var(--text); }
+h2 {
+  color: var(--accent);
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+h3 {
+  color: var(--heading);
+  margin-top: 30px;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+}
 
-/* Panels / cards */
-.card {
+p {
+  margin: 0 0 15px;
+  color: var(--text);
+}
+
+ul {
   background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 20px 40px;
+  border-radius: 8px;
+  margin: 14px 0 22px;
 }
 
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff; /* keep your nice link blue, or set to var(--accent) */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Optional “research box” style (matches your HTML) */
+.research-box,
+.card {
+  background: var(--panel2);
+  border-left: 5px solid var(--accent);
+  padding: 20px 40px;
+  margin: 30px 0;
+  border-radius: 8px;
+}
+
+/* If you use .card-inner in React components */
 .card-inner {
-  padding: 18px;
+  padding: 0; /* because .card already has padding now */
 }
 
-/* Small badge chips */
+/* Divider line */
+.hr {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+/* Charts spacing */
+.chart {
+  margin: 10px 0 40px;
+}
+
+/* Badges become simpler (optional) */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(91, 124, 250, 0.10);
-  border: 1px solid rgba(91, 124, 250, 0.18);
-  color: rgba(14, 19, 48, 0.85);
+  background: #f1f1f1;
+  border: 1px solid #e6e6e6;
+  color: #444;
   font-size: 12px;
   font-weight: 600;
 }
 
-/* Section divider line (minimal) */
-.hr {
-  height: 1px;
-  background: rgba(14, 19, 48, 0.08);
-  margin: 28px 0;
+html {
+  background: radial-gradient(circle at 20% 30%, rgba(231, 76, 60, 0.12), transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(231, 76, 60, 0.10), transparent 40%),
+              #ffffff;
 }
 
-/* Inputs (slider) */
-input[type="range"] {
-  accent-color: var(--accent);
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text);
 }
 
-/* Make charts sit nicely */
-.chart {
-  margin-top: 12px;
+/* canvas behind everything */
+#background-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* content above canvas */
+.page {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+
+.section {
+  margin: 36px 0;                 /* space between parts */
+  padding: 22px 26px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px rgba(16, 24, 48, 0.06);
+}
+
+.section h2 {
+  margin-top: 0;                   /* avoid double spacing */
+}
+
+.section + .section {
+  margin-top: 44px;                /* extra separation between consecutive parts */
 }

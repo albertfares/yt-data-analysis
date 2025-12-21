@@ -104,9 +104,15 @@ blockquote {
     font-weight: bold;
 }
 
+/* ---------- Call-to-Action Buttons ---------- */
+.cta-wrapper {
+  min-height: 60vh;              /* controls vertical placement */
+  display: flex;
+  justify-content: center;       /* center vertically */
+}
+
 .cta-container {
   display: flex;
-  justify-content: center;
   gap: 36px;
   flex-wrap: wrap; /* wraps on small screens */
   margin-top: 48px;
