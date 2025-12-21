@@ -80,7 +80,7 @@ export default function MultiHistFromJson({
           ].join("<br/>");
         },
       },
-      legend: { top: 40 },
+      legend: { top: 60 },
       xAxis: {
         type: logX ? "log" : "value",
         name: xName,
@@ -96,7 +96,7 @@ export default function MultiHistFromJson({
         axisLabel: { formatter: (v) => Number(v).toLocaleString() },
       },
       series,
-      grid: { left: 80, right: 20, bottom: 60, top: 80 },
+      grid: { left: 80, right: 20, bottom: 60, top: 130 },
     };
   }, [h, error, title, xName, yName, logX, logY]);
 

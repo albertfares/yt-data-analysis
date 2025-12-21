@@ -57,15 +57,9 @@ function taglineFrom(a) {
 }
 
 export default function ProfileCards({
-  // where your exported JSON lives
   basePath = "data/kmeans_explorer",
-  // new JSON (recommended instead of TSV)
   peopleShareJsonPath = "data/kmeans_cluster_people_share.json",
-
-  // ✅ fixed K for the “character cards”
   Kfixed = 10,
-
-  // regime bounds (for bars)
   minTc = 10,
   maxTc = 1000,
   minNch = 1,

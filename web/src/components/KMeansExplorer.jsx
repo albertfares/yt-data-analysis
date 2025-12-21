@@ -106,7 +106,7 @@ export default function KMeansExplorer({
 
       legend: {
         type: "scroll",
-        top: 35,
+        top: 60,
       },
 
       grid: { left: 70, right: 20, top: 90, bottom: 60 },
@@ -178,9 +178,9 @@ export default function KMeansExplorer({
         <ReactECharts
             option={option || {}}
             style={{ height, width: "100%" }}
-            notMerge={true}                 // ✅ IMPORTANT: remove old series
+            notMerge={true}
             lazyUpdate={true}
-            replaceMerge={["series", "legend"]} // ✅ extra safety
+            replaceMerge={["series", "legend"]}
         />
         {(!points || !allLabels) && (
           <div
