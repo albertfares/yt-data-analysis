@@ -9,6 +9,10 @@ YouTube's recommendation algorithm is a closely guarded secret. We seek to circu
 
 This approach ignores standard metrics such as view counts in order to reveal organic communities formed by genuine human interactions. The result is a transparent recommendation engine that prioritizes users' active interests —what makes them react— rather than passive metadata that may result from a simple trend. By shifting the focus from static categories (simple views) to dynamic user behavior, we offer a new way to discover content based on where communities are actually active.
 
+Alongside the structural analysis of channels and videos, we also study the humans behind the network. Using streaming methods on billions of comments, we analyze how users actually behave on YouTube: how active they are, how concentrated their attention is, and wether meaningful participation patterns exist at all. 
+
+We show that commenter behavior is not random: most users leave weak traces, while a smaller population exhibits stable and informative engagement. This behavioral backbone justifies the selection of "signal users", and ensures that the resulting content network reflects genuine community structure rather than statistical noise. 
+
 ## Research Questions :thought_balloon: 
 
 - **User Level (Behavior):** Is there any tendency in user commenting behavior? Is it possible to construct a network based on it?
@@ -68,8 +72,32 @@ Finally, we operationalized the network structure.
 - **Proximity-Based Logic:** We built a tool that suggests channels based on **network proximity**. By locating a user within a specific behavioral cluster, the engine recommends the strongest neighboring nodes ("digital neighbors") that they haven't visited yet.
 - **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links $W_{ij}$) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
 
+### 4. User Behavior Analysis 
+We studied wether user behavior is structured, stable and meaningful or wether it's mostly random noise. 
+Using streaming computation over billions of comments, we compute for every user: 
+- **Activity:** total number of comments
+- **Breadth:** number of distinct channels interacted with
+- **Focus/Concentration:** wether engagement is centered on a few channels or widely scattered
+
+### 5. Participation Regimes & Signal Extraction 
+From this analysis we identify **Participation Regimes**, separating users according to the strength and stability of their behavior: 
+- casual, low-signal users
+- moderately engaged users
+- highly committed users with stable preferences
+
+Only the later categories provide enough behavioral evidences to meaningfully infer relationships between channels. Thus justifies filtering not as arbitrary tresholds, but as an empirically grounded decision supported by the data.
+
+### 6. Diagnostics & Robustness
+To ensure that our framework truly reflects human behavior rather than artifacts, we perform a series of diagnostic checks:
+
+- **Noise and Singletons:** evaluate the influence of users appearing only once or in extremely sparse contexts
+- **Stability Checks:** verify that behavioral summaries remain consistent under thresholding
+- **Distributional Sanity Checks:** ensure results match expected large-scale engagement behavior
+
+These diagnostics confirm that the network we build is supported by reliable human signal rather than statistical chance, reinforcing the robustness of the final model.
+
 ## Data Story
-Dive into the visual side of our analysis. This [data story](https://radatouille.netlify.app/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
+Dive into the visual side of our analysis. Our [data story](https://epfl-ada.github.io/ada-2025-project-radatouille/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform. It also shows you how user behavior emerges from the chaotic sea of YouTube comments, featuring graphs about user profiles and their characterization. 
 
 ## Repository Structure :file_folder:
 ```
@@ -84,14 +112,13 @@ ada-2025-project-radatouille/
 │   ├── network_helper.py       #utils methods file for VIDEO-level part
 │   └── community_helper.py     #utils methods file for USER-level part
 │
-├── plot_results/
-│
-├── website/
+├── web/
 │                                           
 ├── .gitignore
-├── requirements.txt                            
 ├── README.md                                       # Project description and instructions
-└── results.ipynb                                   # Jupyter notebook with the results
+├── requirements.txt                           
+├── results_content_network.ipynb                   # Jupyter notebook with the results for USER-level part
+└── results_user_community.ipynb                    # Jupyter notebook with the results for VIDEO-level part
 ```
 ## How to Run the Code :computer:
 
@@ -122,8 +149,8 @@ ada-2025-project-radatouille/
 | **[Romain](https://github.com/frossardr)** | **Network Construction:** Handled the crawling of edge data, implementation of the PMI/Score metric, and efficient handling of large dataframes. |
 | **[Albert](https://github.com/albertfares)** | **Visualization & Story:** Created the Chord diagrams, Gephi network exports, and led the design and implementation of the Data Story website. |
 | **[Hugo](https://github.com/jeanninhugo)** | **Algorithm & Analysis:** Implemented community detection (Louvain), defined the specific metrics for "Hubs" and "Bridges," and managed the repository structure. |
-| **[Thomas](https://github.com/Tkemper2)** | **User Analysis & Report:** Working on the User-level metrics to position users within the network and synthesizing findings into the final textual report/README. |
-| **[Matteo](https://github.com/SltMatteo)** | **User Analysis & Report:** Working on the User-level metrics to position users within the network and synthesizing findings into the final textual report/README. |
+| **[Thomas](https://github.com/Tkemper2)** | **User Analysis & Report:** Built the user-level analysis pipeline, created and analyzed the user space and clustered the groups into communities |
+| **[Matteo](https://github.com/SltMatteo)** | **User Analysis & Report:**  Developed user-level diagnostics, demonstrated the existence of meaningful behavioral structure and applied filtering strategies |
 
 
 
