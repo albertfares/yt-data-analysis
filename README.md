@@ -69,7 +69,7 @@ Finally, we operationalized the network structure.
 - **Value over Views:** This topology-based approach prioritizes **Appreciation** (strong social links $W_{ij}$) over raw **Views**, effectively bypassing the "Rich-Get-Richer" loop of traditional algorithms.
 
 ## Data Story
-Dive into the visual side of our analysis. This [data story](https://radatouille.netlify.app/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
+Dive into the visual side of our analysis. This [data story](https://epfl-ada.github.io/ada-2025-project-radatouille/) moves beyond the code to visualize the full network of 449 million users, featuring interactive chord diagrams and a deep dive into the "Hubs" and "Bridges" that define the platform.
 
 ## Repository Structure :file_folder:
 ```
