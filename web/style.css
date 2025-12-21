@@ -1,118 +1,151 @@
+/* =========================================================
+   Light Editorial + YouTube Red accent
+   + Optional glass wrappers (.glass / .section-card)
+   (rewritten cleanly, no duplicates)
+   ========================================================= */
+
+:root{
+  --page-max: 800px;
+
+  --text: #333;
+  --heading: #2c3e50;
+  --accent: #e74c3c;
+  --accent2: #c0392b;
+
+  --line: #eee;
+
+  --panel: #f9f9f9;
+  --panel2: #fff6f6;
+  --quote: #fff8f8;
+  --formula: #f4f4f4;
+  --info: #e8f4f8;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 10px 28px rgba(0,0,0,0.10);
+  --glass-radius: 24px;
+}
+
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
 /* ---------- Base layout ---------- */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 20px;
 }
 
 /* ---------- Headings ---------- */
-h1 {
-    color: #2c3e50;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+h1{
+  color: var(--heading);
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 10px;
+  margin: 0 0 18px;
 }
 
-h2 {
-    color: #e74c3c; /* YouTube Red-ish accent */
-    margin-top: 40px;
+h2{
+  color: var(--accent);
+  margin: 40px 0 14px;
 }
 
-h3 {
-    color: #2c3e50;
-    margin-top: 30px;
+h3{
+  color: var(--heading);
+  margin: 30px 0 10px;
 }
 
 /* ---------- Text ---------- */
-p {
-    margin-bottom: 15px;
+p{ margin: 0 0 15px; }
+
+ul{
+  background-color: var(--panel);
+  padding: 20px 40px;
+  border-radius: 8px;
+  margin: 16px 0 22px;
 }
 
-ul {
-    background-color: #f9f9f9;
-    padding: 20px 40px;
-    border-radius: 8px;
-}
-
-li {
-    margin-bottom: 10px;
-}
+li{ margin-bottom: 10px; }
 
 /* ---------- Quotes ---------- */
-blockquote {
-    border-left: 5px solid #e74c3c;
-    background-color: #fff8f8;
-    margin: 20px 0;
-    padding: 15px 20px;
-    font-style: italic;
+blockquote{
+  border-left: 5px solid var(--accent);
+  background-color: var(--quote);
+  margin: 20px 0;
+  padding: 15px 20px;
+  font-style: italic;
+  border-radius: 8px;
 }
 
 /* ---------- Formula / math ---------- */
-.formula-box {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin: 20px 0;
-    overflow-x: auto;
+.formula-box{
+  background-color: var(--formula);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px 0;
+  overflow-x: auto;
 }
 
 /* ---------- Research questions block ---------- */
-.research-box {
-    background-color: #fff6f6;
-    border-left: 5px solid #e74c3c;
-    padding: 20px 40px;
-    margin: 30px 0;
-    border-radius: 8px;
+.research-box{
+  background-color: var(--panel2);
+  border-left: 5px solid var(--accent);
+  padding: 20px 40px;
+  margin: 30px 0;
+  border-radius: 8px;
 }
 
-.research-box h2 {
-    margin-top: 0;
-    text-align: left;
-    color: #e74c3c;
+.research-box h2{
+  margin: 0 0 12px;
+  text-align: left;
+  color: var(--accent);
 }
 
-.research-box ul {
-    background-color: transparent;
-    text-align: left;
-    padding-left: 20px;
-    list-style-position: outside;
+.research-box ul{
+  background-color: transparent;
+  padding-left: 20px;
+  list-style-position: outside;
+  margin: 0;
 }
 
 /* ---------- User guide / info ---------- */
-.user-guide {
-    background-color: #e8f4f8;
-    padding: 15px;
-    border-radius: 6px;
-    font-size: 0.9em;
-    margin-bottom: 15px;
-    border-left: 4px solid #3498db;
+.user-guide{
+  background-color: var(--info);
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  border-left: 4px solid #3498db;
 }
 
 /* ---------- Chart placeholder ---------- */
-.chart-placeholder {
-    background-color: #eee;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #ccc;
-    margin-bottom: 40px;
-    color: #777;
-    font-weight: bold;
+.chart-placeholder{
+  background-color: #eee;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  margin-bottom: 40px;
+  color: #777;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
 /* ---------- Call-to-Action Buttons ---------- */
-.cta-wrapper {
+.cta-wrapper{
   min-height: 60vh;
   display: flex;
-  justify-content: center;   /* horizontal centering */
-  align-items: center;       /* vertical centering */
+  justify-content: center;
+  align-items: center;
 }
 
-.cta-container {
+.cta-container{
   display: flex;
   gap: 36px;
   justify-content: center;
@@ -122,24 +155,66 @@ blockquote {
   margin-bottom: 120px;
 }
 
-.cta-button a {
+.cta-button a{
   display: inline-flex;
   justify-content: center;
   align-items: center;
 
-  min-width: 180px;   /* 👈 key line */
+  min-width: 180px;
   padding: 12px 16px;
 
   font-weight: 600;
   text-decoration: none;
   color: white;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
+
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   border-radius: 999px;
   box-shadow: 0 8px 22px rgba(231, 76, 60, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.cta-button a:hover {
+.cta-button a:hover{
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(231, 76, 60, 0.35);
+}
+
+/* =========================================================
+   Optional wrappers for your rewritten HTML
+   Use: <section class="glass section-card"> ... </section>
+   or:  <div class="research-box glass"> ... </div>
+   ========================================================= */
+
+.glass{
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+}
+
+/* generic glass section card wrapper */
+.section-card{
+  padding: 40px 50px;
+  margin: 40px 0;
+}
+
+.section-card h1,
+.section-card h2{ margin-top: 0; }
+
+/* internal rhythm */
+.section-card p + p{ margin-top: 14px; }
+.section-card ul{ margin-top: 18px; }
+.section-card blockquote{ margin-top: 20px; }
+
+/* keep research-box look but allow glass overlay */
+.research-box.glass{
+  background: var(--glass-bg);
+  border-left: 5px solid var(--accent); /* keep the accent stripe */
+}
+
+/* optional: make CTA tray glass if you add .glass */
+.cta-container.glass{
+  padding: 22px;
+  border-radius: 22px;
 }
