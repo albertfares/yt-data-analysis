@@ -570,7 +570,50 @@ export default function User_community() {
             You nod your head. You need to think about it. Maybe it’s time to open your YouTube profile and find out.
           </p>
         </Section>
+
+
+      {/* JOURNEY NAVIGATION */}
+<section
+  style={{
+    margin: "48px 0 80px",
+    padding: "28px 22px",
+    borderRadius: 16,
+    background: "rgba(255,255,255,0.85)",
+    border: "1px solid rgba(0,0,0,0.06)",
+    textAlign: "center",
+  }}
+>
+  <p style={{ marginTop: 0, fontSize: "1.05rem" }}>
+    You’ve reached the end of this path.
+    <br />
+    Where would you like to go next?
+  </p>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      gap: 24,
+      marginTop: 24,
+      flexWrap: "wrap",
+    }}
+  >
+    <a className="cta-btn subtle" href="../index.html">
+      Introduction
+    </a>
+
+    <a className="cta-btn accent" href="../viz/">
+      Network Journey
+    </a>
+
+    <a className="cta-btn subtle" href="../conclusion.html">
+      Conclusion
+    </a>
+  </div>
+</section>
       </div>
+
+
     </>
   );
 }
