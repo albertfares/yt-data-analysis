@@ -36,6 +36,9 @@ We focused on the large-scale structure of the YouNiverse dataset, employing the
 - **Pointwise Mutual Information (PMI)** (for edge weighting)
 - **OLS Regression** (for analyzing the link between subscribers and connectivity score)
 - **Interactive Visualization** (Chord Diagrams, Sankey Diagrams)
+- **Large-Scale User Behavior Analysis** (streaming computation of activity, breadth, and concentration over billions of comments)
+- **Participation Regimes & Filtering** (identifying meaningful users vs. noise and grounding “Super User” filtering in empirical evidence)
+- **Robustness Diagnostics** (noise evaluation, singleton impact, stability and sanity checks to ensure behavioral signal reliability)
 
 ### 1. Preprocessing & User Profiling (The Signal)
 To build a robust graph, we defined the "Signal" by filtering for **"Super Users"** ($U_{super}$). A user $u$ is retained only if they satisfy the following engagement thresholds:
