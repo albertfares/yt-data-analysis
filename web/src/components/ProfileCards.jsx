@@ -49,12 +49,25 @@ function titleFrom(id, a) {
 
 function taglineFrom(a) {
   if (a.focus === "Focused" && a.topic === "Specialist") return "Lives in one corner of YouTube and knows it deeply.";
-  if (a.focus === "Explorer" && a.topic === "Generalist") return "Wanders everywhere — comments across many channels and topics.";
+  if (a.focus === "Explorer" && a.topic === "Generalist") return "Wanders everywhere, comments across many channels and topics.";
   if (a.focus === "Balanced" && a.topic === "Mixed") return "Has a stable routine but still likes variety.";
-  if (a.focus === "Focused") return "Returns to a small set of channels again and again.";
-  if (a.topic === "Generalist") return "Enjoys many topics, rarely stays in one lane.";
+  if (a.focus === "Focused") return "Only comments on a few channels but across various topics.";
+  if (a.topic === "Generalist") return "Enjoys many topics and channels without a strong preference.";
   return "A consistent commenter with a recognizable pattern.";
 }
+
+const CUSTOM_DESCRIPTIONS_10 = {
+  0: "Biggest group, focus on a small set of channel with low activity.",
+  1: "Moderate",
+  2: "Balanced users with stable habits who occasionally branch out to discover new creators.",
+  3: "Topic specialists who comment deeply within a narrow set of themes across a few channels.",
+  4: "Wide-ranging generalists who participate broadly but without strong attachment to any channel.",
+  5: "Low-activity but consistent commenters who return to familiar channels over long periods.",
+  6: "Highly active explorers commenting across many channels with strong topical diversity.",
+  7: "Focused power users who comment frequently within a tightly defined interest space.",
+  8: "Casual participants engaging sporadically across different topics and creators.",
+  9: "Hybrid profiles mixing loyalty and exploration depending on content type."
+};
 
 export default function ProfileCards({
   basePath = "data/kmeans_explorer",
