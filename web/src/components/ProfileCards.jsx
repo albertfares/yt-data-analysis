@@ -149,7 +149,7 @@ export default function ProfileCards({
       >
         {cards.map((p) => {
           const a = archetypeFrom(p);
-          const title = titleFrom(p.id, a);
+          const title = `${a.focus} · ${a.topic}`;
           const tagline = taglineFrom(a);
 
           const tcN = normLog(p.tc_median ?? 0, minTc, maxTc);
