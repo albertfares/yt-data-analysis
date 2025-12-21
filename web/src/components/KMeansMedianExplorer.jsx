@@ -96,8 +96,8 @@ export default function KMeansMedianExplorer({
       },
 
       parallelAxis: [
-        { dim: 0, name: "log10(tc_median+1)", min: tcMin, max: tcMax, realtime: false },
-        { dim: 1, name: "log10(nch_median+1)", min: nchMin, max: nchMax, realtime: false },
+        { dim: 0, name: "total comments (log10)", min: tcMin, max: tcMax, realtime: false },
+        { dim: 1, name: "number of channel (log10)", min: nchMin, max: nchMax, realtime: false },
         { dim: 2, name: "channel diversity", min: 0, max: 1, realtime: false },
         { dim: 3, name: "category diversity", min: 0, max: 1, realtime: false },
       ],
