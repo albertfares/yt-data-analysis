@@ -104,25 +104,27 @@ blockquote {
     font-weight: bold;
 }
 
-.cta-button {
-  text-align: center;
-  margin: 50px 0;
+.cta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 🔑 centers buttons horizontally */
+  gap: 16px;             /* spacing between buttons */
+  margin-top: 48px;
 }
 
 .cta-button a {
   display: inline-block;
-  padding: 14px 28px;
-  font-size: 1rem;
+  padding: 14px 32px;
   font-weight: 600;
   text-decoration: none;
   color: white;
-  background-color: #e74c3c;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(231, 76, 60, 0.25);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 8px 22px rgba(231, 76, 60, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cta-button a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(231, 76, 60, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(231, 76, 60, 0.35);
 }
