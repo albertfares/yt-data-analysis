@@ -584,7 +584,7 @@ export default function User_community() {
   }}
 >
   <p style={{ marginTop: 0, fontSize: "1.05rem" }}>
-    You’ve reached the end of this path.
+    You’ve reached the end of this journey.
     <br />
     Where would you like to go next?
   </p>
@@ -598,7 +598,7 @@ export default function User_community() {
       flexWrap: "wrap",
     }}
   >
-    <a className="cta-btn subtle" href="../index.html">
+    <a className="cta-btn accent" href="../index.html">
       Introduction
     </a>
 
@@ -606,7 +606,7 @@ export default function User_community() {
       Network Journey
     </a>
 
-    <a className="cta-btn subtle" href="../conclusion.html">
+    <a className="cta-btn accent" href="../conclusion.html">
       Conclusion
     </a>
   </div>
