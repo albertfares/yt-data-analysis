@@ -122,6 +122,24 @@ blockquote{
   -webkit-backdrop-filter: blur(10px);
 }
 
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Glassmorphism Mixin Concept */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
 /* ---------- Call-to-Action Buttons ---------- */
 .cta-container{
   width: 100%;
@@ -167,3 +185,21 @@ blockquote{
   h1{ font-size: 2.5em; }
   ul{ padding: 16px 20px; }
 }
+
+.section-card{
+  padding: 50px;
+  margin: 40px 0;
+}
+
+.section-card h2{
+  margin-top: 0;
+}
+
+.intro-card{
+  padding: 32px 36px;
+  margin: 20px 0 40px;
+}
+
+.section-card p + p{ margin-top: 14px; }
+.section-card ul{ margin-top: 16px; }
+.section-card blockquote{ margin-top: 18px; }
