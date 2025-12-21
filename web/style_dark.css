@@ -1,0 +1,169 @@
+/* =========================
+   Dark Editorial / YouTube-red
+   Works with content directly inside <body>
+   ========================= */
+
+:root{
+  --content-max: 860px;
+
+  --bg: #000;
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.62);
+  --heading: rgba(255,255,255,0.96);
+
+  --accent: #e74c3c;
+  --accent2: #c0392b;
+}
+
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(180, 0, 0, 0.40) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(100, 0, 0, 0.40) 0%, transparent 40%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ✅ Hard-center everything with a middle column */
+body{
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--content-max)) 1fr;
+}
+
+/* ✅ Every direct child of body goes into the center column */
+body > *{
+  grid-column: 2;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Optional: consistent vertical rhythm */
+body > * + *{ margin-top: 18px; }
+
+/* ---------- Headings ---------- */
+h1{
+  margin-top: 64px;
+  margin-bottom: 18px;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #ffffff 0%, #a5a5a5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+h2{
+  color: var(--heading);
+  margin-top: 40px;
+  font-size: 2.2em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+h3{
+  color: rgba(255,255,255,0.88);
+  margin-top: 30px;
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+/* ---------- Text ---------- */
+p{
+  color: rgba(255,255,255,0.75);
+  font-size: 1.15em;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ---------- Lists ---------- */
+ul{
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 18px 28px;
+  border-radius: 14px;
+  margin: 18px auto 28px;
+}
+
+li{
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.74);
+}
+
+/* ---------- Quotes ---------- */
+blockquote{
+  border-left: 5px solid var(--accent);
+  background: rgba(255,255,255,0.05);
+  margin: 26px auto;
+  padding: 15px 20px;
+  font-style: italic;
+  color: rgba(255,255,255,0.90);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ---------- Call-to-Action Buttons ---------- */
+.cta-container{
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 64px auto 120px;
+  padding: 0 20px;
+
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cta-button a{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 180px;
+  padding: 12px 16px;
+
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  border-radius: 999px;
+
+  box-shadow: 0 8px 22px rgba(231,76,60,0.25);
+  border: 1px solid rgba(255,255,255,0.18);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.cta-button a:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(231,76,60,0.35);
+  filter: brightness(1.05);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px){
+  h1{ font-size: 2.5em; }
+  ul{ padding: 16px 20px; }
+}
