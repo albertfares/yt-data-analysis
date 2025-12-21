@@ -910,3 +910,50 @@ code {
     color: #FF8080;
     /* Light red for code */
 }
+
+.top-nav{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 6px 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.nav-inner{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center; /* center buttons */
+}
+
+.nav-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.11);
+  border-color: rgba(255,255,255,0.20);
+}
+
+.nav-btn-accent{
+  background: rgba(231, 76, 60, 0.22);
+  border-color: rgba(231, 76, 60, 0.40);
+}
+
+.nav-btn-accent:hover{
+  background: rgba(231, 76, 60, 0.30);
+  border-color: rgba(231, 76, 60, 0.60);
+}

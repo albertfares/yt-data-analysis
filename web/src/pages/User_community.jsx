@@ -60,7 +60,7 @@ export default function User_community() {
 
   return (
     <>
-      <BackgroundCommentFlow />
+      <BackgroundNodes />
 
       <div className="page">
         {/* HERO */}
