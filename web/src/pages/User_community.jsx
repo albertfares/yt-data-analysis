@@ -275,7 +275,7 @@ export default function User_community() {
             jsonPath="data/groups_total_comments_hist.json"
             title="Distribution of Total Comments per Group"
             xTitle="Total comments"
-            logX={true}
+            logX={false}
             logY={true}
           />
 
