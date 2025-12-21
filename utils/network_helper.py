@@ -1,3 +1,5 @@
+# utils file containing useful functions for network construction and analysis
+
 import duckdb
 import time
 from pathlib import Path
