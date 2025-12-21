@@ -112,7 +112,7 @@ ada-2025-project-radatouille/
     * Download the dataset from the [Zenodo](https://zenodo.org/records/4650046) and place it in `data/raw/`.
 
 4.  **Execution:**
-    * Run the notebook `results.ipynb` to view the analysis pipeline and visualizations.
+    * Run the `results_[...].ipynb` notebooks to view the analysis pipeline and visualizations.
     * :warning:The notebook is long, and some cells may take a long time and be memory-intensive to run.
 
 ## Contributions :memo:
